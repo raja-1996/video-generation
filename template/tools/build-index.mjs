@@ -20,7 +20,7 @@ ${shared}
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="${total}" data-width="1920" data-height="1080">
+    <div id="root" data-composition-id="main" data-fps="24" data-start="0" data-duration="${total}" data-width="1920" data-height="1080">
 ${hosts}
       <audio id="voice" class="clip" src="assets/narration.mp3" data-start="0" data-duration="${t.total}" data-track-index="0" data-volume="1"></audio>
     </div>

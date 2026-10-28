@@ -73,6 +73,8 @@ from `template/tools/`; `dcn-v2-explainer/` is the reference film.
 - **Red text on kraft** fails contrast at the bright red; the accent is `#b52a1f`.
 - **Render time** is about 2.5× the video length on this cloud container (8 min video ≈ 19 min). Kokoro
   slows down a lot while a render is running; generate the voice first.
+- **24 fps.** `build-index.mjs` sets `data-fps="24"` on the root. Only about a quarter of frames change (the rest
+  are holds), and 24 fps renders about 15–20% faster than 30 with no visible loss on these slow moves.
 - **No full-screen grain or noise overlays.** The kraft fibre noise (9% opacity) made renders about 40% slower
   in software capture and was invisible after encoding (mean pixel difference 0.6 / 255); the ground is flat colour.
 - **Quiet audio on phones**: raw Kokoro narration lands near −23 LUFS. Always run `tools/finish.sh`.
