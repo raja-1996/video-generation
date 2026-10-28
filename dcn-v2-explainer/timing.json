@@ -1,5 +1,5 @@
 {
- "total": 303.965,
+ "total": 482.675,
  "scenes": [
   {
    "id": "night",
@@ -139,8 +139,35 @@
    ]
   },
   {
-   "id": "listen",
+   "id": "lookup",
    "start": 83.31,
+   "dur": 22.035,
+   "lines": [
+    {
+     "text": "Here's how a trait becomes a profile.",
+     "start": 0.45,
+     "dur": 2.6
+    },
+    {
+     "text": "Picture a row of switches, one for every city in the world. For Madrid, exactly one is on.",
+     "start": 3.37,
+     "dur": 6.225
+    },
+    {
+     "text": "Multiply that row by a big learned table, and the single switch simply picks out Madrid's column.",
+     "start": 9.915,
+     "dur": 6.15
+    },
+    {
+     "text": "So the math is just a lookup: the model reads Madrid's line from its notebook.",
+     "start": 16.385,
+     "dur": 4.9
+    }
+   ]
+  },
+  {
+   "id": "listen",
+   "start": 105.345,
    "dur": 9.79,
    "lines": [
     {
@@ -162,7 +189,7 @@
   },
   {
    "id": "andgate",
-   "start": 93.1,
+   "start": 115.135,
    "dur": 12.04,
    "lines": [
     {
@@ -184,7 +211,7 @@
   },
   {
    "id": "keep",
-   "start": 105.14,
+   "start": 127.175,
    "dur": 10.665,
    "lines": [
     {
@@ -205,8 +232,62 @@
    ]
   },
   {
+   "id": "worked1",
+   "start": 137.84,
+   "dur": 28.76,
+   "lines": [
+    {
+     "text": "Let's run one layer with real numbers. Take two facts, Madrid and English: one if true, zero if not.",
+     "start": 0.45,
+     "dur": 6.95
+    },
+    {
+     "text": "Listening: Madrid's message is a little of itself, plus two times English. Those weights were learned.",
+     "start": 7.72,
+     "dur": 6.25
+    },
+    {
+     "text": "Combining: multiply that message by Madrid. Out pops two times Madrid times English: the traveller term.",
+     "start": 14.29,
+     "dur": 7.475
+    },
+    {
+     "text": "If she doesn't speak English, that term becomes zero. The pair only counts when both are true.",
+     "start": 22.085,
+     "dur": 5.925
+    }
+   ]
+  },
+  {
+   "id": "worked2",
+   "start": 166.6,
+   "dur": 18.91,
+   "lines": [
+    {
+     "text": "Now the two small extras.",
+     "start": 0.45,
+     "dur": 2.1
+    },
+    {
+     "text": "The bias adds a fixed nudge to the message, so after multiplying, Madrid alone still counts a little.",
+     "start": 2.87,
+     "dur": 6.5
+    },
+    {
+     "text": "And keep adds Madrid back, unchanged.",
+     "start": 9.69,
+     "dur": 2.875
+    },
+    {
+     "text": "So the layer's output is a sum of readable pieces, each with its own learned weight.",
+     "start": 12.885,
+     "dur": 5.275
+    }
+   ]
+  },
+  {
    "id": "dials",
-   "start": 115.805,
+   "start": 185.51,
    "dur": 17.31,
    "lines": [
     {
@@ -233,7 +314,7 @@
   },
   {
    "id": "stack",
-   "start": 133.115,
+   "start": 202.82,
    "dur": 11.94,
    "lines": [
     {
@@ -254,8 +335,35 @@
    ]
   },
   {
+   "id": "degree",
+   "start": 214.76,
+   "dur": 20.91,
+   "lines": [
+    {
+     "text": "Why does each layer add exactly one more 'and'?",
+     "start": 0.45,
+     "dur": 3.05
+    },
+    {
+     "text": "Because every layer multiplies by the original facts once more.",
+     "start": 3.82,
+     "dur": 4.525
+    },
+    {
+     "text": "Layer one makes Madrid times English. Layer two multiplies by eleven p.m. as well.",
+     "start": 8.665,
+     "dur": 6.275
+    },
+    {
+     "text": "So with L layers, the longest combination holds L plus one facts.",
+     "start": 15.26,
+     "dur": 4.9
+    }
+   ]
+  },
+  {
    "id": "orders",
-   "start": 145.055,
+   "start": 235.67,
    "dur": 14.44,
    "lines": [
     {
@@ -277,7 +385,7 @@
   },
   {
    "id": "deep",
-   "start": 159.495,
+   "start": 250.11,
    "dur": 17.435,
    "lines": [
     {
@@ -304,7 +412,7 @@
   },
   {
    "id": "table",
-   "start": 176.93,
+   "start": 267.545,
    "dur": 12.79,
    "lines": [
     {
@@ -326,7 +434,7 @@
   },
   {
    "id": "themes",
-   "start": 189.72,
+   "start": 280.335,
    "dur": 13.44,
    "lines": [
     {
@@ -347,8 +455,35 @@
    ]
   },
   {
+   "id": "lowrank",
+   "start": 293.775,
+   "dur": 25.96,
+   "lines": [
+    {
+     "text": "Here's the squeeze in numbers.",
+     "start": 0.45,
+     "dur": 2.1
+    },
+    {
+     "text": "Say the model reads four hundred numbers about Maya. A full table of dials needs four hundred times four hundred: a hundred and sixty thousand.",
+     "start": 2.87,
+     "dur": 9.15
+    },
+    {
+     "text": "Instead, first score Maya on a hundred themes, then turn those scores back into messages.",
+     "start": 12.34,
+     "dur": 5.925
+    },
+    {
+     "text": "That's two thin tables of forty thousand each. Half the dials, and at Google, no accuracy lost.",
+     "start": 18.585,
+     "dur": 6.625
+    }
+   ]
+  },
+  {
    "id": "experts",
-   "start": 203.16,
+   "start": 319.735,
    "dur": 9.595,
    "lines": [
     {
@@ -364,8 +499,30 @@
    ]
   },
   {
+   "id": "mixmath",
+   "start": 329.33,
+   "dur": 16.44,
+   "lines": [
+    {
+     "text": "In symbols, each specialist is one of these thin squeezes.",
+     "start": 0.45,
+     "dur": 3.95
+    },
+    {
+     "text": "The gate gives each one a weight between zero and one, based on Maya's traits.",
+     "start": 4.72,
+     "dur": 4.9
+    },
+    {
+     "text": "Their weighted messages are added up, and, as always, what the layer already knew is kept.",
+     "start": 9.94,
+     "dur": 5.75
+    }
+   ]
+  },
+  {
    "id": "chance",
-   "start": 212.755,
+   "start": 345.77,
    "dur": 12.515,
    "lines": [
     {
@@ -386,8 +543,62 @@
    ]
   },
   {
+   "id": "sigmoid",
+   "start": 358.285,
+   "dur": 21.76,
+   "lines": [
+    {
+     "text": "How does a score become a chance?",
+     "start": 0.45,
+     "dur": 2.25
+    },
+    {
+     "text": "The model adds everything into one score, which could be any number at all.",
+     "start": 3.02,
+     "dur": 4.575
+    },
+    {
+     "text": "An S-shaped squeeze turns it into a percentage. A score of zero means fifty-fifty.",
+     "start": 7.915,
+     "dur": 5.55
+    },
+    {
+     "text": "Plus two becomes eighty-eight percent. Minus two, twelve percent. It never quite reaches zero or a hundred.",
+     "start": 13.785,
+     "dur": 7.225
+    }
+   ]
+  },
+  {
+   "id": "logloss",
+   "start": 380.045,
+   "dur": 23.935,
+   "lines": [
+    {
+     "text": "And here's the penalty in numbers. Suppose Maya does tap.",
+     "start": 0.45,
+     "dur": 4.0
+    },
+    {
+     "text": "If the model said ninety percent, the penalty is small: about a tenth.",
+     "start": 4.77,
+     "dur": 4.75
+    },
+    {
+     "text": "Fifty percent costs zero point seven. Ten percent costs two point three.",
+     "start": 9.84,
+     "dur": 5.025
+    },
+    {
+     "text": "Averaged over billions of examples, plus a small tax on oversized dials, that's the one score training pushes down.",
+     "start": 15.185,
+     "dur": 8.0
+    }
+   ]
+  },
+  {
    "id": "race",
-   "start": 225.27,
+   "start": 403.98,
    "dur": 20.585,
    "lines": [
     {
@@ -414,7 +625,7 @@
   },
   {
    "id": "result",
-   "start": 245.855,
+   "start": 424.565,
    "dur": 12.915,
    "lines": [
     {
@@ -436,7 +647,7 @@
   },
   {
    "id": "lessons",
-   "start": 258.77,
+   "start": 437.48,
    "dur": 19.285,
    "lines": [
     {
@@ -463,7 +674,7 @@
   },
   {
    "id": "budget",
-   "start": 278.055,
+   "start": 456.765,
    "dur": 16.74,
    "lines": [
     {
@@ -485,7 +696,7 @@
   },
   {
    "id": "close",
-   "start": 294.795,
+   "start": 473.505,
    "dur": 9.17,
    "lines": [
     {

@@ -25,3 +25,13 @@
       .stamp { position: absolute; font-family: var(--font-display); color: var(--red); border: 8px solid var(--red);
         border-radius: 12px; padding: 10px 34px; font-size: 76px; letter-spacing: 0.04em; }
       .bar { position: absolute; bottom: 0; width: 34px; background: var(--ink); border-radius: 4px 4px 0 0; }
+      /* equations: each term can carry an underline and a plain-words label */
+      .eq { font-family: var(--font-display); white-space: nowrap; line-height: 1.1; }
+      .eq .t { display: inline-block; position: relative; padding: 0 6px; }
+      .eq .t .u { position: absolute; left: 6px; right: 6px; top: 100%; margin-top: 4px; height: 8px; border-radius: 4px; background: var(--ink); }
+      .eq .t .w { position: absolute; left: 50%; top: 100%; margin-top: 20px; transform: translateX(-50%); white-space: nowrap;
+        font-family: var(--font-body); font-weight: 900; font-size: 34px; color: #3d3024; }
+      .eq .red { color: var(--red); }
+      .eq .red .u { background: var(--red); }
+      .eq .red .w { color: var(--red); }
+      .eq sub { font-size: 0.55em; }

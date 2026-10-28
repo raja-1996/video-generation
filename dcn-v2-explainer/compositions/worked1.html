@@ -1,0 +1,54 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #w1-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #w1-facts { position: absolute; left: 110px; top: 190px; display: flex; gap: 40px; }
+    .w1-f { display: flex; align-items: center; gap: 18px; }
+    .w1-f .tag { position: relative; width: 280px; height: 110px; font-size: 40px; }
+    .w1-v { width: 90px; height: 90px; border: 5px solid var(--ink); border-radius: 50%; background: var(--tag);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 52px; }
+    #w1-l1 { position: absolute; left: 110px; top: 380px; font-size: 68px; }
+    #w1-l2 { position: absolute; left: 110px; top: 610px; font-size: 76px; }
+    #w1-cases { position: absolute; left: 110px; top: 860px; font-weight: 900; font-size: 44px; line-height: 1.45; }
+    #w1-cases b { font-family: var(--font-display); font-weight: 400; }
+    #w1-note { position: absolute; left: 1250px; top: 230px; width: 600px; font-weight: 800; font-size: 30px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="worked1" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="w1-title" class="disp">One layer, with real numbers</div>
+    <div id="w1-facts">
+      <div class="w1-f"><div class="tag">Madrid</div><div class="w1-v">1</div></div>
+      <div class="w1-f"><div class="tag">English</div><div class="w1-v" id="w1-ev">1</div></div>
+    </div>
+    <div id="w1-note">1 = true, 0 = false. M = Madrid, E = English. The weights 0.1 and 2 are example values the model would learn.</div>
+    <div id="w1-l1" class="eq">
+      <span class="t" id="w1-a">message =</span><span class="t" id="w1-b">0.1 × Madrid<span class="u"></span><span class="w">a little of itself</span></span><span class="t" id="w1-c">+ 2 × English<span class="u"></span><span class="w">two times English</span></span>
+    </div>
+    <div id="w1-l2" class="eq">
+      <span class="t" id="w1-d">M × message =</span><span class="t" id="w1-e">0.1·M·M</span><span class="t red" id="w1-f">+ 2·M·E<span class="u"></span><span class="w">the traveller term</span></span>
+    </div>
+    <div id="w1-cases" data-hold><div id="w1-k1">Madrid 1, English 1 → <b style="color:var(--red)">2 × 1 × 1 = 2</b></div><div id="w1-k2">Madrid 1, English 0 → <b>2 × 1 × 0 = 0</b></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#w1-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#w1-facts .w1-f", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)", stagger: 0.4 }, 3.4);
+    tl.fromTo("#w1-facts .w1-v", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", stagger: 0.4 }, 5.6);
+    tl.fromTo("#w1-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.0);
+    // listening
+    tl.fromTo(["#w1-a", "#w1-b", "#w1-c"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.9 }, 8.0);
+    tl.set(["#w1-l1 .u", "#w1-l1 .w", "#w1-l2 .u", "#w1-l2 .w"], { opacity: 0 }, 0);
+    tl.to(["#w1-b .u", "#w1-b .w"], { opacity: 1, duration: 0.2 }, 9.6);
+    tl.to(["#w1-c .u", "#w1-c .w"], { opacity: 1, duration: 0.2 }, 11.0);
+    // combining
+    tl.fromTo(["#w1-d", "#w1-e", "#w1-f"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 1.0 }, 14.6);
+    tl.to(["#w1-f .u", "#w1-f .w"], { opacity: 1, duration: 0.2 }, 19.6);
+    // only when both are true
+    tl.fromTo("#w1-k1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 22.3);
+    tl.to("#w1-ev", { scaleX: 0, duration: 0.15, ease: "power2.in" }, 23.9);
+    tl.set("#w1-ev", { textContent: "0" }, 24.05);
+    tl.to("#w1-ev", { scaleX: 1, duration: 0.2, ease: "expo.out" }, 24.05);
+    tl.fromTo("#w1-k2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 24.3);
+    window.__timelines["worked1"] = tl;
+  </script>
+</template>

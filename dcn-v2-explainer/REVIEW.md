@@ -1,4 +1,11 @@
-# Review: DCN-V2 explainer (5-minute cut, 22 scenes, ~307 s)
+# Review: DCN-V2 explainer (math cut, 30 scenes, ~486 s)
+
+Math cut adds worked-number scenes: lookup (embedding = W·e picks a column), worked1/worked2 (one cross layer on
+Madrid/English with example weights 0.1, 2, bias 0.5 -> 0.1·M·M + 2·M·E + 0.5·M + M), degree (L layers -> L+1 facts),
+lowrank (400x400 = 160,000 vs two 400x100 = 80,000), mixmath (sum of gate × specialist + x), sigmoid
+(0->50%, +2->88%, -2->12%), logloss (-ln 0.9=0.11, -ln 0.5=0.69, -ln 0.1=2.30, plus L2 tax). Example weights are labelled.
+
+## Earlier: 5-minute cut (22 scenes, ~307 s)
 
 Added in the 5-minute cut: synthetic (known-answer tests), dials (DCN v1 vs v2), orders (why the keep step matters),
 deep (stacked vs parallel), race (Criteo leaderboard, Table 6), lessons (production lessons, section 8),

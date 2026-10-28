@@ -52,6 +52,15 @@
    ]
   },
   {
+   "id": "lookup",
+   "lines": [
+    "Here's how a trait becomes a profile.",
+    "Picture a row of switches, one for every city in the world. For Madrid, exactly one is on.",
+    "Multiply that row by a big learned table, and the single switch simply picks out Madrid's column.",
+    "So the math is just a lookup: the model reads Madrid's line from its notebook."
+   ]
+  },
+  {
    "id": "listen",
    "lines": [
     "Then comes the cross layer.",
@@ -76,6 +85,24 @@
    ]
   },
   {
+   "id": "worked1",
+   "lines": [
+    "Let's run one layer with real numbers. Take two facts, Madrid and English: one if true, zero if not.",
+    "Listening: Madrid's message is a little of itself, plus two times English. Those weights were learned.",
+    "Combining: multiply that message by Madrid. Out pops two times Madrid times English: the traveller term.",
+    "If she doesn't speak English, that term becomes zero. The pair only counts when both are true."
+   ]
+  },
+  {
+   "id": "worked2",
+   "lines": [
+    "Now the two small extras.",
+    "The bias adds a fixed nudge to the message, so after multiplying, Madrid alone still counts a little.",
+    "And keep adds Madrid back, unchanged.",
+    "So the layer's output is a sum of readable pieces, each with its own learned weight."
+   ]
+  },
+  {
    "id": "dials",
    "lines": [
     "This is version two for a reason.",
@@ -90,6 +117,15 @@
     "Stack a second layer, and pairs become trios:",
     "Madrid, and English, and eleven p.m.: a late-night traveller.",
     "Each layer adds one more 'and'."
+   ]
+  },
+  {
+   "id": "degree",
+   "lines": [
+    "Why does each layer add exactly one more 'and'?",
+    "Because every layer multiplies by the original facts once more.",
+    "Layer one makes Madrid times English. Layer two multiplies by eleven p.m. as well.",
+    "So with L layers, the longest combination holds L plus one facts."
    ]
   },
   {
@@ -126,10 +162,27 @@
    ]
   },
   {
+   "id": "lowrank",
+   "lines": [
+    "Here's the squeeze in numbers.",
+    "Say the model reads four hundred numbers about Maya. A full table of dials needs four hundred times four hundred: a hundred and sixty thousand.",
+    "Instead, first score Maya on a hundred themes, then turn those scores back into messages.",
+    "That's two thin tables of forty thousand each. Half the dials, and at Google, no accuracy lost."
+   ]
+  },
+  {
    "id": "experts",
    "lines": [
     "Then several small specialists each read the traits their own way,",
     "and a gate decides, for Maya, whose opinion counts most."
+   ]
+  },
+  {
+   "id": "mixmath",
+   "lines": [
+    "In symbols, each specialist is one of these thin squeezes.",
+    "The gate gives each one a weight between zero and one, based on Maya's traits.",
+    "Their weighted messages are added up, and, as always, what the layer already knew is kept."
    ]
   },
   {
@@ -138,6 +191,24 @@
     "Everything ends in one number: the chance she taps.",
     "When the model is confidently wrong, it pays the biggest penalty,",
     "so it learns to be honest about what it knows."
+   ]
+  },
+  {
+   "id": "sigmoid",
+   "lines": [
+    "How does a score become a chance?",
+    "The model adds everything into one score, which could be any number at all.",
+    "An S-shaped squeeze turns it into a percentage. A score of zero means fifty-fifty.",
+    "Plus two becomes eighty-eight percent. Minus two, twelve percent. It never quite reaches zero or a hundred."
+   ]
+  },
+  {
+   "id": "logloss",
+   "lines": [
+    "And here's the penalty in numbers. Suppose Maya does tap.",
+    "If the model said ninety percent, the penalty is small: about a tenth.",
+    "Fifty percent costs zero point seven. Ten percent costs two point three.",
+    "Averaged over billions of examples, plus a small tax on oversized dials, that's the one score training pushes down."
    ]
   },
   {

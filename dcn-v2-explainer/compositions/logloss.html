@@ -1,0 +1,50 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ll-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #ll-sub { position: absolute; left: 110px; top: 160px; font-weight: 900; font-size: 40px; color: #3d3024; }
+    .ll-row { position: absolute; left: 110px; height: 100px; width: 1700px; }
+    .ll-said { position: absolute; left: 0; top: 18px; width: 380px; font-family: var(--font-display); font-size: 52px; }
+    .ll-bar { position: absolute; left: 400px; top: 20px; height: 64px; background: var(--red); border-radius: 8px; transform-origin: 0 50%; }
+    .ll-val { position: absolute; top: 22px; font-family: var(--font-display); font-size: 52px; }
+    #ll-head { position: absolute; left: 110px; top: 240px; width: 1700px; font-weight: 900; font-size: 32px; color: #5c4a35; }
+    #ll-n1 { position: absolute; left: 1100px; top: 322px; font-weight: 900; font-size: 36px; color: #3d3024; }
+    #ll-eq { position: absolute; left: 110px; top: 720px; font-size: 60px; }
+  </style>
+  <div id="root" data-composition-id="logloss" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ll-title" class="disp">The penalty, in numbers</div>
+    <div id="ll-sub">Maya taps. Beforehand, the model said…</div>
+    <div id="ll-head"><span style="margin-left:0">chance it gave</span><span style="margin-left:150px">penalty = −log(chance)</span></div>
+    <div class="ll-row" id="ll-r1" style="top:300px"><div class="ll-said">90%</div><div class="ll-bar"></div></div>
+    <div id="ll-n1">fairly sure, and right: small</div>
+    <div class="ll-row" id="ll-r2" style="top:420px"><div class="ll-said">50%</div><div class="ll-bar"></div></div>
+    <div class="ll-row" id="ll-r3" style="top:540px"><div class="ll-said">10%</div><div class="ll-bar"></div></div>
+    <div id="ll-eq" class="eq" data-hold><span class="t">loss =</span><span class="t" id="ll-a">average penalty<span class="u"></span><span class="w">over billions of examples</span></span><span class="t red" id="ll-b">+ λ · (dial sizes)²<span class="u"></span><span class="w">a small tax on oversized dials</span></span></div>
+  </div>
+  <script>
+    (function () {
+      [["#ll-r1", 0.9], ["#ll-r2", 0.5], ["#ll-r3", 0.1]].forEach(([id, p]) => {
+        const v = -Math.log(p), w = v * 480;
+        const r = document.querySelector(id);
+        r.querySelector(".ll-bar").style.width = w.toFixed(0) + "px";
+        r.insertAdjacentHTML("beforeend", `<div class="ll-val" style="left:${(420 + w).toFixed(0)}px">${v.toFixed(2)}</div>`);
+      });
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(["#ll-title", "#ll-sub"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.8 }, 0.5);
+    tl.fromTo("#ll-head", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.0);
+    [["#ll-r1", 5.0], ["#ll-r2", 10.0], ["#ll-r3", 12.4]].forEach(([id, t]) => {
+      tl.fromTo(id + " .ll-said", { opacity: 0 }, { opacity: 1, duration: 0.25 }, t);
+      tl.fromTo(id + " .ll-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "expo.out" }, t + 0.4);
+      tl.fromTo(id + " .ll-val", { opacity: 0 }, { opacity: 1, duration: 0.25 }, t + 0.9);
+    });
+    tl.fromTo("#ll-n1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.4);
+    tl.set(["#ll-eq .t", "#ll-eq .u", "#ll-eq .w"], { opacity: 0 }, 0);
+    tl.to(["#ll-eq .t:first-child", "#ll-a"], { opacity: 1, duration: 0.3, stagger: 0.2 }, 15.5);
+    tl.to(["#ll-a .u", "#ll-a .w"], { opacity: 1, duration: 0.2 }, 17.0);
+    tl.to("#ll-b", { opacity: 1, duration: 0.3 }, 18.6);
+    tl.to(["#ll-b .u", "#ll-b .w"], { opacity: 1, duration: 0.2 }, 19.0);
+    window.__timelines["logloss"] = tl;
+  </script>
+</template>

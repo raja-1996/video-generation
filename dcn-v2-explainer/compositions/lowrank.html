@@ -1,0 +1,60 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #lr-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #lr-full { position: absolute; left: 110px; top: 220px; width: 440px; height: 440px; border: 5px solid var(--ink); background-color: var(--tag);
+      background-image: repeating-linear-gradient(0deg, transparent 0 21px, #b9a37f 21px 22px), repeating-linear-gradient(90deg, transparent 0 21px, #b9a37f 21px 22px); }
+    #lr-fullw { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-family: var(--font-display); font-size: 96px; }
+    #lr-fulll { position: absolute; left: 110px; top: 690px; width: 560px; font-weight: 900; font-size: 40px; }
+    #lr-fulll b { font-family: var(--font-display); font-weight: 400; font-size: 60px; display: block; }
+    #lr-pipe { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .lr-cap { position: absolute; top: 740px; text-align: center; font-weight: 900; font-size: 34px; }
+    .lr-num { position: absolute; font-family: var(--font-display); font-size: 44px; text-align: center; width: 280px; }
+    #lr-sum { position: absolute; left: 720px; top: 880px; display: flex; align-items: center; gap: 40px; }
+    #lr-sum .disp { font-size: 60px; }
+    #lr-sum .stamp { position: relative; font-size: 64px; padding: 0 24px; }
+    #lr-f { position: absolute; left: 1500px; top: 120px; font-size: 64px; }
+  </style>
+  <div id="root" data-composition-id="lowrank" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="lr-title" class="disp">The squeeze, in numbers</div>
+    <div id="lr-full"><div id="lr-fullw">W</div></div>
+    <div id="lr-fulll">full table: 400 × 400<b id="lr-cnt">0</b>dials</div>
+    <svg id="lr-pipe" viewBox="0 0 1920 1080">
+      <g id="lr-g1"><rect x="720" y="260" width="50" height="440" rx="8" fill="#f6e9cc" stroke="#221c16" stroke-width="5"/>
+        <polygon points="800,260 1080,425 1080,535 800,700" fill="#c39c69" stroke="#221c16" stroke-width="5"/></g>
+      <g id="lr-g2"><rect x="1100" y="425" width="50" height="110" rx="8" fill="#b52a1f" stroke="#221c16" stroke-width="5"/></g>
+      <g id="lr-g3"><polygon points="1180,425 1460,260 1460,700 1180,535" fill="#c39c69" stroke="#221c16" stroke-width="5"/>
+        <rect x="1490" y="260" width="50" height="440" rx="8" fill="#f6e9cc" stroke="#221c16" stroke-width="5"/></g>
+    </svg>
+    <div class="lr-cap" id="lr-c1" style="left:660px;width:440px">Vᵀ: Maya's 400 numbers<br/>→ 100 theme scores</div>
+    <div class="lr-cap" id="lr-c2" style="left:1150px;width:440px">U: theme scores<br/>→ 400 messages</div>
+    <div class="lr-num" id="lr-n1" style="left:800px;top:445px">40,000</div>
+    <div class="lr-num" id="lr-n2" style="left:1180px;top:445px">40,000</div>
+    <div id="lr-sum"><div class="disp">80,000 dials</div><div class="stamp" id="lr-half">½</div></div>
+    <div id="lr-f" class="eq">W ≈ U · Vᵀ</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#lr-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#lr-full", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }, 3.0);
+    tl.fromTo("#lr-fulll", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.0);
+    const c = { v: 0 };
+    tl.fromTo(c, { v: 0 }, { v: 160000, duration: 1.6, ease: "power2.out",
+      onUpdate: () => { document.getElementById("lr-cnt").textContent = (Math.round(c.v / 1000) * 1000).toLocaleString("en-US"); } }, 8.4);
+    // score on themes, then back out
+    tl.to(["#lr-full", "#lr-fulll"], { opacity: 0.35, duration: 0.4 }, 12.3);
+    tl.fromTo("#lr-g1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 12.6);
+    tl.fromTo("#lr-c1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 13.4);
+    tl.fromTo("#lr-g2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.4);
+    tl.fromTo("#lr-g3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 15.8);
+    tl.fromTo("#lr-c2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 16.3);
+    // two thin tables
+    tl.fromTo(["#lr-n1", "#lr-n2"], { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)", stagger: 0.4 }, 19.2);
+    tl.fromTo("#lr-sum .disp", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 21.4);
+    tl.fromTo("#lr-half", { opacity: 0, scale: 1.6, rotation: -6 }, { opacity: 1, duration: 0.01 }, 21.9);
+    tl.to("#lr-half", { scale: 1, duration: 0.14, ease: "power4.out" }, 21.91);
+    tl.fromTo("#lr-f", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 22.6);
+    window.__timelines["lowrank"] = tl;
+  </script>
+</template>
