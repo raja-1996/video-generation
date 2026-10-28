@@ -1,0 +1,51 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #cz-window { position: absolute; left: 110px; top: 110px; width: 900px; height: 860px; border: 18px solid #2b3a5c; border-radius: 6px;
+      background: linear-gradient(180deg, #5b79a8 0%, #a9b6c9 55%, #f4d9a0 100%); }
+    #cz-line1 { position: absolute; left: 170px; top: 200px; width: 780px; color: #fbf6ec; font-size: 84px; }
+    #cz-line2 { position: absolute; left: 175px; top: 560px; width: 780px; color: #fbf6ec; font-weight: 900; font-size: 42px; line-height: 1.3; }
+    #cz-line2 span { display: block; color: #f2c46d; font-weight: 800; font-size: 34px; margin-top: 10px; }
+    #cz-shade { position: absolute; left: 128px; top: 128px; width: 864px; height: 824px; background: rgba(22,35,63,0.72); }
+    #cz-phone { position: absolute; left: 1210px; top: 90px; width: 470px; height: 900px; background: #0b0f1a; border-radius: 64px; padding: 22px; }
+    #cz-screen { position: relative; width: 100%; height: 100%; border-radius: 46px; overflow: hidden; background: var(--screen); }
+    #cz-search { position: absolute; left: 24px; right: 24px; top: 70px; height: 84px; border-radius: 42px; background: #ece2cc; border: 3px solid #d9c9a6;
+      display: flex; align-items: center; padding-left: 30px; font-weight: 800; font-size: 30px; }
+    #cz-top { position: absolute; left: 24px; right: 24px; top: 180px; height: 420px; border-radius: 20px; background: #9fc3d6; overflow: hidden; border: 4px solid var(--ink); }
+    #cz-top .rail { position: absolute; left: 0; right: 0; top: 230px; height: 14px; background: #5a3a1c; }
+    #cz-top .box { position: absolute; left: 80px; top: 246px; width: 250px; height: 70px; background: #a86a3a; border: 4px solid var(--ink); border-radius: 6px; }
+    #cz-top .leaf { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: #5e8c4a; border: 4px solid var(--ink); }
+    #cz-top .cap { position: absolute; left: 20px; bottom: 16px; font-family: var(--font-display); font-size: 34px; color: var(--ink); }
+    .cz-small { position: absolute; top: 620px; width: 190px; height: 220px; border-radius: 20px; }
+    #cz-saved { left: 1300px; top: 520px; font-size: 64px; color: var(--red); background: var(--screen); }
+  </style>
+  <div id="root" data-composition-id="close" data-width="1920" data-height="1080">
+    <div class="nightbg"></div>
+    <div id="cz-window"></div>
+    <div id="cz-shade"></div>
+    <div id="cz-line1" class="disp" data-hold>Two clerks who never meet, and a guestbook.</div>
+    <div id="cz-line2" data-hold>InteractRank now ranks Pinterest search, worldwide.<span>Billions of searches a day.</span></div>
+    <div id="cz-phone"><div id="cz-screen">
+      <div id="cz-search">small balcony garden</div>
+      <div id="cz-top"><div class="rail"></div><div class="box"></div>
+        <div class="leaf" style="left:95px;top:200px"></div><div class="leaf" style="left:150px;top:185px"></div><div class="leaf" style="left:205px;top:198px"></div><div class="leaf" style="left:260px;top:182px"></div>
+        <div class="cap">Herb box</div></div>
+      <div class="cz-small" style="left:24px;background:#e07a5f"></div>
+      <div class="cz-small" style="left:232px;background:#f2cc8f"></div>
+    </div></div>
+    <div class="stamp" id="cz-saved">SAVED</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#cz-phone", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 0.3);
+    tl.fromTo("#cz-top", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 1.4);
+    tl.fromTo(".cz-small", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)", stagger: 0.12 }, 1.7);
+    tl.set("#cz-saved", { opacity: 0 }, 0);
+    tl.set("#cz-saved", { opacity: 1, scale: 1.5, rotation: -6 }, 3.6);
+    tl.to("#cz-saved", { scale: 1, duration: 0.14, ease: "power2.out" }, 3.6);
+    tl.fromTo("#cz-shade", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 4.3);
+    tl.fromTo("#cz-line1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 4.8);
+    tl.fromTo("#cz-line2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 9.8);
+    window.__timelines["close"] = tl;
+  </script>
+</template>

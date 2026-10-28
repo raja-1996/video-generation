@@ -1,0 +1,38 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #le-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    .le-row { position: absolute; left: 110px; display: flex; align-items: center; gap: 28px; font-weight: 900; font-size: 40px; }
+    .le-q { padding: 16px 26px; background: var(--tag); border: 4px solid var(--ink); border-radius: 30px; }
+    .le-pin { padding: 16px 26px; background: var(--tag); border: 4px solid var(--ink); border-radius: 12px; }
+    .le-v { width: 100px; height: 100px; border-radius: 50%; border: 6px solid var(--ink); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 52px; background: var(--tag); }
+    .le-v.yes { background: var(--lamp); }
+    .le-t { font-weight: 800; font-size: 34px; color: #3d3024; }
+    #le-r1 { top: 230px; } #le-r2 { top: 370px; } #le-r3 { top: 610px; } #le-r4 { top: 750px; }
+    #le-h2 { position: absolute; left: 110px; top: 530px; font-weight: 900; font-size: 36px; color: var(--red); }
+    .le-x { color: var(--red); border-color: var(--red); }
+    #le-foot { position: absolute; left: 110px; top: 960px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="learn" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="le-title" class="disp">How it learns</div>
+    <div class="le-row" id="le-r1"><div class="le-q">small balcony garden</div><div class="le-pin">herb box pin</div><div class="le-v yes">1</div><div class="le-t">saved</div></div>
+    <div class="le-row" id="le-r2"><div class="le-q">small balcony garden</div><div class="le-pin">patio heater pin</div><div class="le-v">0</div><div class="le-t">shown, skipped</div></div>
+    <div id="le-h2">borrowed from other searches in the same batch:</div>
+    <div class="le-row" id="le-r3"><div class="le-q">small balcony garden</div><div class="le-pin">car repair pin</div><div class="le-v le-x">✕</div><div class="le-t">obviously wrong</div></div>
+    <div class="le-row" id="le-r4" data-hold><div class="le-q">small balcony garden</div><div class="le-pin">cake recipe pin</div><div class="le-v le-x">✕</div><div class="le-t">obviously wrong</div></div>
+    <div id="le-foot">Example pairs. Loss weights: yes/no 1.0, wrong answers 0.01 (paper §2.4, §3.2.2).</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#le-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.4);
+    tl.fromTo("#le-r1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 1.4);
+    tl.fromTo("#le-r2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 3.2);
+    tl.fromTo("#le-h2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.0);
+    tl.fromTo("#le-r3", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 7.0);
+    tl.fromTo("#le-r4", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 8.4);
+    tl.fromTo("#le-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.4);
+    window.__timelines["learn"] = tl;
+  </script>
+</template>

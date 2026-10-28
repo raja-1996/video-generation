@@ -1,0 +1,59 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #cl-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    #cl-wall { position: absolute; left: 930px; top: 230px; width: 60px; height: 640px; background: #7a4e25; border: 5px solid var(--ink); border-radius: 6px; }
+    .cl-desk { position: absolute; top: 700px; width: 600px; height: 40px; background: #5a3a1c; border: 5px solid var(--ink); border-radius: 6px; }
+    #cl-d1 { left: 220px; } #cl-d2 { left: 1100px; }
+    .cl-clerk { position: absolute; top: 470px; width: 150px; height: 230px; }
+    .cl-clerk .h { position: absolute; left: 35px; top: 0; width: 80px; height: 80px; border-radius: 50%; background: var(--tag); border: 5px solid var(--ink); }
+    .cl-clerk .b { position: absolute; left: 0; top: 90px; width: 150px; height: 140px; border-radius: 70px 70px 0 0; background: var(--ink); }
+    #cl-c1 { left: 240px; } #cl-c2 { left: 1560px; }
+    .cl-name { position: absolute; top: 770px; font-weight: 900; font-size: 40px; }
+    .cl-name span { display: block; font-weight: 700; font-size: 32px; color: #5c4a35; }
+    #cl-n1 { left: 220px; } #cl-n2 { left: 1100px; }
+    .cl-card { position: absolute; width: 340px; height: 200px; background: var(--tag); border: 4px solid var(--ink); border-radius: 10px; padding: 18px 22px;
+      font-weight: 800; font-size: 30px; line-height: 1.25; }
+    .cl-card .k { font-family: var(--font-display); font-size: 34px; display: block; margin-bottom: 6px; }
+    #cl-qc { left: 450px; top: 450px; }
+    .cl-pc { left: 1140px; top: 450px; }
+    #cl-pile { position: absolute; left: 1140px; top: 450px; }
+    #cl-adv { position: absolute; left: 1500px; top: 380px; padding: 8px 20px; background: var(--lamp); border: 4px solid var(--ink); border-radius: 10px; font-weight: 900; font-size: 32px; }
+    #cl-match { position: absolute; left: 460px; top: 160px; width: 1000px; white-space: nowrap; text-align: center; font-family: var(--font-display); font-size: 64px; color: var(--red); }
+  </style>
+  <div id="root" data-composition-id="clerks" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="cl-title" class="disp">Two towers = two clerks</div>
+    <div class="cl-desk" id="cl-d1"></div><div class="cl-desk" id="cl-d2"></div>
+    <div class="cl-clerk" id="cl-c1"><div class="h"></div><div class="b"></div></div>
+    <div class="cl-clerk" id="cl-c2"><div class="h"></div><div class="b"></div></div>
+    <div id="cl-wall"></div>
+    <div class="cl-name" id="cl-n1">query tower<span>writes Priya's card now</span></div>
+    <div class="cl-name" id="cl-n2">item tower<span>wrote every pin's card earlier</span></div>
+    <div class="cl-card" id="cl-qc"><span class="k">PRIYA</span>"small balcony garden"<br>+ her history</div>
+    <div id="cl-pile">
+      <div class="cl-card" style="left:24px;top:-24px"></div>
+      <div class="cl-card" style="left:12px;top:-12px"></div>
+      <div class="cl-card" id="cl-pc"><span class="k">HERB BOX PIN</span>picture, title,<br>who saved it</div>
+    </div>
+    <div id="cl-adv">made in advance</div>
+    <div id="cl-match" data-hold>do they line up?</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#cl-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo([".cl-desk", ".cl-clerk"], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", stagger: 0.1 }, 2.4);
+    tl.fromTo("#cl-wall", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.6, ease: "expo.out" }, 3.6);
+    tl.fromTo("#cl-n1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.4);
+    tl.fromTo("#cl-qc", { opacity: 0, y: -40, rotation: 0 }, { opacity: 1, y: 0, rotation: -3, duration: 0.6, ease: "back.out(1.4)" }, 5.8);
+    tl.fromTo("#cl-n2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.6);
+    tl.fromTo("#cl-pile .cl-card", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.4)", stagger: 0.15 }, 9.0);
+    // both cards slide toward the wall: the score is how they line up
+    tl.fromTo("#cl-adv", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 11.2);
+    tl.to("#cl-adv", { opacity: 0, duration: 0.2 }, 12.9);
+    tl.to("#cl-qc", { x: 120, y: -150, rotation: 0, duration: 0.8, ease: "power2.inOut" }, 13.0);
+    tl.to("#cl-pile", { x: -110, y: -150, duration: 0.8, ease: "power2.inOut" }, 13.0);
+    tl.fromTo("#cl-match", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.0);
+    window.__timelines["clerks"] = tl;
+  </script>
+</template>

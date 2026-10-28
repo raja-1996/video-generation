@@ -1,0 +1,323 @@
+{
+ "total": 261.575,
+ "scenes": [
+  {
+   "id": "morning",
+   "start": 0.0,
+   "dur": 10.595,
+   "lines": [
+    {
+     "text": "It's seven forty in the morning, and Priya types: small balcony garden.",
+     "start": 0.45,
+     "dur": 4.8
+    },
+    {
+     "text": "Billions of pins exist. A few dozen will reach her screen.",
+     "start": 5.57,
+     "dur": 4.275
+    }
+   ]
+  },
+  {
+   "id": "funnel",
+   "start": 10.595,
+   "dur": 17.56,
+   "lines": [
+    {
+     "text": "Search works like a funnel. Retrieval grabs about a hundred thousand pins.",
+     "start": 0.45,
+     "dur": 4.975
+    },
+    {
+     "text": "Pre-ranking has milliseconds to cut them to about a thousand.",
+     "start": 5.745,
+     "dur": 4.125
+    },
+    {
+     "text": "Heavy ranking models pick the last hundred.",
+     "start": 10.19,
+     "dur": 2.925
+    },
+    {
+     "text": "This Pinterest paper is about that middle step.",
+     "start": 13.435,
+     "dur": 3.375
+    }
+   ]
+  },
+  {
+   "id": "clerks",
+   "start": 28.155,
+   "dur": 16.335,
+   "lines": [
+    {
+     "text": "The usual tool is a two tower model: two clerks who never talk.",
+     "start": 0.45,
+     "dur": 4.3
+    },
+    {
+     "text": "One writes a card about Priya and her search.",
+     "start": 5.07,
+     "dur": 2.9
+    },
+    {
+     "text": "The other has already written a card for every pin, ahead of time.",
+     "start": 8.29,
+     "dur": 4.15
+    },
+    {
+     "text": "The score is how well the two cards line up.",
+     "start": 12.76,
+     "dur": 2.825
+    }
+   ]
+  },
+  {
+   "id": "dot",
+   "start": 44.49,
+   "dur": 23.66,
+   "lines": [
+    {
+     "text": "Lining up means a dot product: multiply matching entries, then add.",
+     "start": 0.45,
+     "dur": 4.75
+    },
+    {
+     "text": "Say Priya's card reads point eight, point one, point five. A herb box pin reads point nine, zero, point four.",
+     "start": 5.52,
+     "dur": 7.35
+    },
+    {
+     "text": "Point seven two, plus zero, plus point two: a match of point nine two.",
+     "start": 13.19,
+     "dur": 4.875
+    },
+    {
+     "text": "Real cards hold sixty four numbers. The sum works the same way.",
+     "start": 18.385,
+     "dur": 4.525
+    }
+   ]
+  },
+  {
+   "id": "blind",
+   "start": 68.15,
+   "dur": 13.07,
+   "lines": [
+    {
+     "text": "It's fast, because every pin's card is ready before she searches.",
+     "start": 0.45,
+     "dur": 4.3
+    },
+    {
+     "text": "But the clerks never meet. Neither can know that people who typed these exact words kept saving this exact pin.",
+     "start": 5.07,
+     "dur": 7.25
+    }
+   ]
+  },
+  {
+   "id": "guestbook",
+   "start": 81.22,
+   "dur": 24.36,
+   "lines": [
+    {
+     "text": "So InteractRank pastes a guestbook on the back of each pin.",
+     "start": 0.45,
+     "dur": 3.7
+    },
+    {
+     "text": "For each past search, it counts how often people engaged with this pin.",
+     "start": 4.47,
+     "dur": 4.45
+    },
+    {
+     "text": "In symbols: engagements with this pin for this search, divided by how often the search was made.",
+     "start": 9.24,
+     "dur": 6.125
+    },
+    {
+     "text": "Say balcony garden was searched a thousand times, and this pin was saved or opened on a hundred and twenty. Point one two.",
+     "start": 15.685,
+     "dur": 7.925
+    }
+   ]
+  },
+  {
+   "id": "windows",
+   "start": 105.58,
+   "dur": 15.12,
+   "lines": [
+    {
+     "text": "Counts are kept over seven days, ninety days, one year, and two years, and can be split by groups like country.",
+     "start": 0.45,
+     "dur": 7.425
+    },
+    {
+     "text": "Each pin keeps only its most engaging searches, and new days are simply added to the old counts.",
+     "start": 8.195,
+     "dur": 6.175
+    }
+   ]
+  },
+  {
+   "id": "score",
+   "start": 120.7,
+   "dur": 29.68,
+   "lines": [
+    {
+     "text": "The final score blends the clerks and the guestbook.",
+     "start": 0.45,
+     "dur": 3.1
+    },
+    {
+     "text": "A learned weight on the card match, plus a learned weight on each guestbook line.",
+     "start": 3.87,
+     "dur": 4.75
+    },
+    {
+     "text": "With example weights: one times point nine two, plus three times point one two. One point two eight.",
+     "start": 8.94,
+     "dur": 6.75
+    },
+    {
+     "text": "Another pin matches the cards better, at one point oh, but nobody saved it for this search. It stays at one point oh, below.",
+     "start": 16.01,
+     "dur": 8.1
+    },
+    {
+     "text": "The guestbook is looked up, not computed, so this adds almost no work.",
+     "start": 24.43,
+     "dur": 4.5
+    }
+   ]
+  },
+  {
+   "id": "history",
+   "start": 150.38,
+   "dur": 25.285,
+   "lines": [
+    {
+     "text": "Priya's card also reads her last hundred actions across Pinterest, updated in real time.",
+     "start": 0.45,
+     "dur": 6.2
+    },
+    {
+     "text": "One summary is a learned weighted average. A second lets the search decide what matters.",
+     "start": 6.97,
+     "dur": 6.075
+    },
+    {
+     "text": "Rate three past saves for garden: point nine, point six, and zero.",
+     "start": 13.365,
+     "dur": 4.525
+    },
+    {
+     "text": "With search weights of point six, point three, and point one, her garden interest is point seven two.",
+     "start": 18.21,
+     "dur": 6.325
+    }
+   ]
+  },
+  {
+   "id": "learn",
+   "start": 175.665,
+   "dur": 12.87,
+   "lines": [
+    {
+     "text": "It learns from past searches: was this pin saved, or opened for a long look?",
+     "start": 0.45,
+     "dur": 4.95
+    },
+    {
+     "text": "Pins borrowed from other searches serve as obvious wrong answers, so it also learns what doesn't fit.",
+     "start": 5.72,
+     "dur": 6.4
+    }
+   ]
+  },
+  {
+   "id": "cost",
+   "start": 188.535,
+   "dur": 16.42,
+   "lines": [
+    {
+     "text": "Offline, it put the right pin in the top three two point nine percent more often than plain two towers.",
+     "start": 0.45,
+     "dur": 6.35
+    },
+    {
+     "text": "A heavier rival, IntTower, gained less, using over three thousand operations. InteractRank uses one hundred forty two.",
+     "start": 7.12,
+     "dur": 8.55
+    }
+   ]
+  },
+  {
+   "id": "abtest",
+   "start": 204.955,
+   "dur": 21.715,
+   "lines": [
+    {
+     "text": "Then a week-long test with ten million users, against the old word-matching ranker, BM25.",
+     "start": 0.45,
+     "dur": 6.875
+    },
+    {
+     "text": "Sessions where people found what they wanted: two towers alone, up two point seven percent. Guestbooks alone, three point six.",
+     "start": 7.645,
+     "dur": 8.275
+    },
+    {
+     "text": "Together, six point five. That's three point seven over two towers.",
+     "start": 16.24,
+     "dur": 4.725
+    }
+   ]
+  },
+  {
+   "id": "segments",
+   "start": 226.67,
+   "dur": 19.14,
+   "lines": [
+    {
+     "text": "Guestbooks shine on popular searches: plus five point nine percent on their own.",
+     "start": 0.45,
+     "dur": 4.975
+    },
+    {
+     "text": "On searches almost nobody repeats, the guestbook is nearly empty, and alone it does no better than the old ranker.",
+     "start": 5.745,
+     "dur": 7.775
+    },
+    {
+     "text": "With the towers beside it, InteractRank beats both, in every group.",
+     "start": 13.84,
+     "dur": 4.55
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "start": 245.81,
+   "dur": 15.765,
+   "lines": [
+    {
+     "text": "Back in Priya's kitchen, the herb box is near the top.",
+     "start": 0.45,
+     "dur": 3.75
+    },
+    {
+     "text": "Two clerks who never meet, and a guestbook of what people actually saved.",
+     "start": 4.52,
+     "dur": 4.7
+    },
+    {
+     "text": "InteractRank now runs Pinterest search worldwide, billions of searches a day.",
+     "start": 9.54,
+     "dur": 5.475
+    }
+   ]
+  }
+ ]
+}

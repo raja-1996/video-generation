@@ -1,0 +1,51 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #fu-title { position: absolute; left: 110px; top: 60px; font-size: 80px; }
+    .fu-stage { position: absolute; top: 300px; height: 420px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: var(--tag); border: 5px solid var(--ink); border-radius: 18px; }
+    .fu-stage .disp { font-size: 62px; }
+    .fu-stage .lbl { font-size: 36px; margin-top: 10px; color: #3d3024; }
+    #fu-s1 { left: 110px; width: 520px; }
+    #fu-s2 { left: 700px; width: 480px; top: 350px; height: 320px; }
+    #fu-s3 { left: 1250px; width: 400px; top: 410px; height: 200px; }
+    .fu-arrow { position: absolute; top: 485px; font-family: var(--font-display); font-size: 60px; }
+    #fu-a1 { left: 640px; } #fu-a2 { left: 1190px; }
+    #fu-watch { position: absolute; left: 860px; top: 210px; width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--ink); background: var(--tag); }
+    #fu-watch::before { content: ""; position: absolute; left: 50%; top: -30px; width: 30px; height: 22px; margin-left: -15px; background: var(--ink); border-radius: 4px; }
+    #fu-hand { position: absolute; left: 62px; top: 14px; width: 8px; height: 56px; background: var(--red); border-radius: 4px; transform-origin: 50% 100%; }
+    #fu-ms { position: absolute; left: 1020px; top: 240px; font-weight: 900; font-size: 40px; color: var(--red); }
+    #fu-ring { position: absolute; left: 680px; top: 330px; width: 520px; height: 360px; border: 8px solid var(--red); border-radius: 26px; }
+    #fu-stamp { left: 700px; top: 760px; font-size: 60px; }
+    #fu-foot { position: absolute; left: 110px; top: 990px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="funnel" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="fu-title" class="disp">The search funnel</div>
+    <div class="fu-stage" id="fu-s1"><div class="disp">~100,000</div><div class="lbl">retrieval</div></div>
+    <div class="fu-arrow" id="fu-a1">›</div>
+    <div class="fu-stage" id="fu-s2"><div class="disp">~1,000</div><div class="lbl">pre-ranking</div></div>
+    <div class="fu-arrow" id="fu-a2">›</div>
+    <div class="fu-stage" id="fu-s3"><div class="disp">~100</div><div class="lbl">ranking</div></div>
+    <div id="fu-watch"><div id="fu-hand"></div></div>
+    <div id="fu-ms">milliseconds</div>
+    <div id="fu-ring"></div>
+    <div class="stamp" id="fu-stamp" data-hold>THIS PAPER</div>
+    <div id="fu-foot">Pins per search at each stage, from billions in the corpus. Source: InteractRank paper, Figure 1.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#fu-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#fu-s1", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, 3.2);
+    tl.fromTo("#fu-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.0);
+    tl.fromTo(["#fu-a1", "#fu-s2"], { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)", stagger: 0.15 }, 6.6);
+    tl.fromTo(["#fu-watch", "#fu-ms"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.2);
+    tl.fromTo("#fu-hand", { rotation: 0 }, { rotation: 300, duration: 2.6, ease: "none" }, 7.4);
+    tl.fromTo(["#fu-a2", "#fu-s3"], { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)", stagger: 0.15 }, 10.8);
+    tl.fromTo("#fu-ring", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.4, ease: "expo.out" }, 14.0);
+    tl.set("#fu-stamp", { opacity: 1, scale: 1.5, rotation: -4 }, 14.6);
+    tl.to("#fu-stamp", { scale: 1, duration: 0.14, ease: "power2.out" }, 14.6);
+    tl.set("#fu-stamp", { opacity: 0 }, 0);
+    window.__timelines["funnel"] = tl;
+  </script>
+</template>

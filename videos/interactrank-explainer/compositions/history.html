@@ -1,0 +1,69 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #hi-title { position: absolute; left: 110px; top: 50px; font-size: 70px; }
+    #hi-strip { position: absolute; left: 110px; top: 160px; width: 1700px; height: 80px; display: flex; gap: 4px; flex-wrap: nowrap; overflow: hidden; }
+    .hi-sq { flex: 0 0 13px; height: 80px; border-radius: 3px; }
+    #hi-sl { position: absolute; left: 110px; top: 250px; font-weight: 900; font-size: 32px; color: #3d3024; }
+    #hi-e1 { position: absolute; left: 110px; top: 320px; font-size: 56px; }
+    #hi-e2 { position: absolute; left: 980px; top: 320px; font-size: 56px; }
+    #hi-e1 .w, #hi-e2 .w { font-size: 28px; }
+    .hi-col { position: absolute; top: 560px; width: 380px; }
+    .hi-col .tl { height: 120px; border-radius: 12px; border: 4px solid var(--ink); display: flex; align-items: flex-end; padding: 10px 16px;
+      font-weight: 900; font-size: 32px; color: var(--ink); background: var(--tag); }
+    .hi-col .v { font-family: var(--font-display); font-size: 50px; margin-top: 12px; }
+    .hi-col .b { font-family: var(--font-display); font-size: 50px; margin-top: 8px; color: var(--red); }
+    .hi-col .p { font-family: var(--font-display); font-size: 50px; margin-top: 8px; border-top: 4px solid var(--ink); padding-top: 6px; }
+    .hi-rl { position: absolute; left: 1350px; font-weight: 800; font-size: 30px; color: #5c4a35; }
+    #hi-sum { position: absolute; left: 1350px; top: 880px; font-family: var(--font-display); font-size: 80px; color: var(--red); }
+    #hi-note { position: absolute; left: 110px; top: 1000px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="history" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="hi-title" class="disp">Her last 100 actions</div>
+    <div id="hi-strip"></div>
+    <div id="hi-sl">saves, long clicks, shares, anywhere on Pinterest · updated in real time</div>
+    <div id="hi-e1" class="eq"><span class="t" id="hi-a0">u = Σ</span><span class="t" id="hi-a1">αᵢ<span class="u"></span><span class="w">learned weight</span></span><span class="t" id="hi-a2">eᵢ<span class="u"></span><span class="w" style="margin-top:72px">one past action</span></span></div>
+    <div id="hi-e2" class="eq"><span class="t" id="hi-b0">u(q) = Σ</span><span class="t red" id="hi-b1">βᵢ(q)<span class="u"></span><span class="w">weight set by the search</span></span><span class="t" id="hi-b2">eᵢ</span></div>
+    <div class="hi-col" id="hi-c1" style="left:110px"><div class="tl" style="background:#9cc58a">Tomato seedlings</div><div class="v">0.9</div><div class="b">× 0.6</div><div class="p">0.54</div></div>
+    <div class="hi-col" id="hi-c2" style="left:520px"><div class="tl" style="background:#e6c48e">Balcony chair</div><div class="v">0.6</div><div class="b">× 0.3</div><div class="p">0.18</div></div>
+    <div class="hi-col" id="hi-c3" style="left:930px"><div class="tl" style="background:#e3b3bd">Wedding shoes</div><div class="v">0</div><div class="b">× 0.1</div><div class="p">0</div></div>
+    <div class="hi-rl" id="hi-l1" style="top:710px">garden score</div>
+    <div class="hi-rl" id="hi-l2" style="top:780px;color:var(--red)">search weight β</div>
+    <div id="hi-sum" data-hold>= 0.72</div>
+    <div id="hi-note">Example scores and weights. Real actions are embeddings, not single numbers. Paper, section 2.2.1, equations 1 and 2.</div>
+  </div>
+  <script>
+    (function () {
+      const hues = ["#81b29a", "#e07a5f", "#f2cc8f", "#3d5a80", "#6d8f5a", "#b5838d", "#98c1d9", "#c8553d"];
+      const strip = document.getElementById("hi-strip");
+      for (let i = 0; i < 101; i++) {
+        const d = document.createElement("div"); d.className = "hi-sq"; d.style.background = hues[(i * 5) % hues.length];
+        strip.appendChild(d);
+      }
+      strip.firstChild.style.background = "#5e8c4a"; strip.firstChild.id = "hi-new";
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#hi-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.4);
+    tl.fromTo("#hi-strip .hi-sq", { opacity: 0, scaleY: 0.2 }, { opacity: 1, scaleY: 1, duration: 0.3, ease: "expo.out", stagger: 0.015 }, 1.6);
+    tl.fromTo("#hi-sl", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.0);
+    // a new action arrives at the front in real time
+    tl.fromTo("#hi-strip", { x: -17 }, { x: 0, duration: 0.5, ease: "power2.inOut" }, 5.2);
+    tl.set(["#hi-e1 .u", "#hi-e1 .w", "#hi-e2 .u", "#hi-e2 .w"], { opacity: 0 }, 0);
+    tl.fromTo(["#hi-a0", "#hi-a1", "#hi-a2"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.25 }, 7.4);
+    tl.to(["#hi-a1 .u", "#hi-a1 .w", "#hi-a2 .u", "#hi-a2 .w"], { opacity: 1, duration: 0.2 }, 8.4);
+    tl.fromTo(["#hi-b0", "#hi-b1", "#hi-b2"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.25 }, 10.6);
+    tl.to(["#hi-b1 .u", "#hi-b1 .w"], { opacity: 1, duration: 0.2 }, 11.4);
+    // worked
+    tl.set(".hi-col .b, .hi-col .p", { opacity: 0 }, 0);
+    tl.fromTo(".hi-col .tl", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.3 }, 13.6);
+    tl.fromTo("#hi-l1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.6);
+    tl.fromTo(".hi-col .v", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.9 }, 15.0);
+    tl.fromTo("#hi-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 15.4);
+    tl.to(".hi-col .b", { opacity: 1, duration: 0.3, stagger: 0.8 }, 19.3);
+    tl.fromTo("#hi-l2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 19.3);
+    tl.to(".hi-col .p", { opacity: 1, duration: 0.3, stagger: 0.25 }, 22.0);
+    tl.fromTo("#hi-sum", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 23.4);
+    window.__timelines["history"] = tl;
+  </script>
+</template>

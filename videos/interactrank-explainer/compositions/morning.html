@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #mo-window { position: absolute; left: 110px; top: 110px; width: 900px; height: 860px; border: 18px solid #2b3a5c;
+      border-radius: 6px; overflow: hidden; background: linear-gradient(180deg, #2a3d66 0%, #6a6f8f 55%, #f2c46d 100%); }
+    .mo-roof { position: absolute; bottom: 0; background: #1a2440; }
+    #mo-sun { position: absolute; left: 560px; top: 640px; width: 150px; height: 150px; border-radius: 50%; background: #f7d27e; }
+    #mo-sill { position: absolute; left: 92px; top: 960px; width: 936px; height: 34px; background: #2b3a5c; border-radius: 4px; }
+    #mo-mullion-v { position: absolute; left: 541px; top: 110px; width: 18px; height: 860px; background: #2b3a5c; }
+    #mo-mullion-h { position: absolute; left: 110px; top: 470px; width: 900px; height: 18px; background: #2b3a5c; }
+    #mo-time { position: absolute; left: 160px; top: 160px; color: #fbf6ec; font-size: 112px; }
+    #mo-who { position: absolute; left: 166px; top: 290px; color: #f2c46d; font-size: 46px; font-weight: 800; }
+    #mo-big { position: absolute; left: 160px; top: 560px; color: #fbf6ec; }
+    #mo-big .disp { font-size: 118px; }
+    #mo-big .lbl { color: #fbf6ec; font-size: 44px; margin-top: 6px; }
+    #mo-phone { position: absolute; left: 1210px; top: 90px; width: 470px; height: 900px; background: #0b0f1a; border-radius: 64px; padding: 22px; }
+    #mo-screen { position: relative; width: 100%; height: 100%; border-radius: 46px; overflow: hidden; background: var(--screen); }
+    #mo-search { position: absolute; left: 24px; right: 24px; top: 70px; height: 84px; border-radius: 42px; background: #ece2cc;
+      border: 3px solid #d9c9a6; display: flex; align-items: center; padding-left: 30px; font-weight: 800; font-size: 30px; color: var(--ink); }
+    #mo-caret { display: inline-block; width: 3px; height: 34px; background: var(--ink); margin-left: 3px; }
+    #mo-feed { position: absolute; left: 24px; right: 24px; top: 190px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .mo-pin { border-radius: 20px; }
+    #mo-few { position: absolute; left: 1220px; top: 1000px; width: 450px; text-align: center; color: #f2c46d; font-weight: 800; font-size: 32px; }
+  </style>
+  <div id="root" data-composition-id="morning" data-width="1920" data-height="1080">
+    <div class="nightbg"></div>
+    <div id="mo-window"><div id="mo-sun"></div><div id="mo-city"></div></div>
+    <div id="mo-mullion-v"></div><div id="mo-mullion-h"></div><div id="mo-sill"></div>
+    <div id="mo-time" class="disp">7:40 am</div>
+    <div id="mo-who">Priya, before work</div>
+    <div id="mo-big"><div class="disp">Billions</div><div class="lbl">of pins on Pinterest</div></div>
+    <div id="mo-phone"><div id="mo-screen">
+      <div id="mo-search"><span id="mo-q"></span><span id="mo-caret"></span></div>
+      <div id="mo-feed">
+        <div class="mo-pin" style="height:230px;background:#81b29a"></div>
+        <div class="mo-pin" style="height:300px;background:#e07a5f"></div>
+        <div class="mo-pin" style="height:280px;background:#f2cc8f"></div>
+        <div class="mo-pin" style="height:200px;background:#3d5a80;margin-top:-70px"></div>
+        <div class="mo-pin" style="height:240px;background:#6d8f5a"></div>
+        <div class="mo-pin" style="height:240px;background:#b5838d"></div>
+      </div>
+    </div></div>
+    <div id="mo-few">a few dozen reach her screen</div>
+  </div>
+  <script>
+    (function () {
+      let s = 7;
+      const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+      const city = document.getElementById("mo-city");
+      let x = -20;
+      while (x < 900) {
+        const w = 90 + Math.floor(rnd() * 120), h = 160 + Math.floor(rnd() * 300);
+        const b = document.createElement("div");
+        b.className = "mo-roof"; b.style.left = x + "px"; b.style.width = w + "px"; b.style.height = h + "px";
+        city.appendChild(b); x += w + 8;
+      }
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#mo-who", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.3);
+    tl.fromTo("#mo-phone", { y: 30 }, { y: 0, duration: 0.6, ease: "expo.out" }, 0.2);
+    const q = "small balcony garden", st = { n: 0 };
+    tl.fromTo(st, { n: 0 }, { n: q.length, duration: 1.6, ease: "none",
+      onUpdate: () => { document.getElementById("mo-q").textContent = q.slice(0, Math.round(st.n)); } }, 3.3);
+    tl.fromTo("#mo-caret", { opacity: 1 }, { opacity: 0, duration: 0.1 }, 5.2);
+    tl.to(["#mo-time", "#mo-who"], { opacity: 0, duration: 0.25, ease: "power3.in" }, 5.4);
+    tl.fromTo("#mo-big", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 5.7);
+    tl.fromTo("#mo-feed .mo-pin", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)", stagger: 0.12 }, 7.8);
+    tl.fromTo("#mo-few", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.4);
+    window.__timelines["morning"] = tl;
+  </script>
+</template>

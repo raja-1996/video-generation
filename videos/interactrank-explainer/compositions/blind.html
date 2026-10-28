@@ -1,0 +1,52 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #bl-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    #bl-pile { position: absolute; left: 1220px; top: 260px; }
+    .bl-card { position: absolute; width: 300px; height: 170px; background: var(--tag); border: 4px solid var(--ink); border-radius: 10px;
+      font-family: var(--font-display); font-size: 30px; padding: 14px 20px; }
+    #bl-ready { position: absolute; left: 1210px; top: 520px; width: 420px; padding: 12px 22px; background: var(--lamp); border: 4px solid var(--ink); border-radius: 10px;
+      font-weight: 900; font-size: 36px; text-align: center; }
+    #bl-fast { position: absolute; left: 110px; top: 250px; width: 900px; font-weight: 900; font-size: 44px; line-height: 1.3; }
+    #bl-fast span { color: #5c4a35; font-size: 34px; display: block; }
+    #bl-wall { position: absolute; left: 930px; top: 640px; width: 60px; height: 360px; background: #7a4e25; border: 5px solid var(--ink); border-radius: 6px; }
+    .bl-clerk { position: absolute; top: 760px; width: 120px; height: 190px; }
+    .bl-clerk .h { position: absolute; left: 28px; top: 0; width: 64px; height: 64px; border-radius: 50%; background: var(--tag); border: 5px solid var(--ink); }
+    .bl-clerk .b { position: absolute; left: 0; top: 72px; width: 120px; height: 118px; border-radius: 60px 60px 0 0; background: var(--ink); }
+    #bl-note { position: absolute; left: 390px; top: 400px; width: 1140px; padding: 26px 34px; border: 5px dashed var(--red); border-radius: 14px; background: rgba(246,233,204,0.6);
+      font-weight: 900; font-size: 42px; line-height: 1.3; }
+    #bl-note b { font-family: var(--font-display); font-weight: 400; color: var(--red); }
+    #bl-unseen { left: 1010px; top: 625px; font-size: 44px; white-space: nowrap; }
+  </style>
+  <div id="root" data-composition-id="blind" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="bl-title" class="disp">Fast, but blind</div>
+    <div id="bl-fast">Only Priya's card is written now.<span>The pins' cards are fetched, not computed.</span></div>
+    <div id="bl-pile">
+      <div class="bl-card" style="left:36px;top:-36px"></div>
+      <div class="bl-card" style="left:18px;top:-18px"></div>
+      <div class="bl-card">HERB BOX PIN</div>
+    </div>
+    <div id="bl-ready">ready before she searches</div>
+    <div class="bl-clerk" style="left:700px"><div class="h"></div><div class="b"></div></div>
+    <div class="bl-clerk" style="left:1100px"><div class="h"></div><div class="b"></div></div>
+    <div id="bl-wall"></div>
+    <div id="bl-note" data-hold>People who searched <b>"small balcony garden"</b><br>kept saving <b>this herb box pin</b>.</div>
+    <div class="stamp" id="bl-unseen">NEITHER CLERK SEES THIS</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#bl-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#bl-pile .bl-card", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.12 }, 1.2);
+    tl.fromTo("#bl-ready", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 2.6);
+    tl.fromTo("#bl-fast", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.2);
+    tl.to(["#bl-fast", "#bl-pile", "#bl-ready"], { opacity: 0, duration: 0.25, ease: "power3.in" }, 5.0);
+    tl.fromTo(".bl-clerk", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 5.3);
+    tl.fromTo("#bl-wall", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.5, ease: "expo.out" }, 5.6);
+    tl.fromTo("#bl-note", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 8.0);
+    tl.set("#bl-unseen", { opacity: 0 }, 0);
+    tl.set("#bl-unseen", { opacity: 1, scale: 1.5, rotation: -5 }, 10.6);
+    tl.to("#bl-unseen", { scale: 1, duration: 0.14, ease: "power2.out" }, 10.6);
+    window.__timelines["blind"] = tl;
+  </script>
+</template>

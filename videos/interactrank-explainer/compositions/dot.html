@@ -1,0 +1,51 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #do-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    .do-row { position: absolute; left: 110px; height: 120px; display: flex; align-items: center; }
+    .do-row .nm { width: 400px; font-weight: 900; font-size: 42px; }
+    .do-cell { width: 200px; height: 110px; margin-right: 40px; background: var(--tag); border: 4px solid var(--ink); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 58px; }
+    #do-r1 { top: 200px; } #do-r2 { top: 350px; } #do-r3 { top: 530px; }
+    #do-r3 .do-cell { background: transparent; border-style: dashed; }
+    .do-x { position: absolute; top: 478px; font-family: var(--font-display); font-size: 48px; width: 200px; text-align: center; }
+    #do-sum { position: absolute; left: 1290px; top: 530px; height: 120px; display: flex; align-items: center; font-family: var(--font-display); font-size: 92px; color: var(--red); }
+    #do-plus { position: absolute; left: 510px; top: 660px; width: 700px; text-align: center; font-weight: 900; font-size: 34px; color: #3d3024; }
+    #do-eq { position: absolute; left: 110px; top: 770px; font-size: 64px; }
+    #do-note { position: absolute; left: 1330px; top: 230px; width: 500px; font-weight: 800; font-size: 30px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="dot" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="do-title" class="disp">Lining up = a dot product</div>
+    <div class="do-row" id="do-r1"><div class="nm">Priya's card</div><div class="do-cell">0.8</div><div class="do-cell">0.1</div><div class="do-cell">0.5</div></div>
+    <div class="do-row" id="do-r2"><div class="nm">Herb box pin</div><div class="do-cell">0.9</div><div class="do-cell">0</div><div class="do-cell">0.4</div></div>
+    <div class="do-x" style="left:510px">×</div><div class="do-x" style="left:750px">×</div><div class="do-x" style="left:990px">×</div>
+    <div class="do-row" id="do-r3"><div class="nm">multiply</div><div class="do-cell" id="do-p1">0.72</div><div class="do-cell" id="do-p2">0</div><div class="do-cell" id="do-p3">0.20</div></div>
+    <div id="do-sum">= 0.92</div>
+    <div id="do-plus">add them up: 0.72 + 0 + 0.20</div>
+    <div id="do-note">Example values. Real cards hold 64 numbers each.</div>
+    <div id="do-eq" class="eq" data-hold>
+      <span class="t" id="do-e1">q<span class="u"></span><span class="w">Priya's card</span></span><span class="t" id="do-e2">·</span><span class="t" id="do-e3">p<span class="u"></span><span class="w" style="margin-top:72px">the pin's card</span></span><span class="t" id="do-e4">= q₁p₁ + q₂p₂ + … + q₆₄p₆₄<span class="u"></span><span class="w">multiply matching entries, then add all 64</span></span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#do-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#do-r1 .nm", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.6);
+    tl.fromTo("#do-r1 .do-cell", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.5 }, 6.3);
+    tl.fromTo("#do-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.6);
+    tl.fromTo("#do-r2 .nm", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 9.3);
+    tl.fromTo("#do-r2 .do-cell", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)", stagger: 0.5 }, 10.1);
+    tl.fromTo([".do-x", "#do-r3 .nm"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 13.2);
+    tl.fromTo("#do-p1", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 13.6);
+    tl.fromTo("#do-p2", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 14.8);
+    tl.fromTo("#do-p3", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 15.6);
+    tl.fromTo("#do-plus", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 15.9);
+    tl.fromTo("#do-sum", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 16.9);
+    tl.set(["#do-eq .u", "#do-eq .w"], { opacity: 0 }, 0);
+    tl.fromTo(["#do-e1", "#do-e2", "#do-e3", "#do-e4"], { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.3 }, 18.6);
+    tl.to(["#do-e1 .u", "#do-e1 .w", "#do-e3 .u", "#do-e3 .w"], { opacity: 1, duration: 0.2 }, 19.4);
+    tl.to(["#do-e4 .u", "#do-e4 .w"], { opacity: 1, duration: 0.2 }, 20.6);
+    window.__timelines["dot"] = tl;
+  </script>
+</template>

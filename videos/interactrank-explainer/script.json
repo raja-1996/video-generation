@@ -1,0 +1,120 @@
+{
+ "voice": "af_heart",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "morning",
+   "lines": [
+    "It's seven forty in the morning, and Priya types: small balcony garden.",
+    "Billions of pins exist. A few dozen will reach her screen."
+   ]
+  },
+  {
+   "id": "funnel",
+   "lines": [
+    "Search works like a funnel. Retrieval grabs about a hundred thousand pins.",
+    "Pre-ranking has milliseconds to cut them to about a thousand.",
+    "Heavy ranking models pick the last hundred.",
+    "This Pinterest paper is about that middle step."
+   ]
+  },
+  {
+   "id": "clerks",
+   "lines": [
+    "The usual tool is a two tower model: two clerks who never talk.",
+    "One writes a card about Priya and her search.",
+    "The other has already written a card for every pin, ahead of time.",
+    "The score is how well the two cards line up."
+   ]
+  },
+  {
+   "id": "dot",
+   "lines": [
+    "Lining up means a dot product: multiply matching entries, then add.",
+    "Say Priya's card reads point eight, point one, point five. A herb box pin reads point nine, zero, point four.",
+    "Point seven two, plus zero, plus point two: a match of point nine two.",
+    "Real cards hold sixty four numbers. The sum works the same way."
+   ]
+  },
+  {
+   "id": "blind",
+   "lines": [
+    "It's fast, because every pin's card is ready before she searches.",
+    "But the clerks never meet. Neither can know that people who typed these exact words kept saving this exact pin."
+   ]
+  },
+  {
+   "id": "guestbook",
+   "lines": [
+    "So InteractRank pastes a guestbook on the back of each pin.",
+    "For each past search, it counts how often people engaged with this pin.",
+    "In symbols: engagements with this pin for this search, divided by how often the search was made.",
+    "Say balcony garden was searched a thousand times, and this pin was saved or opened on a hundred and twenty. Point one two."
+   ]
+  },
+  {
+   "id": "windows",
+   "lines": [
+    "Counts are kept over seven days, ninety days, one year, and two years, and can be split by groups like country.",
+    "Each pin keeps only its most engaging searches, and new days are simply added to the old counts."
+   ]
+  },
+  {
+   "id": "score",
+   "lines": [
+    "The final score blends the clerks and the guestbook.",
+    "A learned weight on the card match, plus a learned weight on each guestbook line.",
+    "With example weights: one times point nine two, plus three times point one two. One point two eight.",
+    "Another pin matches the cards better, at one point oh, but nobody saved it for this search. It stays at one point oh, below.",
+    "The guestbook is looked up, not computed, so this adds almost no work."
+   ]
+  },
+  {
+   "id": "history",
+   "lines": [
+    "Priya's card also reads her last hundred actions across Pinterest, updated in real time.",
+    "One summary is a learned weighted average. A second lets the search decide what matters.",
+    "Rate three past saves for garden: point nine, point six, and zero.",
+    "With search weights of point six, point three, and point one, her garden interest is point seven two."
+   ]
+  },
+  {
+   "id": "learn",
+   "lines": [
+    "It learns from past searches: was this pin saved, or opened for a long look?",
+    "Pins borrowed from other searches serve as obvious wrong answers, so it also learns what doesn't fit."
+   ]
+  },
+  {
+   "id": "cost",
+   "lines": [
+    "Offline, it put the right pin in the top three two point nine percent more often than plain two towers.",
+    "A heavier rival, IntTower, gained less, using over three thousand operations. InteractRank uses one hundred forty two."
+   ]
+  },
+  {
+   "id": "abtest",
+   "lines": [
+    "Then a week-long test with ten million users, against the old word-matching ranker, BM25.",
+    "Sessions where people found what they wanted: two towers alone, up two point seven percent. Guestbooks alone, three point six.",
+    "Together, six point five. That's three point seven over two towers."
+   ]
+  },
+  {
+   "id": "segments",
+   "lines": [
+    "Guestbooks shine on popular searches: plus five point nine percent on their own.",
+    "On searches almost nobody repeats, the guestbook is nearly empty, and alone it does no better than the old ranker.",
+    "With the towers beside it, InteractRank beats both, in every group."
+   ]
+  },
+  {
+   "id": "close",
+   "lines": [
+    "Back in Priya's kitchen, the herb box is near the top.",
+    "Two clerks who never meet, and a guestbook of what people actually saved.",
+    "InteractRank now runs Pinterest search worldwide, billions of searches a day."
+   ]
+  }
+ ]
+}

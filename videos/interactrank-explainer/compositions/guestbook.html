@@ -1,0 +1,81 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #gb-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    #gb-card { position: absolute; left: 110px; top: 200px; width: 780px; height: 560px; }
+    .gb-face { position: absolute; inset: 0; background: var(--tag); border: 5px solid var(--ink); border-radius: 18px; overflow: hidden; }
+    #gb-front .pic { position: absolute; left: 30px; top: 30px; right: 30px; height: 380px; border-radius: 12px; background: #9fc3d6; }
+    #gb-front .rail { position: absolute; left: 0; right: 0; top: 250px; height: 18px; background: #5a3a1c; }
+    #gb-front .box { position: absolute; left: 180px; top: 270px; width: 360px; height: 90px; background: #a86a3a; border: 5px solid var(--ink); border-radius: 6px; }
+    #gb-front .leaf { position: absolute; width: 70px; height: 70px; border-radius: 50%; background: #5e8c4a; border: 4px solid var(--ink); }
+    #gb-front .cap { position: absolute; left: 34px; top: 430px; font-family: var(--font-display); font-size: 48px; }
+    #gb-back { opacity: 0; }
+    #gb-back .hd { position: absolute; left: 34px; top: 22px; font-family: var(--font-display); font-size: 44px; }
+    .gb-row { position: absolute; left: 34px; right: 34px; height: 92px; border-top: 3px solid #b9a37c; display: flex; align-items: center;
+      font-weight: 800; font-size: 32px; }
+    .gb-row .s { width: 380px; } .gb-row .n { width: 160px; text-align: right; font-family: var(--font-display); font-size: 34px; }
+    .gb-row.colh { font-weight: 900; font-size: 28px; color: #5c4a35; border-top: none; }
+    .gb-row.colh .n { font-family: var(--font-body); font-size: 28px; }
+    #gb-r1 { color: var(--red); }
+    #gb-eq { position: absolute; left: 990px; top: 300px; font-size: 76px; }
+    #gb-eq .w { font-size: 30px; }
+    #gb-work { position: absolute; left: 990px; top: 640px; font-size: 78px; }
+    #gb-work .red { color: var(--red); }
+    #gb-note { position: absolute; left: 990px; top: 760px; width: 820px; font-weight: 800; font-size: 30px; color: #5c4a35; }
+    #gb-foot { position: absolute; left: 110px; top: 990px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="guestbook" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="gb-title" class="disp">A guestbook on every pin</div>
+    <div id="gb-card">
+      <div class="gb-face" id="gb-front">
+        <div class="pic"><div class="rail"></div><div class="box"></div>
+          <div class="leaf" style="left:200px;top:215px"></div><div class="leaf" style="left:270px;top:195px"></div><div class="leaf" style="left:345px;top:210px"></div><div class="leaf" style="left:420px;top:190px"></div><div class="leaf" style="left:470px;top:220px"></div></div>
+        <div class="cap">Herb box pin</div>
+      </div>
+      <div class="gb-face" id="gb-back">
+        <div class="hd">Guestbook</div>
+        <div class="gb-row colh" style="top:90px"><span class="s">search</span><span class="n">searched</span><span class="n">engaged</span></div>
+        <div class="gb-row" id="gb-r1" style="top:170px"><span class="s">small balcony garden</span><span class="n">1,000</span><span class="n">120</span></div>
+        <div class="gb-row" id="gb-r2" style="top:262px"><span class="s">herb planter ideas</span><span class="n">900</span><span class="n">64</span></div>
+        <div class="gb-row" id="gb-r3" style="top:354px"><span class="s">apartment patio</span><span class="n">700</span><span class="n">31</span></div>
+        <div class="gb-row" id="gb-r4" style="top:446px"><span class="s">railing planter</span><span class="n">400</span><span class="n">40</span></div>
+      </div>
+    </div>
+    <div id="gb-eq" class="eq">
+      <span class="t" id="gb-e0">IQP =</span><span class="t red" id="gb-e1">C(p,q)<span class="u"></span><span class="w">engaged with this pin, for this search</span></span>
+    </div>
+    <div id="gb-div" class="eq" style="position:absolute;left:990px;top:470px;font-size:76px">
+      <span class="t" id="gb-e2">÷ C(q)<span class="u"></span><span class="w" style="left:0;transform:none">times the search was made</span></span>
+    </div>
+    <div id="gb-work" class="eq" data-hold><span id="gb-w1">120 ÷ 1,000</span> <span class="red" id="gb-w2">= 0.12</span></div>
+    <div id="gb-note">Example counts. Saves and long clicks count as engaged; rare searches are smoothed.</div>
+    <div id="gb-foot">ItemQueryPerf (IQP), equation 3, section 2.3 of the paper.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#gb-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#gb-card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.6);
+    // flip: squash, swap faces, grow back
+    tl.to("#gb-card", { scaleX: 0, duration: 0.18, ease: "power2.in" }, 2.6);
+    tl.set("#gb-front", { opacity: 0 }, 2.78);
+    tl.set("#gb-back", { opacity: 1 }, 2.78);
+    tl.to("#gb-card", { scaleX: 1, duration: 0.25, ease: "expo.out" }, 2.78);
+    tl.fromTo(["#gb-back .hd", "#gb-back .colh"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.1);
+    tl.fromTo(["#gb-r1", "#gb-r2", "#gb-r3", "#gb-r4"], { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out", stagger: 0.45 }, 5.0);
+    // symbols
+    tl.set(["#gb-eq .u", "#gb-eq .w", "#gb-div .u", "#gb-div .w"], { opacity: 0 }, 0);
+    tl.fromTo("#gb-e0", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 9.6);
+    tl.fromTo("#gb-e1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 10.6);
+    tl.to(["#gb-e1 .u", "#gb-e1 .w"], { opacity: 1, duration: 0.2 }, 11.0);
+    tl.fromTo("#gb-e2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 13.0);
+    tl.to(["#gb-e2 .u", "#gb-e2 .w"], { opacity: 1, duration: 0.2 }, 13.4);
+    tl.fromTo("#gb-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 13.8);
+    // numbers
+    tl.fromTo("#gb-r1", { backgroundColor: "rgba(181,42,31,0)" }, { backgroundColor: "rgba(181,42,31,0.12)", duration: 0.3 }, 16.0);
+    tl.fromTo("#gb-w1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 19.0);
+    tl.fromTo("#gb-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 19.4);
+    tl.fromTo("#gb-w2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 22.8);
+    window.__timelines["guestbook"] = tl;
+  </script>
+</template>
