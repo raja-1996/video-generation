@@ -6,3 +6,4 @@ node_modules/
 *.wav
 *.mp4
 .DS_Store
+*.mp3

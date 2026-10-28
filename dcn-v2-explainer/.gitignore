@@ -1,3 +1,4 @@
 .hyperframes/
 renders/
 *.wav
+assets/*.mp3
