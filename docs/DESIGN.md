@@ -8,7 +8,7 @@ Tokens live in `dcn-v2-explainer/tools/shared.css`.
 | World | Used for | Ground | Key objects |
 | --- | --- | --- | --- |
 | **Night** (Maya's world) | the opening and the closing | night blue `#16233f`, a window onto a lit city | a phone with a "For you" feed |
-| **Kraft workbench** (the model's world) | every explanation | kraft paper `#d8b98a` with a 9% fibre noise | price tags, rubber stamps, ledgers, circuits, dials |
+| **Kraft workbench** (the model's world) | every explanation | flat kraft paper `#d8b98a` | price tags, rubber stamps, ledgers, circuits, dials |
 
 ![Night world](screenshots/01-night-maya.jpg)
 ![Kraft world](screenshots/02-shop-feature-cross.jpg)
