@@ -8,6 +8,8 @@ Explainer videos made from research papers: HTML scenes rendered to video with
 | `kokoro/` | setup script for Kokoro TTS (`bash kokoro/setup_kokoro.sh tts`) |
 | `hyperframes/` | setup script for HyperFrames (`bash hyperframes/setup_hyperframes.sh`) |
 | `dcn-v2-explainer/` | the DCN-V2 paper explainer (arXiv 2008.13535): 30 scenes, about 8 minutes |
+| `template/` | tools copied into every new video project |
+| `.claude/skills/paper-to-video/` | share a paper link with Claude Code here and it makes the video |
 | `docs/VIDEO_PLAYBOOK.md` | principles, preferences, the step-by-step workflow and the gotchas |
 | `docs/DESIGN.md` | the visual system, with screenshots |
 

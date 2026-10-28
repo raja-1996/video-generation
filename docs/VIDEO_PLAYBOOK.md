@@ -20,13 +20,16 @@ These come from the requests that shaped the DCN-V2 video. They take priority ov
 5. **Voice only.** Narration carries the film. No music, no sound effects (owner's preference).
 6. **Length follows the content.** A first cut of about 3 minutes; the owner then asked for 5 minutes, then for
    more math detail (8 minutes). Add scenes for missing ideas rather than stretching existing ones.
-7. **Stay true to the source.** Every claim and number traces to the paper. When the story would bend a fact,
+7. **The owner picks the story.** Show three storylines with a recommendation first; after the pick, build
+   straight through to the finished video.
+8. **Stay true to the source.** Every claim and number traces to the paper. When the story would bend a fact,
    fix the story (two cross layers make *trios*, so the script says "Madrid, and English, and 11 pm").
    Illustrative values are marked on screen.
 
 ## Workflow
 
-Everything below runs in `dcn-v2-explainer/`; copy that folder to start a new film.
+For a new paper, the `paper-to-video` skill runs these steps. New films live in `videos/<slug>/` and start
+from `template/tools/`; `dcn-v2-explainer/` is the reference film.
 
 | Step | What | Command / file |
 | --- | --- | --- |
