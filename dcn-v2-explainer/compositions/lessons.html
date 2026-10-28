@@ -1,0 +1,63 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ln-title { position: absolute; left: 110px; top: 60px; font-size: 76px; }
+    .ln-blk { position: absolute; top: 210px; height: 140px; border: 5px solid var(--ink); border-radius: 18px; background: var(--tag);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 38px; }
+    #ln-cross { background: #c39c69; }
+    #ln-deep { background: #3a3129; color: var(--tag); }
+    #ln-n1 { position: absolute; left: 400px; top: 380px; font-weight: 900; font-size: 40px; color: var(--red); }
+    #ln-chart { position: absolute; left: 110px; top: 500px; width: 820px; height: 420px; }
+    #ln-chart .lbl { font-size: 36px; }
+    .ln-col { position: absolute; bottom: 60px; width: 120px; background: var(--ink); border-radius: 8px 8px 0 0; transform-origin: 50% 100%; }
+    .ln-col.hi { background: var(--red); }
+    .ln-x { position: absolute; bottom: 10px; width: 120px; text-align: center; font-weight: 900; font-size: 34px; }
+    #ln-base { position: absolute; left: 0; right: 0; bottom: 56px; height: 5px; background: var(--ink); }
+    #ln-n2 { position: absolute; left: 110px; top: 935px; font-weight: 800; font-size: 30px; color: #3d3024; }
+    #ln-ways { position: absolute; left: 1050px; top: 500px; width: 780px; height: 420px; }
+    .ln-mini { position: absolute; border: 4px solid var(--ink); border-radius: 10px; background: #c39c69; width: 150px; height: 70px; }
+    .ln-cap { position: absolute; font-weight: 900; font-size: 36px; }
+  </style>
+  <div id="root" data-composition-id="lessons" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ln-title" class="disp">Lessons from Google</div>
+    <div class="ln-blk" style="left:110px;width:280px">Raw inputs</div>
+    <div class="ln-blk" id="ln-cross" style="left:420px;width:300px">Cross layers</div>
+    <div class="ln-blk" id="ln-deep" style="left:750px;width:330px">Deep layers</div>
+    <div class="ln-blk" style="left:1110px;width:260px; color:var(--red)">Chance</div>
+    <div id="ln-n1">↑ right after the inputs</div>
+    <div id="ln-chart">
+      <div class="lbl">Gain from each cross layer</div>
+      <div class="ln-col hi" style="left:40px;height:250px"></div><div class="ln-x" style="left:40px">1</div>
+      <div class="ln-col hi" style="left:220px;height:150px"></div><div class="ln-x" style="left:220px">2</div>
+      <div class="ln-col" style="left:400px;height:30px"></div><div class="ln-x" style="left:400px">3</div>
+      <div class="ln-col" style="left:580px;height:18px"></div><div class="ln-x" style="left:580px">4</div>
+      <div id="ln-base"></div>
+    </div>
+    <div id="ln-n2">Bar heights illustrative: gains plateau after 2 layers (paper section 8).</div>
+    <div id="ln-ways" data-hold>
+      <div class="ln-mini" style="left:40px;top:60px"></div>
+      <div class="ln-mini" style="left:40px;top:150px"></div>
+      <div class="ln-cap" style="left:0;top:250px;width:240px;text-align:center">stacked:<br/>deeper combos</div>
+      <div class="ln-mini" style="left:400px;top:105px"></div>
+      <div class="ln-mini" style="left:580px;top:105px"></div>
+      <div class="ln-cap" style="left:390px;top:250px;width:360px;text-align:center">side by side:<br/>different combos</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ln-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo(".ln-blk:not(#ln-cross)", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 1.2);
+    // lesson 1: the cross layers slot in next to the raw inputs
+    tl.fromTo("#ln-cross", { opacity: 0, y: -160 }, { opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.3)" }, 4.4);
+    tl.fromTo("#ln-n1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.3);
+    // lesson 2: one or two layers, then a plateau
+    tl.fromTo("#ln-chart", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.8);
+    tl.fromTo(".ln-col", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out", stagger: 0.45 }, 9.2);
+    tl.fromTo("#ln-n2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.6);
+    // lesson 3: stacking vs side by side
+    tl.fromTo("#ln-ways .ln-mini", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)", stagger: 0.15 }, 13.3);
+    tl.fromTo("#ln-ways .ln-cap", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 1.2 }, 14.0);
+    window.__timelines["lessons"] = tl;
+  </script>
+</template>

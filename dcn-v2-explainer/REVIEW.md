@@ -1,4 +1,9 @@
-# Review: DCN-V2 explainer
+# Review: DCN-V2 explainer (5-minute cut, 22 scenes, ~307 s)
+
+Added in the 5-minute cut: synthetic (known-answer tests), dials (DCN v1 vs v2), orders (why the keep step matters),
+deep (stacked vs parallel), race (Criteo leaderboard, Table 6), lessons (production lessons, section 8),
+budget (cross layers vs ReLU at fixed size, Table 7). Leaderboard and budget values are the paper's numbers;
+dial angles and the gain-per-layer bars are illustrative and labelled so.
 
 **Picked storyline:** A, the shopkeeper (see STORYLINES.md). Not built: B (matchmaker's grid), C (failing calculator).
 

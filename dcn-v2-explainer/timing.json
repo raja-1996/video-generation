@@ -1,5 +1,5 @@
 {
- "total": 182.63,
+ "total": 303.965,
  "scenes": [
   {
    "id": "night",
@@ -100,8 +100,30 @@
    ]
   },
   {
-   "id": "profiles",
+   "id": "synthetic",
    "start": 55.425,
+   "dur": 15.54,
+   "lines": [
+    {
+     "text": "The authors tested this on hidden recipes with a known answer, built only from multiplied traits.",
+     "start": 0.45,
+     "dur": 6.275
+    },
+    {
+     "text": "A tiny cross network found them almost exactly.",
+     "start": 7.045,
+     "dur": 3.45
+    },
+    {
+     "text": "A plain neural network, even a far bigger one, still missed.",
+     "start": 10.815,
+     "dur": 3.975
+    }
+   ]
+  },
+  {
+   "id": "profiles",
+   "start": 70.965,
    "dur": 12.345,
    "lines": [
     {
@@ -118,7 +140,7 @@
   },
   {
    "id": "listen",
-   "start": 67.77,
+   "start": 83.31,
    "dur": 9.79,
    "lines": [
     {
@@ -140,7 +162,7 @@
   },
   {
    "id": "andgate",
-   "start": 77.56,
+   "start": 93.1,
    "dur": 12.04,
    "lines": [
     {
@@ -162,7 +184,7 @@
   },
   {
    "id": "keep",
-   "start": 89.6,
+   "start": 105.14,
    "dur": 10.665,
    "lines": [
     {
@@ -183,8 +205,35 @@
    ]
   },
   {
+   "id": "dials",
+   "start": 115.805,
+   "dur": 17.31,
+   "lines": [
+    {
+     "text": "This is version two for a reason.",
+     "start": 0.45,
+     "dur": 2.5
+    },
+    {
+     "text": "In the original, every trait heard the same single summary from the others.",
+     "start": 3.27,
+     "dur": 4.725
+    },
+    {
+     "text": "Version two gives every pair of traits its own dial,",
+     "start": 8.315,
+     "dur": 3.675
+    },
+    {
+     "text": "so Madrid with English can matter far more than Madrid with phone.",
+     "start": 12.31,
+     "dur": 4.25
+    }
+   ]
+  },
+  {
    "id": "stack",
-   "start": 100.265,
+   "start": 133.115,
    "dur": 11.94,
    "lines": [
     {
@@ -205,8 +254,57 @@
    ]
   },
   {
+   "id": "orders",
+   "start": 145.055,
+   "dur": 14.44,
+   "lines": [
+    {
+     "text": "There's a quiet detail in that keep step.",
+     "start": 0.45,
+     "dur": 2.625
+    },
+    {
+     "text": "Without it, two layers would only make trios, and forget the simple pairs and single facts.",
+     "start": 3.395,
+     "dur": 5.8
+    },
+    {
+     "text": "With it, every layer holds singles, pairs and trios at once.",
+     "start": 9.515,
+     "dur": 4.175
+    }
+   ]
+  },
+  {
+   "id": "deep",
+   "start": 159.495,
+   "dur": 17.435,
+   "lines": [
+    {
+     "text": "Cross layers are great at exact 'ands'. But some patterns are fuzzier.",
+     "start": 0.45,
+     "dur": 4.575
+    },
+    {
+     "text": "So DCN V2 hands its result to an ordinary deep network,",
+     "start": 5.345,
+     "dur": 4.7
+    },
+    {
+     "text": "or runs the two side by side and merges them.",
+     "start": 10.365,
+     "dur": 3.325
+    },
+    {
+     "text": "Which works better depends on the data.",
+     "start": 14.01,
+     "dur": 2.675
+    }
+   ]
+  },
+  {
    "id": "table",
-   "start": 112.205,
+   "start": 176.93,
    "dur": 12.79,
    "lines": [
     {
@@ -228,7 +326,7 @@
   },
   {
    "id": "themes",
-   "start": 124.995,
+   "start": 189.72,
    "dur": 13.44,
    "lines": [
     {
@@ -250,7 +348,7 @@
   },
   {
    "id": "experts",
-   "start": 138.435,
+   "start": 203.16,
    "dur": 9.595,
    "lines": [
     {
@@ -267,7 +365,7 @@
   },
   {
    "id": "chance",
-   "start": 148.03,
+   "start": 212.755,
    "dur": 12.515,
    "lines": [
     {
@@ -288,8 +386,35 @@
    ]
   },
   {
+   "id": "race",
+   "start": 225.27,
+   "dur": 20.585,
+   "lines": [
+    {
+     "text": "Then, a fair race. On Criteo, forty-five million real ad clicks,",
+     "start": 0.45,
+     "dur": 5.025
+    },
+    {
+     "text": "every model was tuned carefully and trained five times.",
+     "start": 5.795,
+     "dur": 3.9
+    },
+    {
+     "text": "DCN V2 came out on top, where even a thousandth counts.",
+     "start": 10.015,
+     "dur": 4.225
+    },
+    {
+     "text": "And the mixture version cut the cost by about thirty percent, at the same accuracy.",
+     "start": 14.56,
+     "dur": 5.275
+    }
+   ]
+  },
+  {
    "id": "result",
-   "start": 160.545,
+   "start": 245.855,
    "dur": 12.915,
    "lines": [
     {
@@ -310,8 +435,57 @@
    ]
   },
   {
+   "id": "lessons",
+   "start": 258.77,
+   "dur": 19.285,
+   "lines": [
+    {
+     "text": "Running it at Google taught a few lessons.",
+     "start": 0.45,
+     "dur": 2.775
+    },
+    {
+     "text": "Put the cross layers right next to the raw inputs, where traits still mean something.",
+     "start": 3.545,
+     "dur": 4.925
+    },
+    {
+     "text": "One or two layers are enough; after that, the gains level off.",
+     "start": 8.79,
+     "dur": 4.1
+    },
+    {
+     "text": "And stacking finds deeper combinations, while side by side finds different ones.",
+     "start": 13.21,
+     "dur": 5.325
+    }
+   ]
+  },
+  {
+   "id": "budget",
+   "start": 278.055,
+   "dur": 16.74,
+   "lines": [
+    {
+     "text": "One finding surprised even the authors.",
+     "start": 0.45,
+     "dur": 2.875
+    },
+    {
+     "text": "With the same memory budget, a network made only of cross layers beat the usual kind, every time.",
+     "start": 3.645,
+     "dur": 6.65
+    },
+    {
+     "text": "Maybe, they suggest, cross layers could replace those layers in other models too.",
+     "start": 10.615,
+     "dur": 5.375
+    }
+   ]
+  },
+  {
    "id": "close",
-   "start": 173.46,
+   "start": 294.795,
    "dur": 9.17,
    "lines": [
     {

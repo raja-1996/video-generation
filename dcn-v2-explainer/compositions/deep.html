@@ -1,0 +1,58 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #dp-title { position: absolute; left: 110px; top: 70px; font-size: 72px; }
+    #dp-title em { font-style: normal; color: var(--red); }
+    .dp-blk { position: absolute; height: 150px; border: 5px solid var(--ink); border-radius: 18px; background: var(--tag);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 40px; text-align: center; line-height: 1.05; }
+    .dp-cross { background: #c39c69; }
+    .dp-deep { background: #3a3129; color: var(--tag); }
+    .dp-out { background: var(--tag); color: var(--red); }
+    #dp-wires { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .dp-tag { position: absolute; font-weight: 900; font-size: 36px; color: #3d3024; }
+    .dp-won { position: absolute; font-weight: 900; font-size: 38px; }
+    .dp-won b { color: var(--red); font-weight: 900; }
+  </style>
+  <div id="root" data-composition-id="deep" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="dp-title" class="disp"><span id="dp-t1">Exact “and”s,</span> <span id="dp-t2">plus the <em>fuzzy</em> rest</span></div>
+    <svg id="dp-wires" viewBox="0 0 1920 1080" fill="none" stroke="#221c16" stroke-width="6">
+      <g id="dp-w1"><path d="M370 335 L440 335"/><path d="M740 335 L810 335"/><path d="M1110 335 L1180 335"/></g>
+      <g id="dp-w2"><path d="M370 780 C420 780 400 690 460 690"/><path d="M370 780 C420 780 400 870 460 870"/>
+        <path d="M760 690 C820 690 800 780 860 780"/><path d="M760 870 C820 870 800 780 860 780"/><path d="M1060 780 L1130 780"/></g>
+    </svg>
+    <!-- stacked -->
+    <div id="dp-st">
+      <div class="dp-blk" style="left:110px;top:260px;width:260px">Traits</div>
+      <div class="dp-blk dp-cross" style="left:440px;top:260px;width:300px">Cross layers</div>
+      <div class="dp-blk dp-deep" style="left:810px;top:260px;width:300px">Deep network</div>
+      <div class="dp-blk dp-out" style="left:1180px;top:260px;width:260px">Chance</div>
+      <div class="dp-tag" style="left:110px;top:430px">one after the other</div>
+      <div class="dp-won" id="dp-c1" style="left:1490px;top:300px">Criteo:<br/><b>this won</b></div>
+    </div>
+    <!-- side by side -->
+    <div id="dp-par">
+      <div class="dp-blk" style="left:110px;top:705px;width:260px">Traits</div>
+      <div class="dp-blk dp-cross" style="left:460px;top:625px;width:300px;height:130px">Cross layers</div>
+      <div class="dp-blk dp-deep" style="left:460px;top:805px;width:300px;height:130px">Deep network</div>
+      <div class="dp-blk" style="left:860px;top:705px;width:200px">Merge</div>
+      <div class="dp-blk dp-out" style="left:1130px;top:705px;width:260px">Chance</div>
+      <div class="dp-tag" style="left:110px;top:960px">side by side</div>
+      <div class="dp-won" id="dp-c2" style="left:1440px;top:740px">MovieLens:<br/><b>this won</b></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#dp-t1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.6);
+    tl.fromTo("#dp-t2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 3.3);
+    tl.fromTo("#dp-st .dp-blk", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", stagger: 0.35 }, 5.5);
+    tl.fromTo("#dp-w1 path", { strokeDasharray: 80, strokeDashoffset: 80 }, { strokeDashoffset: 0, duration: 0.3, stagger: 0.35 }, 5.8);
+    tl.fromTo("#dp-st .dp-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.2);
+    tl.fromTo("#dp-par .dp-blk", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", stagger: 0.3 }, 10.4);
+    tl.fromTo("#dp-w2 path", { strokeDasharray: 200, strokeDashoffset: 200 }, { strokeDashoffset: 0, duration: 0.35, stagger: 0.2 }, 10.7);
+    tl.fromTo("#dp-par .dp-tag", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.0);
+    tl.fromTo("#dp-c1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 14.1);
+    tl.fromTo("#dp-c2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 14.7);
+    window.__timelines["deep"] = tl;
+  </script>
+</template>

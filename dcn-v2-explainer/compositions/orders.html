@@ -1,0 +1,47 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #or-sw { position: absolute; left: 110px; top: 110px; display: flex; align-items: center; gap: 30px; }
+    #or-sw .disp { font-size: 72px; }
+    #or-track { position: relative; width: 200px; height: 100px; border-radius: 50px; border: 6px solid var(--ink); background: #a8916d; }
+    #or-knob { position: absolute; left: 8px; top: 8px; width: 72px; height: 72px; border-radius: 50%; background: var(--tag); border: 5px solid var(--ink); }
+    #or-state { font-family: var(--font-display); font-size: 60px; width: 140px; }
+    .or-shelf { position: absolute; left: 110px; width: 1700px; height: 200px; }
+    .or-shelf .lbl { position: absolute; left: 0; top: 70px; width: 200px; font-family: var(--font-display); font-size: 48px; font-weight: 400; }
+    .or-board { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: #6e4526; border-radius: 4px; }
+    .or-items { position: absolute; left: 240px; top: 30px; display: flex; gap: 30px; }
+    .or-items .tag { position: relative; height: 120px; width: auto; padding: 0 34px 0 70px; font-size: 40px; white-space: nowrap; }
+    .or-gone { position: absolute; left: 240px; top: 30px; height: 130px; width: 1420px; border: 5px dashed #6b5a44; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 40px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="orders" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="or-sw"><div class="disp">Keep step</div><div id="or-track"><div id="or-knob"></div></div><div id="or-state">OFF</div></div>
+    <div class="or-shelf" id="or-s1" style="top:280px"><div class="lbl">singles</div><div class="or-board"></div>
+      <div class="or-items"><div class="tag">Madrid</div><div class="tag">English</div><div class="tag">11 pm</div></div>
+      <div class="or-gone" id="or-g1">forgotten</div></div>
+    <div class="or-shelf" id="or-s2" style="top:520px"><div class="lbl">pairs</div><div class="or-board"></div>
+      <div class="or-items"><div class="tag">Madrid × English</div><div class="tag">English × 11 pm</div></div>
+      <div class="or-gone" id="or-g2">forgotten</div></div>
+    <div class="or-shelf" id="or-s3" style="top:760px"><div class="lbl">trios</div><div class="or-board"></div>
+      <div class="or-items"><div class="tag">Madrid × English × 11 pm</div></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#or-sw", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.4);
+    tl.fromTo(".or-shelf", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.15 }, 1.2);
+    tl.set(["#or-s1 .or-items", "#or-s2 .or-items"], { opacity: 0 }, 0);
+    tl.set(["#or-g1", "#or-g2", "#or-s3 .or-items"], { opacity: 0 }, 0);
+    // switched off: only the trio survives
+    tl.to("#or-s3 .or-items", { opacity: 1, duration: 0.4, ease: "power2.out" }, 4.6);
+    tl.to(["#or-g1", "#or-g2"], { opacity: 1, duration: 0.3, stagger: 0.2 }, 7.4);
+    // switched on: everything kept
+    tl.to("#or-knob", { x: 100, duration: 0.3, ease: "power3.inOut" }, 9.6);
+    tl.to("#or-track", { backgroundColor: "#f5b921", duration: 0.3 }, 9.6);
+    tl.set("#or-state", { textContent: "ON" }, 9.75);
+    tl.to(["#or-g1", "#or-g2"], { opacity: 0, duration: 0.2 }, 10.0);
+    tl.fromTo("#or-s1 .or-items", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 10.6);
+    tl.fromTo("#or-s2 .or-items", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 11.2);
+    window.__timelines["orders"] = tl;
+  </script>
+</template>

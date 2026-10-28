@@ -1,0 +1,57 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #rc-head { position: absolute; left: 110px; top: 60px; }
+    #rc-head .disp { font-size: 76px; }
+    #rc-head .lbl { font-size: 38px; color: #3d3024; margin-top: 6px; }
+    #rc-fair { position: absolute; left: 1220px; top: 90px; width: 600px; font-weight: 900; font-size: 38px; text-align: right; }
+    #rc-board { position: absolute; left: 110px; top: 250px; width: 1700px; }
+    .rc-row { position: relative; height: 64px; margin-bottom: 6px; }
+    .rc-name { position: absolute; left: 0; top: 10px; width: 260px; font-weight: 900; font-size: 36px; text-align: right; }
+    .rc-bar { position: absolute; left: 290px; top: 10px; height: 46px; background: #8f7d60; border-radius: 6px; transform-origin: 0 50%; }
+    .rc-val { position: absolute; top: 12px; font-weight: 900; font-size: 34px; }
+    .rc-ours .rc-name { color: var(--red); }
+    .rc-ours .rc-bar { background: var(--red); }
+    #rc-key { position: absolute; left: 400px; top: 975px; font-weight: 800; font-size: 32px; color: #3d3024; }
+    #rc-cost { position: absolute; left: 1080px; top: 322px; font-size: 44px; padding: 4px 18px; border-width: 6px; white-space: nowrap; }
+    #rc-lead { position: absolute; left: 860px; top: 252px; font-weight: 900; font-size: 36px; color: var(--red); }
+    #rc-foot { position: absolute; left: 400px; top: 1010px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="race" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="rc-head"><div class="disp">The Criteo race</div><div class="lbl"><span id="rc-n">0</span> real ad clicks, one week of logs</div></div>
+    <div id="rc-fair">every model tuned<br/>5 runs each, averaged</div>
+    <div id="rc-board"></div>
+    <div id="rc-lead">1st, ahead by 0.0014 (0.001 counts)</div>
+    <div class="stamp" id="rc-cost" data-hold>−30% COST</div>
+    <div id="rc-key">Shorter bar = fewer mistakes · test log loss from 0.4400 · paper Table 6</div>
+  </div>
+  <script>
+    (function () {
+      const rows = [["DCN-V2", 0.4406, 1], ["DCN-Mix", 0.4408, 1], ["CrossNet", 0.4413, 1], ["AutoInt+", 0.442, 0], ["DeepFM", 0.442, 0],
+        ["DCN", 0.442, 0], ["PNN", 0.4421, 0], ["xDeepFM", 0.4421, 0], ["DNN", 0.4421, 0], ["DLRM", 0.4427, 0]];
+      const b = document.getElementById("rc-board");
+      rows.forEach(([n, v, ours], i) => {
+        const w = ((v - 0.44) / 0.003) * 1100;
+        b.insertAdjacentHTML("beforeend", `<div class="rc-row${ours ? " rc-ours" : ""}" id="rc-r${i}"><div class="rc-name">${n}</div>
+          <div class="rc-bar" style="width:${w.toFixed(0)}px"></div><div class="rc-val" style="left:${(310 + w).toFixed(0)}px">${v.toFixed(4)}</div></div>`);
+      });
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rc-head", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 0.5);
+    tl.fromTo("#rc-fair", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.0);
+    const ck = { v: 0 };
+    tl.fromTo(ck, { v: 0 }, { v: 45000000, duration: 1.8, ease: "power2.out",
+      onUpdate: () => { document.getElementById("rc-n").textContent = (Math.round(ck.v / 100000) * 100000).toLocaleString("en-US"); } }, 2.6);
+    tl.fromTo("#rc-lead", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 12.6);
+    // the baselines finish first, the DCN-V2 family last
+    for (let i = 9; i >= 3; i--) tl.fromTo(`#rc-r${i}`, { opacity: 0 }, { opacity: 1, duration: 0.25 }, 6.6 + (9 - i) * 0.25);
+    tl.fromTo("#rc-board .rc-row:nth-child(n+4) .rc-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.out", stagger: 0.1 }, 6.7);
+    tl.fromTo("#rc-key", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.4);
+    tl.fromTo(["#rc-r2", "#rc-r1", "#rc-r0"], { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", stagger: 0.3 }, 10.2);
+    tl.fromTo("#rc-board .rc-ours .rc-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power3.out", stagger: -0.3 }, 10.3);
+    tl.fromTo("#rc-cost", { opacity: 0, scale: 1.5, rotation: -5 }, { opacity: 1, duration: 0.01 }, 15.6);
+    tl.to("#rc-cost", { scale: 1, duration: 0.14, ease: "power4.out" }, 15.61);
+    window.__timelines["race"] = tl;
+  </script>
+</template>
