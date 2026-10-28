@@ -1,0 +1,66 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ch-gauge { position: absolute; left: 80px; top: 200px; width: 820px; height: 560px; }
+    #ch-item { position: absolute; left: 140px; top: 110px; width: 700px; font-weight: 900; font-size: 42px; }
+    #ch-item span { color: #5c4a35; font-weight: 800; font-size: 34px; display: block; }
+    #ch-pct { position: absolute; left: 80px; width: 820px; top: 640px; text-align: center; font-size: 120px; }
+    #ch-honest { position: absolute; left: 80px; width: 820px; top: 800px; text-align: center; font-weight: 900; font-size: 44px; }
+    #ch-plot { position: absolute; left: 1010px; top: 150px; width: 830px; height: 760px; }
+    .ch-ax { position: absolute; font-weight: 800; font-size: 32px; color: #3d3024; }
+    .ch-note { position: absolute; font-weight: 900; font-size: 38px; }
+  </style>
+  <div id="root" data-composition-id="chance" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ch-item">“Late-night tapas”<span>chance Maya taps it (example)</span></div>
+    <svg id="ch-gauge" viewBox="0 0 820 560">
+      <path d="M110 430 A300 300 0 0 1 710 430" fill="none" stroke="#f6e9cc" stroke-width="60"/>
+      <path d="M110 430 A300 300 0 0 1 710 430" fill="none" stroke="#221c16" stroke-width="6"/>
+      <path id="ch-fill" d="M110 430 A300 300 0 0 1 710 430" fill="none" stroke="#b52a1f" stroke-width="44" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="100"/>
+      <line id="ch-needle" x1="410" y1="430" x2="410" y2="170" stroke="#221c16" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="410" cy="430" r="26" fill="#221c16"/>
+      <text x="100" y="490" font-family="Nunito" font-weight="800" font-size="32" fill="#3d3024" text-anchor="middle">0%</text>
+      <text x="720" y="490" font-family="Nunito" font-weight="800" font-size="32" fill="#3d3024" text-anchor="middle">100%</text>
+    </svg>
+    <div id="ch-pct" class="disp">0%</div>
+    <div id="ch-honest" data-hold>Odds it can stand behind</div>
+    <svg id="ch-plot" viewBox="0 0 830 760">
+      <line x1="80" y1="660" x2="800" y2="660" stroke="#221c16" stroke-width="5"/>
+      <line x1="80" y1="40" x2="80" y2="660" stroke="#221c16" stroke-width="5"/>
+      <path id="ch-curve" fill="none" stroke="#221c16" stroke-width="9" stroke-linecap="round"/>
+      <circle id="ch-dot" r="22" fill="#b52a1f" stroke="#221c16" stroke-width="5" cx="80" cy="660"/>
+    </svg>
+    <div class="ch-ax" style="left:1100px;top:830px">how sure it was of a wrong answer →</div>
+    <div class="ch-ax" style="left:1000px;top:120px">penalty ↑</div>
+    <div class="ch-note" id="ch-n1" style="left:1150px;top:700px">unsure: small</div>
+    <div class="ch-note" id="ch-n2" style="left:1300px;top:160px; color:var(--red)">sure and wrong: huge</div>
+  </div>
+  <script>
+    (function () {
+      // penalty for a wrong answer given with confidence p: -log(1 - p)
+      let d = "";
+      for (let i = 0; i <= 99; i++) { const p = i / 100, x = 80 + p * 720, y = 660 - (-Math.log(1 - p)) * 130;
+        d += (i ? "L" : "M") + x.toFixed(1) + " " + Math.max(40, y).toFixed(1); }
+      document.getElementById("ch-curve").setAttribute("d", d);
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(["#ch-item", "#ch-gauge"], { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.15 }, 0.3);
+    tl.fromTo("#ch-pct", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.6);
+    tl.fromTo("#ch-needle", { rotation: -90, svgOrigin: "410 430" }, { rotation: -90 + 180 * 0.74, duration: 1.4, ease: "power3.inOut" }, 1.8);
+    tl.fromTo("#ch-fill", { attr: { "stroke-dashoffset": 100 } }, { attr: { "stroke-dashoffset": 26 }, duration: 1.4, ease: "power3.inOut" }, 1.8);
+    const g = { v: 0 };
+    tl.fromTo(g, { v: 0 }, { v: 74, duration: 1.4, ease: "power3.inOut",
+      onUpdate: () => { document.getElementById("ch-pct").textContent = Math.round(g.v) + "%"; } }, 1.8);
+    // the penalty for being sure and wrong
+    tl.fromTo(["#ch-plot", ".ch-ax"], { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.1 }, 4.3);
+    tl.fromTo("#ch-curve", { strokeDasharray: 1400, strokeDashoffset: 1400 }, { strokeDashoffset: 0, duration: 1.4, ease: "power2.in" }, 4.8);
+    tl.fromTo("#ch-n1", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 5.3);
+    const dot = { p: 0 };
+    tl.fromTo(dot, { p: 0 }, { p: 0.985, duration: 1.6, ease: "power2.in",
+      onUpdate: () => { const x = 80 + dot.p * 720, y = Math.max(40, 660 + Math.log(1 - dot.p) * 130);
+        const c = document.getElementById("ch-dot"); c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", y.toFixed(1)); } }, 5.6);
+    tl.fromTo("#ch-n2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 7.2);
+    tl.fromTo("#ch-honest", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 9.1);
+    window.__timelines["chance"] = tl;
+  </script>
+</template>

@@ -1,0 +1,60 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ex-title { position: absolute; left: 110px; top: 70px; font-size: 76px; }
+    #ex-desk { position: absolute; left: 520px; top: 200px; width: 1300px; height: 780px; background: #3a3129; border-radius: 28px;
+      border: 6px solid var(--ink); }
+    .ex-ch { position: absolute; top: 40px; width: 260px; height: 700px; }
+    .ex-name { position: absolute; left: 0; right: 0; top: 0; text-align: center; color: var(--tag); font-weight: 900; font-size: 34px; }
+    .ex-lens { position: absolute; left: 60px; top: 60px; width: 140px; height: 120px; }
+    .ex-slot { position: absolute; left: 124px; top: 230px; width: 12px; height: 400px; background: #120e0b; border-radius: 6px; }
+    .ex-knob { position: absolute; left: 70px; top: 590px; width: 120px; height: 56px; background: var(--tag); border: 5px solid var(--ink); border-radius: 10px; }
+    .ex-knob::after { content: ""; position: absolute; left: 10px; right: 10px; top: 21px; height: 5px; background: var(--ink); }
+    .ex-pct { position: absolute; left: 0; right: 0; top: 650px; text-align: center; color: var(--lamp); font-weight: 900; font-size: 36px; }
+    #ex-maya { position: absolute; left: 110px; top: 330px; width: 340px; }
+    #ex-maya .tag { position: relative; width: 300px; height: 100px; font-size: 36px; margin-bottom: 22px; }
+    #ex-gate { position: absolute; left: 110px; top: 780px; width: 380px; font-weight: 800; font-size: 34px; color: #3d3024; }
+    #ex-gate b { color: var(--red); font-family: var(--font-display); font-weight: 400; font-size: 52px; display: block; }
+  </style>
+  <div id="root" data-composition-id="experts" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ex-title" class="disp">Specialists, mixed for Maya</div>
+    <div id="ex-maya">
+      <div class="tag">Madrid</div><div class="tag">English</div><div class="tag">11 pm</div>
+    </div>
+    <div id="ex-gate"><b>The gate</b>sets each fader for this one request</div>
+    <div id="ex-desk"></div>
+  </div>
+  <script>
+    (function () {
+      const desk = document.getElementById("ex-desk");
+      // each specialist squeezes the traits through a different small set of themes
+      const shapes = [[2], [3], [1], [2]];
+      for (let i = 0; i < 4; i++) {
+        const k = shapes[i][0];
+        let lens = "";
+        const mids = Array.from({ length: k }, (_, m) => 60 + (m - (k - 1) / 2) * 34);
+        for (let a = 0; a < 4; a++) for (const m of mids) lens += `<line x1="10" y1="${15 + a * 30}" x2="70" y2="${m}" stroke="#f6e9cc" stroke-width="2.5"/><line x1="70" y1="${m}" x2="130" y2="${15 + a * 30}" stroke="#f6e9cc" stroke-width="2.5"/>`;
+        for (const m of mids) lens += `<circle cx="70" cy="${m}" r="11" fill="#b52a1f"/>`;
+        desk.insertAdjacentHTML("beforeend", `<div class="ex-ch" style="left:${50 + i * 310}px">
+          <div class="ex-name">Specialist ${i + 1}</div><svg class="ex-lens" viewBox="0 0 140 120">${lens}</svg>
+          <div class="ex-slot"></div><div class="ex-knob" id="ex-k${i}"></div><div class="ex-pct" id="ex-p${i}">0%</div></div>`);
+      }
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ex-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.4);
+    tl.fromTo("#ex-maya .tag", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out", stagger: 0.1 }, 0.7);
+    tl.fromTo("#ex-desk", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" }, 1.2);
+    tl.fromTo("#ex-desk .ex-ch", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.25 }, 1.8);
+    // the gate pushes the faders for Maya (illustrative positions)
+    tl.fromTo("#ex-gate", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.4);
+    const w = [0.62, 0.21, 0.12, 0.05];
+    w.forEach((v, i) => {
+      tl.to(`#ex-k${i}`, { y: -v * 560, duration: 0.9, ease: "power3.inOut" }, 6.0 + i * 0.12);
+      const o = { v: 0 };
+      tl.fromTo(o, { v: 0 }, { v: v * 100, duration: 0.9, ease: "power3.inOut",
+        onUpdate: () => { document.getElementById(`ex-p${i}`).textContent = Math.round(o.v) + "%"; } }, 6.0 + i * 0.12);
+    });
+    window.__timelines["experts"] = tl;
+  </script>
+</template>

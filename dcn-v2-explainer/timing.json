@@ -1,0 +1,715 @@
+{
+ "total": 482.675,
+ "scenes": [
+  {
+   "id": "night",
+   "start": 0.0,
+   "dur": 10.44,
+   "lines": [
+    {
+     "text": "It's eleven at night in Madrid.",
+     "start": 0.45,
+     "dur": 2.325
+    },
+    {
+     "text": "Maya opens an app, and in a few milliseconds,",
+     "start": 3.095,
+     "dur": 3.15
+    },
+    {
+     "text": "it has to guess which of a million things she'll tap.",
+     "start": 6.565,
+     "dur": 3.125
+    }
+   ]
+  },
+  {
+   "id": "shop",
+   "start": 10.44,
+   "dur": 18.68,
+   "lines": [
+    {
+     "text": "A good shopkeeper would just know.",
+     "start": 0.45,
+     "dur": 2.35
+    },
+    {
+     "text": "Not from one fact about her, but from facts together.",
+     "start": 3.12,
+     "dur": 3.675
+    },
+    {
+     "text": "Madrid alone says little. English alone says little.",
+     "start": 7.115,
+     "dur": 3.775
+    },
+    {
+     "text": "But Madrid and English together say: traveller.",
+     "start": 11.21,
+     "dur": 3.325
+    },
+    {
+     "text": "That combination is called a feature cross.",
+     "start": 14.855,
+     "dur": 3.075
+    }
+   ]
+  },
+  {
+   "id": "ledger",
+   "start": 29.12,
+   "dur": 12.39,
+   "lines": [
+    {
+     "text": "For years, engineers wrote these combinations by hand.",
+     "start": 0.45,
+     "dur": 3.975
+    },
+    {
+     "text": "But with thousands of traits, the possible pairs explode",
+     "start": 4.745,
+     "dur": 3.775
+    },
+    {
+     "text": "past anything a person could ever list.",
+     "start": 8.84,
+     "dur": 2.8
+    }
+   ]
+  },
+  {
+   "id": "staircase",
+   "start": 41.51,
+   "dur": 13.915,
+   "lines": [
+    {
+     "text": "Big neural networks were supposed to find them on their own.",
+     "start": 0.45,
+     "dur": 3.825
+    },
+    {
+     "text": "But they build everything from straight pieces, so they're clumsy at multiplying.",
+     "start": 4.595,
+     "dur": 4.9
+    },
+    {
+     "text": "They grow huge, and slow, just to fake a curve.",
+     "start": 9.815,
+     "dur": 3.35
+    }
+   ]
+  },
+  {
+   "id": "synthetic",
+   "start": 55.425,
+   "dur": 15.54,
+   "lines": [
+    {
+     "text": "The authors tested this on hidden recipes with a known answer, built only from multiplied traits.",
+     "start": 0.45,
+     "dur": 6.275
+    },
+    {
+     "text": "A tiny cross network found them almost exactly.",
+     "start": 7.045,
+     "dur": 3.45
+    },
+    {
+     "text": "A plain neural network, even a far bigger one, still missed.",
+     "start": 10.815,
+     "dur": 3.975
+    }
+   ]
+  },
+  {
+   "id": "profiles",
+   "start": 70.965,
+   "dur": 12.345,
+   "lines": [
+    {
+     "text": "DCN V2 starts by turning each trait into a short profile of numbers.",
+     "start": 0.45,
+     "dur": 5.25
+    },
+    {
+     "text": "Madrid becomes a handful of values. So does English. So does eleven p.m.",
+     "start": 6.02,
+     "dur": 5.575
+    }
+   ]
+  },
+  {
+   "id": "lookup",
+   "start": 83.31,
+   "dur": 22.035,
+   "lines": [
+    {
+     "text": "Here's how a trait becomes a profile.",
+     "start": 0.45,
+     "dur": 2.6
+    },
+    {
+     "text": "Picture a row of switches, one for every city in the world. For Madrid, exactly one is on.",
+     "start": 3.37,
+     "dur": 6.225
+    },
+    {
+     "text": "Multiply that row by a big learned table, and the single switch simply picks out Madrid's column.",
+     "start": 9.915,
+     "dur": 6.15
+    },
+    {
+     "text": "So the math is just a lookup: the model reads Madrid's line from its notebook.",
+     "start": 16.385,
+     "dur": 4.9
+    }
+   ]
+  },
+  {
+   "id": "listen",
+   "start": 105.345,
+   "dur": 9.79,
+   "lines": [
+    {
+     "text": "Then comes the cross layer.",
+     "start": 0.45,
+     "dur": 2.075
+    },
+    {
+     "text": "First, every trait listens to all the others,",
+     "start": 2.845,
+     "dur": 3.125
+    },
+    {
+     "text": "with a learned sense of who matters to whom.",
+     "start": 6.29,
+     "dur": 2.75
+    }
+   ]
+  },
+  {
+   "id": "andgate",
+   "start": 115.135,
+   "dur": 12.04,
+   "lines": [
+    {
+     "text": "Then it multiplies that message back into the original trait.",
+     "start": 0.45,
+     "dur": 4.05
+    },
+    {
+     "text": "Multiplying works like the word 'and'.",
+     "start": 4.82,
+     "dur": 2.8
+    },
+    {
+     "text": "The light comes on only when both sides are switched on.",
+     "start": 7.94,
+     "dur": 3.35
+    }
+   ]
+  },
+  {
+   "id": "keep",
+   "start": 127.175,
+   "dur": 10.665,
+   "lines": [
+    {
+     "text": "Finally, it adds back what it already knew,",
+     "start": 0.45,
+     "dur": 2.9
+    },
+    {
+     "text": "so nothing learned earlier gets lost.",
+     "start": 3.67,
+     "dur": 2.675
+    },
+    {
+     "text": "Listen, combine, keep. That's the whole layer.",
+     "start": 6.665,
+     "dur": 3.25
+    }
+   ]
+  },
+  {
+   "id": "worked1",
+   "start": 137.84,
+   "dur": 28.76,
+   "lines": [
+    {
+     "text": "Let's run one layer with real numbers. Take two facts, Madrid and English: one if true, zero if not.",
+     "start": 0.45,
+     "dur": 6.95
+    },
+    {
+     "text": "Listening: Madrid's message is a little of itself, plus two times English. Those weights were learned.",
+     "start": 7.72,
+     "dur": 6.25
+    },
+    {
+     "text": "Combining: multiply that message by Madrid. Out pops two times Madrid times English: the traveller term.",
+     "start": 14.29,
+     "dur": 7.475
+    },
+    {
+     "text": "If she doesn't speak English, that term becomes zero. The pair only counts when both are true.",
+     "start": 22.085,
+     "dur": 5.925
+    }
+   ]
+  },
+  {
+   "id": "worked2",
+   "start": 166.6,
+   "dur": 18.91,
+   "lines": [
+    {
+     "text": "Now the two small extras.",
+     "start": 0.45,
+     "dur": 2.1
+    },
+    {
+     "text": "The bias adds a fixed nudge to the message, so after multiplying, Madrid alone still counts a little.",
+     "start": 2.87,
+     "dur": 6.5
+    },
+    {
+     "text": "And keep adds Madrid back, unchanged.",
+     "start": 9.69,
+     "dur": 2.875
+    },
+    {
+     "text": "So the layer's output is a sum of readable pieces, each with its own learned weight.",
+     "start": 12.885,
+     "dur": 5.275
+    }
+   ]
+  },
+  {
+   "id": "dials",
+   "start": 185.51,
+   "dur": 17.31,
+   "lines": [
+    {
+     "text": "This is version two for a reason.",
+     "start": 0.45,
+     "dur": 2.5
+    },
+    {
+     "text": "In the original, every trait heard the same single summary from the others.",
+     "start": 3.27,
+     "dur": 4.725
+    },
+    {
+     "text": "Version two gives every pair of traits its own dial,",
+     "start": 8.315,
+     "dur": 3.675
+    },
+    {
+     "text": "so Madrid with English can matter far more than Madrid with phone.",
+     "start": 12.31,
+     "dur": 4.25
+    }
+   ]
+  },
+  {
+   "id": "stack",
+   "start": 202.82,
+   "dur": 11.94,
+   "lines": [
+    {
+     "text": "Stack a second layer, and pairs become trios:",
+     "start": 0.45,
+     "dur": 3.35
+    },
+    {
+     "text": "Madrid, and English, and eleven p.m.: a late-night traveller.",
+     "start": 4.12,
+     "dur": 4.375
+    },
+    {
+     "text": "Each layer adds one more 'and'.",
+     "start": 8.815,
+     "dur": 2.375
+    }
+   ]
+  },
+  {
+   "id": "degree",
+   "start": 214.76,
+   "dur": 20.91,
+   "lines": [
+    {
+     "text": "Why does each layer add exactly one more 'and'?",
+     "start": 0.45,
+     "dur": 3.05
+    },
+    {
+     "text": "Because every layer multiplies by the original facts once more.",
+     "start": 3.82,
+     "dur": 4.525
+    },
+    {
+     "text": "Layer one makes Madrid times English. Layer two multiplies by eleven p.m. as well.",
+     "start": 8.665,
+     "dur": 6.275
+    },
+    {
+     "text": "So with L layers, the longest combination holds L plus one facts.",
+     "start": 15.26,
+     "dur": 4.9
+    }
+   ]
+  },
+  {
+   "id": "orders",
+   "start": 235.67,
+   "dur": 14.44,
+   "lines": [
+    {
+     "text": "There's a quiet detail in that keep step.",
+     "start": 0.45,
+     "dur": 2.625
+    },
+    {
+     "text": "Without it, two layers would only make trios, and forget the simple pairs and single facts.",
+     "start": 3.395,
+     "dur": 5.8
+    },
+    {
+     "text": "With it, every layer holds singles, pairs and trios at once.",
+     "start": 9.515,
+     "dur": 4.175
+    }
+   ]
+  },
+  {
+   "id": "deep",
+   "start": 250.11,
+   "dur": 17.435,
+   "lines": [
+    {
+     "text": "Cross layers are great at exact 'ands'. But some patterns are fuzzier.",
+     "start": 0.45,
+     "dur": 4.575
+    },
+    {
+     "text": "So DCN V2 hands its result to an ordinary deep network,",
+     "start": 5.345,
+     "dur": 4.7
+    },
+    {
+     "text": "or runs the two side by side and merges them.",
+     "start": 10.365,
+     "dur": 3.325
+    },
+    {
+     "text": "Which works better depends on the data.",
+     "start": 14.01,
+     "dur": 2.675
+    }
+   ]
+  },
+  {
+   "id": "table",
+   "start": 267.545,
+   "dur": 12.79,
+   "lines": [
+    {
+     "text": "And the learned weights form a table you can actually read.",
+     "start": 0.45,
+     "dur": 3.575
+    },
+    {
+     "text": "On movie ratings, it lit up the pairs that matter:",
+     "start": 4.345,
+     "dur": 3.35
+    },
+    {
+     "text": "which user, with which movie, and which user, with which gender.",
+     "start": 8.015,
+     "dur": 4.025
+    }
+   ]
+  },
+  {
+   "id": "themes",
+   "start": 280.335,
+   "dur": 13.44,
+   "lines": [
+    {
+     "text": "That table turned out to be mostly a few big themes.",
+     "start": 0.45,
+     "dur": 3.35
+    },
+    {
+     "text": "So DCN V2 squeezes traits into themes, then back out.",
+     "start": 4.12,
+     "dur": 4.45
+    },
+    {
+     "text": "At Google, a quarter of the size kept the full accuracy.",
+     "start": 8.89,
+     "dur": 3.8
+    }
+   ]
+  },
+  {
+   "id": "lowrank",
+   "start": 293.775,
+   "dur": 25.96,
+   "lines": [
+    {
+     "text": "Here's the squeeze in numbers.",
+     "start": 0.45,
+     "dur": 2.1
+    },
+    {
+     "text": "Say the model reads four hundred numbers about Maya. A full table of dials needs four hundred times four hundred: a hundred and sixty thousand.",
+     "start": 2.87,
+     "dur": 9.15
+    },
+    {
+     "text": "Instead, first score Maya on a hundred themes, then turn those scores back into messages.",
+     "start": 12.34,
+     "dur": 5.925
+    },
+    {
+     "text": "That's two thin tables of forty thousand each. Half the dials, and at Google, no accuracy lost.",
+     "start": 18.585,
+     "dur": 6.625
+    }
+   ]
+  },
+  {
+   "id": "experts",
+   "start": 319.735,
+   "dur": 9.595,
+   "lines": [
+    {
+     "text": "Then several small specialists each read the traits their own way,",
+     "start": 0.45,
+     "dur": 4.175
+    },
+    {
+     "text": "and a gate decides, for Maya, whose opinion counts most.",
+     "start": 4.945,
+     "dur": 3.9
+    }
+   ]
+  },
+  {
+   "id": "mixmath",
+   "start": 329.33,
+   "dur": 16.44,
+   "lines": [
+    {
+     "text": "In symbols, each specialist is one of these thin squeezes.",
+     "start": 0.45,
+     "dur": 3.95
+    },
+    {
+     "text": "The gate gives each one a weight between zero and one, based on Maya's traits.",
+     "start": 4.72,
+     "dur": 4.9
+    },
+    {
+     "text": "Their weighted messages are added up, and, as always, what the layer already knew is kept.",
+     "start": 9.94,
+     "dur": 5.75
+    }
+   ]
+  },
+  {
+   "id": "chance",
+   "start": 345.77,
+   "dur": 12.515,
+   "lines": [
+    {
+     "text": "Everything ends in one number: the chance she taps.",
+     "start": 0.45,
+     "dur": 3.425
+    },
+    {
+     "text": "When the model is confidently wrong, it pays the biggest penalty,",
+     "start": 4.195,
+     "dur": 4.3
+    },
+    {
+     "text": "so it learns to be honest about what it knows.",
+     "start": 8.815,
+     "dur": 2.95
+    }
+   ]
+  },
+  {
+   "id": "sigmoid",
+   "start": 358.285,
+   "dur": 21.76,
+   "lines": [
+    {
+     "text": "How does a score become a chance?",
+     "start": 0.45,
+     "dur": 2.25
+    },
+    {
+     "text": "The model adds everything into one score, which could be any number at all.",
+     "start": 3.02,
+     "dur": 4.575
+    },
+    {
+     "text": "An S-shaped squeeze turns it into a percentage. A score of zero means fifty-fifty.",
+     "start": 7.915,
+     "dur": 5.55
+    },
+    {
+     "text": "Plus two becomes eighty-eight percent. Minus two, twelve percent. It never quite reaches zero or a hundred.",
+     "start": 13.785,
+     "dur": 7.225
+    }
+   ]
+  },
+  {
+   "id": "logloss",
+   "start": 380.045,
+   "dur": 23.935,
+   "lines": [
+    {
+     "text": "And here's the penalty in numbers. Suppose Maya does tap.",
+     "start": 0.45,
+     "dur": 4.0
+    },
+    {
+     "text": "If the model said ninety percent, the penalty is small: about a tenth.",
+     "start": 4.77,
+     "dur": 4.75
+    },
+    {
+     "text": "Fifty percent costs zero point seven. Ten percent costs two point three.",
+     "start": 9.84,
+     "dur": 5.025
+    },
+    {
+     "text": "Averaged over billions of examples, plus a small tax on oversized dials, that's the one score training pushes down.",
+     "start": 15.185,
+     "dur": 8.0
+    }
+   ]
+  },
+  {
+   "id": "race",
+   "start": 403.98,
+   "dur": 20.585,
+   "lines": [
+    {
+     "text": "Then, a fair race. On Criteo, forty-five million real ad clicks,",
+     "start": 0.45,
+     "dur": 5.025
+    },
+    {
+     "text": "every model was tuned carefully and trained five times.",
+     "start": 5.795,
+     "dur": 3.9
+    },
+    {
+     "text": "DCN V2 came out on top, where even a thousandth counts.",
+     "start": 10.015,
+     "dur": 4.225
+    },
+    {
+     "text": "And the mixture version cut the cost by about thirty percent, at the same accuracy.",
+     "start": 14.56,
+     "dur": 5.275
+    }
+   ]
+  },
+  {
+   "id": "result",
+   "start": 424.565,
+   "dur": 12.915,
+   "lines": [
+    {
+     "text": "On Google's own traffic, hundreds of billions of examples,",
+     "start": 0.45,
+     "dur": 4.125
+    },
+    {
+     "text": "it improved ranking by zero point six percent,",
+     "start": 4.895,
+     "dur": 3.2
+    },
+    {
+     "text": "where just zero point one already counts as a real win.",
+     "start": 8.415,
+     "dur": 3.75
+    }
+   ]
+  },
+  {
+   "id": "lessons",
+   "start": 437.48,
+   "dur": 19.285,
+   "lines": [
+    {
+     "text": "Running it at Google taught a few lessons.",
+     "start": 0.45,
+     "dur": 2.775
+    },
+    {
+     "text": "Put the cross layers right next to the raw inputs, where traits still mean something.",
+     "start": 3.545,
+     "dur": 4.925
+    },
+    {
+     "text": "One or two layers are enough; after that, the gains level off.",
+     "start": 8.79,
+     "dur": 4.1
+    },
+    {
+     "text": "And stacking finds deeper combinations, while side by side finds different ones.",
+     "start": 13.21,
+     "dur": 5.325
+    }
+   ]
+  },
+  {
+   "id": "budget",
+   "start": 456.765,
+   "dur": 16.74,
+   "lines": [
+    {
+     "text": "One finding surprised even the authors.",
+     "start": 0.45,
+     "dur": 2.875
+    },
+    {
+     "text": "With the same memory budget, a network made only of cross layers beat the usual kind, every time.",
+     "start": 3.645,
+     "dur": 6.65
+    },
+    {
+     "text": "Maybe, they suggest, cross layers could replace those layers in other models too.",
+     "start": 10.615,
+     "dur": 5.375
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "start": 473.505,
+   "dur": 9.17,
+   "lines": [
+    {
+     "text": "Back to Maya: a traveller, late at night, on her phone.",
+     "start": 0.45,
+     "dur": 3.8
+    },
+    {
+     "text": "The shopkeeper's hunch, now learned, for billions of people.",
+     "start": 4.57,
+     "dur": 3.85
+    }
+   ]
+  }
+ ]
+}

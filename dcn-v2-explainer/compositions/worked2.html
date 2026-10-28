@@ -1,0 +1,40 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #w2-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #w2-l1 { position: absolute; left: 110px; top: 230px; font-size: 72px; }
+    #w2-l2 { position: absolute; left: 110px; top: 520px; font-size: 72px; }
+    #w2-note { position: absolute; left: 110px; top: 900px; width: 1700px; font-weight: 800; font-size: 32px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="worked2" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="w2-title" class="disp">The two small extras</div>
+    <div id="w2-l1" class="eq">
+      <span class="t">message = 0.1·M + 2·E</span><span class="t" id="w2-bias">+ 0.5<span class="u"></span><span class="w">bias: a fixed nudge</span></span>
+    </div>
+    <div id="w2-l2" class="eq">
+      <span class="t">out =</span><span class="t" id="w2-t1">0.1·M·M<span class="u"></span><span class="w">itself</span></span><span class="t red" id="w2-t2">+ 2·M·E<span class="u"></span><span class="w">the pair</span></span><span class="t" id="w2-t3">+ 0.5·M<span class="u"></span><span class="w">alone, a little</span></span><span class="t" id="w2-t4">+ M<span class="u"></span><span class="w">kept</span></span>
+    </div>
+    <div id="w2-note" data-hold>M = Madrid, E = English. out = Madrid × message + Madrid. Every weight is learned; these are example values.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#w2-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#w2-l1 .t:first-child", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.4);
+    tl.set(["#w2-l1 .u", "#w2-l1 .w", "#w2-l2 .u", "#w2-l2 .w"], { opacity: 0 }, 0);
+    // the bias nudge, and what it becomes after multiplying by Madrid
+    tl.fromTo("#w2-bias", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 3.6);
+    tl.to(["#w2-bias .u", "#w2-bias .w"], { opacity: 1, duration: 0.2 }, 4.2);
+    tl.fromTo(["#w2-l2 .t:first-child", "#w2-t1", "#w2-t2"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.25 }, 5.6);
+    tl.fromTo("#w2-t3", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 7.0);
+    tl.to(["#w2-t3 .u", "#w2-t3 .w"], { opacity: 1, duration: 0.2 }, 7.6);
+    // keep
+    tl.fromTo("#w2-t4", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 10.1);
+    tl.to(["#w2-t4 .u", "#w2-t4 .w"], { opacity: 1, duration: 0.2 }, 10.5);
+    // every piece readable
+    tl.to(["#w2-t1 .u", "#w2-t1 .w"], { opacity: 1, duration: 0.2 }, 13.4);
+    tl.to(["#w2-t2 .u", "#w2-t2 .w"], { opacity: 1, duration: 0.2 }, 13.8);
+    tl.fromTo("#w2-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.4);
+    window.__timelines["worked2"] = tl;
+  </script>
+</template>

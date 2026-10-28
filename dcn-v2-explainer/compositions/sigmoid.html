@@ -1,0 +1,65 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #sg-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #sg-plot { position: absolute; left: 110px; top: 190px; width: 1200px; height: 760px; }
+    .sg-lbl { position: absolute; font-weight: 900; font-size: 34px; }
+    .sg-call { position: absolute; font-family: var(--font-display); font-size: 48px; }
+    #sg-f { position: absolute; left: 1340px; top: 300px; width: 500px; }
+    #sg-f .eq { font-size: 34px; }
+    #sg-f .lbl { font-size: 32px; color: #3d3024; margin-top: 12px; }
+    #sg-never { position: absolute; left: 1360px; top: 620px; width: 480px; font-weight: 900; font-size: 38px; }
+  </style>
+  <div id="root" data-composition-id="sigmoid" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="sg-title" class="disp">Score → chance</div>
+    <svg id="sg-plot" viewBox="0 0 1200 760">
+      <line x1="60" y1="680" x2="1180" y2="680" stroke="#221c16" stroke-width="5"/>
+      <line x1="620" y1="40" x2="620" y2="680" stroke="#221c16" stroke-width="3" stroke-dasharray="8 10" opacity="0.5"/>
+      <line id="sg-top" x1="60" y1="80" x2="1180" y2="80" stroke="#6b5a44" stroke-width="3" stroke-dasharray="10 10"/>
+      <g id="sg-ticks" font-family="Nunito" font-weight="900" font-size="30" fill="#221c16" text-anchor="middle"></g>
+      <path id="sg-curve" fill="none" stroke="#b52a1f" stroke-width="10" stroke-linecap="round"/>
+      <g id="sg-dots"></g>
+      <circle id="sg-m" r="16" cy="680" cx="620" fill="#221c16"/>
+    </svg>
+    <div class="sg-lbl" style="left:130px;top:250px">100%</div>
+    <div class="sg-lbl" style="left:620px;top:965px">score (any number)</div>
+    <div class="sg-call" id="sg-c0" style="left:470px;top:470px">0 → 50%</div>
+    <div class="sg-call" id="sg-c1" style="left:950px;top:380px;color:var(--red)">+2 → 88%</div>
+    <div class="sg-call" id="sg-c2" style="left:240px;top:730px">−2 → 12%</div>
+    <div id="sg-f"><div class="eq">chance = 1 / (1 + e<sup>−score</sup>)</div><div class="lbl">the S-shaped squeeze (a “sigmoid”)</div></div>
+    <div id="sg-never">never quite 0%, never quite 100%</div>
+  </div>
+  <script>
+    (function () {
+      const X = (s) => 620 + s * 93, Y = (p) => 680 - p * 600;
+      let d = "";
+      for (let i = 0; i <= 120; i++) { const s = -6 + i / 10; d += (i ? "L" : "M") + X(s).toFixed(1) + " " + Y(1 / (1 + Math.exp(-s))).toFixed(1); }
+      document.getElementById("sg-curve").setAttribute("d", d);
+      let t = "";
+      for (let s = -6; s <= 6; s += 2) t += `<line x1="${X(s)}" y1="680" x2="${X(s)}" y2="696" stroke="#221c16" stroke-width="4"/><text x="${X(s)}" y="732">${s > 0 ? "+" + s : s}</text>`;
+      document.getElementById("sg-ticks").innerHTML = t;
+      let dots = "";
+      [[0, "sg-d0"], [2, "sg-d1"], [-2, "sg-d2"]].forEach(([s, id]) => {
+        const p = 1 / (1 + Math.exp(-s));
+        dots += `<g id="${id}"><line x1="${X(s)}" y1="680" x2="${X(s)}" y2="${Y(p)}" stroke="#221c16" stroke-width="4" stroke-dasharray="8 8"/>
+          <circle cx="${X(s)}" cy="${Y(p)}" r="18" fill="#f6e9cc" stroke="#221c16" stroke-width="6"/></g>`;
+      });
+      document.getElementById("sg-dots").innerHTML = dots;
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#sg-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo(["#sg-plot", ".sg-lbl"], { opacity: 0 }, { opacity: 1, duration: 0.4 }, 3.0);
+    // a score can be anything: the marker slides along the number line
+    tl.fromTo("#sg-m", { attr: { cx: 620 } }, { attr: { cx: 1040 }, duration: 1.4, ease: "power2.inOut" }, 4.6);
+    tl.to("#sg-m", { attr: { cx: 200 }, duration: 1.6, ease: "power2.inOut" }, 6.0);
+    tl.to("#sg-m", { opacity: 0, duration: 0.2 }, 7.7);
+    tl.fromTo("#sg-curve", { strokeDasharray: 1700, strokeDashoffset: 1700 }, { strokeDashoffset: 0, duration: 1.3, ease: "power2.inOut" }, 8.3);
+    tl.fromTo("#sg-f", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 9.6);
+    tl.fromTo(["#sg-d0", "#sg-c0"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 11.9);
+    tl.fromTo(["#sg-d1", "#sg-c1"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.2);
+    tl.fromTo(["#sg-d2", "#sg-c2"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, 16.4);
+    tl.fromTo("#sg-never", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 18.4);
+    window.__timelines["sigmoid"] = tl;
+  </script>
+</template>

@@ -1,0 +1,79 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #dl-title { position: absolute; left: 110px; top: 70px; font-size: 80px; }
+    #dl-title em { font-style: normal; color: var(--red); }
+    #dl-v1 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #dl-v1cap { position: absolute; left: 110px; top: 200px; font-weight: 900; font-size: 44px; }
+    .dl-chip { position: absolute; top: 800px; width: 280px; height: 120px; font-size: 42px; }
+    #dl-v2 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #dl-v2cap { position: absolute; left: 110px; top: 200px; font-weight: 900; font-size: 44px; }
+    #dl-grid { position: absolute; left: 560px; top: 270px; }
+    .dl-h { position: absolute; font-weight: 900; font-size: 32px; text-align: center; width: 160px; }
+    .dl-r { position: absolute; font-weight: 900; font-size: 32px; text-align: right; width: 140px; }
+    .dl-note { position: absolute; left: 1420px; width: 440px; font-weight: 900; font-size: 38px; }
+  </style>
+  <div id="root" data-composition-id="dials" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="dl-title" class="disp">Version 1 <em>→</em> Version 2</div>
+    <div id="dl-v1">
+      <div id="dl-v1cap">Version 1: one summary for everyone</div>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+        <g id="dl-lines" stroke="#221c16" stroke-width="5" fill="none">
+          <path d="M960 560 C960 680 330 680 330 790"/><path d="M960 560 C960 680 750 680 750 790"/>
+          <path d="M960 560 C960 680 1170 680 1170 790"/><path d="M960 560 C960 680 1590 680 1590 790"/>
+        </g>
+        <circle cx="960" cy="420" r="130" fill="#f6e9cc" stroke="#221c16" stroke-width="8"/>
+        <line id="dl-bign" x1="960" y1="420" x2="960" y2="320" stroke="#b52a1f" stroke-width="14" stroke-linecap="round"/>
+        <circle cx="960" cy="420" r="16" fill="#221c16"/>
+      </svg>
+      <div class="tag dl-chip" style="left:190px">Madrid</div>
+      <div class="tag dl-chip" style="left:610px">English</div>
+      <div class="tag dl-chip" style="left:1030px">11 pm</div>
+      <div class="tag dl-chip" style="left:1450px">Phone</div>
+    </div>
+    <div id="dl-v2">
+      <div id="dl-v2cap">Version 2: a dial for every pair</div>
+      <div id="dl-grid"></div>
+      <div class="dl-note" id="dl-n1" style="top:330px; color:var(--red)">Madrid × English: turned way up</div>
+      <div class="dl-note" id="dl-n2" style="top:560px">Madrid × Phone: barely matters</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const names = ["Madrid", "English", "11 pm", "Phone"];
+      // needle angle per pair, -120 (low) .. +120 (high); illustrative except the Madrid-English story
+      const A = [[-60, 110, 30, -100], [110, -50, -10, -90], [30, -10, -70, 0], [-100, -90, 0, -80]];
+      const g = document.getElementById("dl-grid");
+      let h = "";
+      names.forEach((n, j) => (h += `<div class="dl-h" style="left:${150 + j * 170}px;top:0">${n}</div>`));
+      names.forEach((n, i) => {
+        h += `<div class="dl-r" style="left:0;top:${70 + i * 170 + 60}px">${n}</div>`;
+        for (let j = 0; j < 4; j++) {
+          const hot = i === 0 && j === 1;
+          h += `<svg class="dl-d" style="position:absolute;left:${160 + j * 170}px;top:${60 + i * 170}px" width="150" height="150" viewBox="0 0 150 150">
+            <circle cx="75" cy="75" r="62" fill="#f6e9cc" stroke="${hot ? "#b52a1f" : "#221c16"}" stroke-width="${hot ? 10 : 6}"/>
+            <line class="dl-n" data-a="${A[i][j]}" x1="75" y1="75" x2="75" y2="25" stroke="${hot ? "#b52a1f" : "#221c16"}" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="75" cy="75" r="8" fill="#221c16"/></svg>`;
+        }
+      });
+      g.innerHTML = h;
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#dl-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#dl-v1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 3.2);
+    tl.fromTo("#dl-v1cap", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.5);
+    tl.fromTo("#dl-lines path", { strokeDasharray: 900, strokeDashoffset: 900 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut", stagger: 0.12 }, 5.2);
+    tl.fromTo("#dl-bign", { rotation: -60, svgOrigin: "960 420" }, { rotation: 20, duration: 1.0, ease: "power3.inOut" }, 4.4);
+    // every pair gets its own dial
+    tl.to("#dl-v1", { opacity: 0, filter: "blur(8px)", duration: 0.25, ease: "power3.in" }, 8.2);
+    tl.fromTo("#dl-v2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.45);
+    tl.fromTo("#dl-grid .dl-d", { scale: 0.5, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.6)", stagger: 0.05 }, 8.6);
+    document.querySelectorAll("#dl-grid .dl-n").forEach((n) => {
+      tl.fromTo(n, { rotation: 0, svgOrigin: "75 75" }, { rotation: +n.dataset.a, duration: 0.9, ease: "power3.inOut" }, 10.0);
+    });
+    tl.fromTo("#dl-n1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 13.6);
+    tl.fromTo("#dl-n2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 15.4);
+    window.__timelines["dials"] = tl;
+  </script>
+</template>

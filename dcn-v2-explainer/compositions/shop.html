@@ -1,0 +1,72 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #sh-counter { position: absolute; left: 0; right: 0; top: 830px; bottom: 0; background: #8a5a33; border-top: 16px solid #6e4526; }
+    #sh-keeper { position: absolute; left: 1330px; top: 250px; width: 500px; height: 600px; }
+    #sh-bubble { position: absolute; left: 1150px; top: 120px; background: #fff; border: 4px solid var(--ink); border-radius: 30px;
+      padding: 22px 34px; font-weight: 800; font-size: 40px; }
+    #sh-bubble::after { content: ""; position: absolute; right: 120px; bottom: -30px; width: 36px; height: 36px; background: #fff;
+      border-right: 4px solid var(--ink); border-bottom: 4px solid var(--ink); transform: rotate(45deg); }
+    #sh-line { position: absolute; left: 80px; top: 130px; width: 1340px; height: 6px; background: var(--string); border-radius: 3px; }
+    .sh-q { position: absolute; font-family: var(--font-display); font-size: 120px; color: #a08a6a; }
+    .sh-note { position: absolute; font-weight: 800; font-size: 36px; color: #6b5a44; }
+    #sh-x { position: absolute; left: 548px; top: 470px; font-family: var(--font-display); font-size: 130px; color: var(--red); }
+    #sh-cross { position: absolute; left: 90px; top: 900px; color: var(--tag); font-size: 70px; }
+    #sh-cross em { font-style: normal; color: var(--lamp); }
+  </style>
+  <div id="root" data-composition-id="shop" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <svg id="sh-keeper" viewBox="0 0 500 600">
+      <path d="M60 600 C60 420 130 360 250 360 C370 360 440 420 440 600 Z" fill="#3d5a80" stroke="#221c16" stroke-width="6"/>
+      <path d="M170 380 L330 380 L350 600 L150 600 Z" fill="#f6e9cc" stroke="#221c16" stroke-width="6"/>
+      <rect x="215" y="300" width="70" height="80" fill="#c98f63" stroke="#221c16" stroke-width="6"/>
+      <circle cx="250" cy="220" r="115" fill="#c98f63" stroke="#221c16" stroke-width="6"/>
+      <path d="M140 200 C140 100 360 90 362 200 C330 150 180 150 140 200 Z" fill="#9aa0a6" stroke="#221c16" stroke-width="6"/>
+      <circle cx="205" cy="230" r="30" fill="none" stroke="#221c16" stroke-width="7"/>
+      <circle cx="295" cy="230" r="30" fill="none" stroke="#221c16" stroke-width="7"/>
+      <line x1="235" y1="230" x2="265" y2="230" stroke="#221c16" stroke-width="7"/>
+      <circle cx="205" cy="232" r="7" fill="#221c16"/><circle cx="295" cy="232" r="7" fill="#221c16"/>
+      <path d="M200 285 C230 300 270 300 300 285 C290 310 210 310 200 285 Z" fill="#9aa0a6" stroke="#221c16" stroke-width="5"/>
+    </svg>
+    <div id="sh-counter"></div>
+    <div id="sh-bubble">I know what she'll want.</div>
+    <div id="sh-line"></div>
+    <div class="tag" id="sh-t1" style="left:120px;top:150px"><span class="k">CITY</span>Madrid</div>
+    <div class="tag" id="sh-t2" style="left:420px;top:150px"><span class="k">LANGUAGE</span>English</div>
+    <div class="tag" id="sh-t3" style="left:740px;top:150px"><span class="k">TIME</span>11 pm</div>
+    <div class="tag" id="sh-t4" style="left:1060px;top:150px"><span class="k">DEVICE</span>Phone</div>
+    <div class="sh-q" id="sh-q1" style="left:150px;top:620px">?</div>
+    <div class="sh-note" id="sh-n1" style="left:240px;top:680px">locals live there too</div>
+    <div class="sh-q" id="sh-q2" style="left:700px;top:620px">?</div>
+    <div class="sh-note" id="sh-n2" style="left:790px;top:680px">so do millions of others</div>
+    <div id="sh-x">×</div>
+    <div class="stamp" id="sh-stamp" style="left:300px;top:650px">TRAVELLER</div>
+    <div id="sh-cross" class="disp">Madrid × English = a <em>feature cross</em></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#sh-keeper", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, 0.0);
+    tl.fromTo("#sh-bubble", { scale: 0.6, opacity: 0, transformOrigin: "80% 100%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.8);
+    tl.to("#sh-bubble", { opacity: 0, duration: 0.2, ease: "power3.in" }, 3.0);
+    // facts hang on the line
+    tl.fromTo("#sh-line", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 3.0);
+    ["#sh-t1", "#sh-t2", "#sh-t3", "#sh-t4"].forEach((id, i) => {
+      tl.fromTo(id, { y: -260, rotation: 0, opacity: 0 }, { y: 0, rotation: [-3, 4, -2, 3][i], opacity: 1, duration: 0.7, ease: "back.out(1.4)" }, 3.4 + i * 0.25);
+    });
+    // Madrid alone
+    tl.to("#sh-t1", { x: 30, y: 300, rotation: -2, duration: 0.6, ease: "power2.inOut" }, 7.1);
+    tl.fromTo(["#sh-q1", "#sh-n1"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", stagger: 0.12 }, 7.7);
+    // English alone
+    tl.to("#sh-t2", { x: 180, y: 300, rotation: 2, duration: 0.6, ease: "power2.inOut" }, 9.0);
+    tl.fromTo(["#sh-q2", "#sh-n2"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", stagger: 0.12 }, 9.5);
+    // together
+    tl.to(["#sh-q1", "#sh-n1", "#sh-q2", "#sh-n2"], { opacity: 0, duration: 0.2, ease: "power3.in" }, 11.2);
+    tl.to("#sh-t1", { x: 90, y: 300, rotation: 0, duration: 0.6, ease: "power3.inOut" }, 11.4);
+    tl.to("#sh-t2", { x: 220, y: 300, rotation: 0, duration: 0.6, ease: "power3.inOut" }, 11.4);
+    tl.fromTo("#sh-x", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 12.0);
+    tl.fromTo("#sh-stamp", { opacity: 0, scale: 1.5, rotation: -6 }, { opacity: 1, duration: 0.01 }, 13.89);
+    tl.to("#sh-stamp", { scale: 1, duration: 0.14, ease: "power4.out" }, 13.9);
+    tl.fromTo("#sh-cross", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 16.0);
+    window.__timelines["shop"] = tl;
+  </script>
+</template>

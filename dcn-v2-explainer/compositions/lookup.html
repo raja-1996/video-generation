@@ -1,0 +1,60 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #lk-title { position: absolute; left: 110px; top: 60px; font-size: 72px; }
+    #lk-row { position: absolute; left: 110px; top: 210px; }
+    .lk-sw { position: absolute; top: 50px; width: 104px; height: 90px; border: 4px solid var(--ink); border-radius: 12px; background: var(--tag);
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 44px; }
+    .lk-city { position: absolute; top: 0; width: 104px; text-align: center; font-weight: 900; font-size: 28px; }
+    #lk-e { position: absolute; left: 1560px; top: 260px; font-weight: 900; font-size: 34px; width: 300px; }
+    #lk-mat { position: absolute; left: 110px; top: 430px; }
+    .lk-cell { position: absolute; width: 104px; height: 74px; border: 3px solid #6b5a44; border-radius: 6px; }
+    #lk-matl { position: absolute; left: 1560px; top: 520px; width: 300px; font-weight: 900; font-size: 34px; }
+    #lk-col { position: absolute; border: 8px solid var(--red); border-radius: 12px; }
+    #lk-eq { position: absolute; left: 110px; top: 880px; font-size: 64px; }
+    #lk-eq em { font-style: normal; color: var(--red); }
+  </style>
+  <div id="root" data-composition-id="lookup" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="lk-title" class="disp">Trait → profile, in math</div>
+    <div id="lk-row"></div>
+    <div id="lk-e">e: one switch per city<br/><span style="color:var(--red)">only Madrid's is on</span></div>
+    <div id="lk-mat"></div>
+    <div id="lk-col"></div>
+    <div id="lk-matl">W: a learned table,<br/>one column per city</div>
+    <div id="lk-eq" class="disp" data-hold>W · e = <em>Madrid's column</em> = Madrid's profile</div>
+  </div>
+  <script>
+    (function () {
+      const cities = ["Lisbon", "Paris", "Madrid", "Rome", "Berlin", "Oslo", "Cairo", "Tokyo", "Lima", "Delhi", "Seoul", "…"];
+      const row = document.getElementById("lk-row"), mat = document.getElementById("lk-mat");
+      let s = 1;
+      const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+      cities.forEach((c, j) => {
+        const x = j * 118;
+        row.insertAdjacentHTML("beforeend", `<div class="lk-city" style="left:${x}px">${c}</div>
+          <div class="lk-sw" id="lk-s${j}" style="left:${x}px">${c === "…" ? "…" : j === 2 ? "1" : "0"}</div>`);
+        for (let i = 0; i < 5; i++) {
+          const v = rnd(), sh = Math.round(240 - v * 170);
+          mat.insertAdjacentHTML("beforeend", `<div class="lk-cell lk-c${j}" style="left:${x}px;top:${i * 84}px;background:rgb(${sh + 6},${sh - 8},${Math.max(0, sh - 36)})"></div>`);
+        }
+      });
+      const col = document.getElementById("lk-col");
+      col.style.left = 110 + 2 * 118 - 12 + "px"; col.style.top = 430 - 12 + "px"; col.style.width = "128px"; col.style.height = 5 * 84 + 14 + "px";
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#lk-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#lk-row > *", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out", stagger: 0.04 }, 3.4);
+    tl.fromTo("#lk-s2", { backgroundColor: "#f6e9cc" }, { backgroundColor: "#f5b921", duration: 0.15 }, 7.6);
+    tl.fromTo("#lk-e", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.8);
+    tl.fromTo("#lk-mat .lk-cell", { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.01 }, 10.0);
+    tl.fromTo("#lk-matl", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.6);
+    // the one switch picks out one column
+    tl.set("#lk-col", { opacity: 0 }, 0);
+    tl.to("#lk-mat .lk-cell:not(.lk-c2)", { opacity: 0.22, duration: 0.4, ease: "power2.inOut" }, 13.6);
+    tl.to("#lk-row .lk-sw:not(#lk-s2)", { opacity: 0.35, duration: 0.4 }, 13.6);
+    tl.fromTo("#lk-col", { opacity: 0, scale: 1.2 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 13.8);
+    tl.fromTo("#lk-eq", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 16.9);
+    window.__timelines["lookup"] = tl;
+  </script>
+</template>

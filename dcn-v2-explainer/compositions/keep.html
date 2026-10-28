@@ -1,0 +1,74 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    .kp-row { position: absolute; left: 380px; width: 1160px; height: 190px; }
+    .kp-row .lbl { position: absolute; left: 0; top: 0; font-size: 36px; }
+    .kp-strip { position: absolute; left: 0; right: 0; top: 52px; height: 130px; background: var(--tag); border: 4px solid var(--ink); border-radius: 14px; }
+    .kp-strip .mid { position: absolute; left: 0; right: 0; top: 50%; height: 3px; background: #6b5a44; }
+    .kp-b { position: absolute; width: 60px; border-radius: 4px; }
+    .kp-op { position: absolute; left: 920px; font-family: var(--font-display); font-size: 96px; }
+    #kp-eq { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-family: var(--font-display); font-size: 120px; white-space: nowrap; }
+    #kp-eq span { display: inline-block; position: relative; padding: 0 10px; }
+    #kp-eq i { font-style: normal; font-size: 0.55em; vertical-align: -0.35em; }
+    .kp-w { position: absolute; left: 50%; top: 170px; transform: translateX(-50%); font-family: var(--font-body); font-weight: 900; font-size: 56px; white-space: nowrap; }
+    .kp-u { position: absolute; left: 6px; right: 6px; top: 150px; height: 10px; border-radius: 5px; background: var(--ink); }
+    #kp-out { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-weight: 800; font-size: 40px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="keep" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="kp-sum">
+      <div class="kp-row" id="kp-r1" style="top:90px"><div class="lbl">Combined, from this layer</div><div class="kp-strip"><div class="mid"></div></div></div>
+      <div class="kp-op" id="kp-plus" style="top:268px">+</div>
+      <div class="kp-row" id="kp-r2" style="top:380px"><div class="lbl">What it already knew</div><div class="kp-strip"><div class="mid"></div></div></div>
+      <div class="kp-op" id="kp-eqs" style="top:558px">=</div>
+      <div class="kp-row" id="kp-r3" style="top:670px"><div class="lbl">Passed on: nothing lost</div><div class="kp-strip"><div class="mid"></div></div></div>
+    </div>
+    <div id="kp-formula">
+      <div id="kp-eq"><span id="kp-e0">next =</span><span id="kp-e1">x<i>0</i> ⊙</span><span id="kp-e2">(W·x + b)</span><span id="kp-e3">+ x</span></div>
+      <div id="kp-out">the whole cross layer, in one line</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const a = [0.9, -0.3, 0.7, 0.1, -0.8, 0.6, 0.2, 0.9, -0.5, 0.4, 0.8, -0.2];
+      const b = [0.8, 0.6, -0.2, 0.9, 0.7, 0.1, -0.9, 0.9, 0.3, -0.6, 0.85, 0.5];
+      const c = a.map((v, i) => v * b[i]);
+      const keep = [0.3, -0.5, 0.4, 0.2, -0.3, 0.5, 0.4, 0.2, -0.4, 0.3, 0.2, -0.3];
+      const sum = c.map((v, i) => Math.max(-1, Math.min(1, v + keep[i])));
+      [[c, "#kp-r1", "#b52a1f"], [keep, "#kp-r2", "#221c16"], [sum, "#kp-r3", "#221c16"]].forEach(([vals, id, col]) => {
+        const strip = document.querySelector(id + " .kp-strip");
+        vals.forEach((v, i) => {
+          const el = document.createElement("div"); el.className = "kp-b";
+          const h = Math.abs(v) * 56;
+          el.style.left = 30 + i * 92 + "px"; el.style.height = h + "px";
+          el.style.top = v >= 0 ? `calc(50% - ${h}px)` : "calc(50% + 3px)";
+          el.style.background = v >= 0 ? col : "#7a4e25";
+          strip.appendChild(el);
+        });
+      });
+      // underlines and words for each part of the formula
+      [["kp-e1", "combine", "#221c16"], ["kp-e2", "listen", "#221c16"], ["kp-e3", "keep", "#221c16"]].forEach(([id, w], n) => {
+        const el = document.getElementById(id);
+        el.insertAdjacentHTML("beforeend", `<div class="kp-u" id="${id}-u"></div><div class="kp-w" id="${id}-w">${w}</div>`);
+      });
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#kp-r1", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.2);
+    tl.fromTo("#kp-r2", { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 1.6);
+    tl.fromTo("#kp-plus", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 2.3);
+    tl.fromTo(["#kp-eqs", "#kp-r3"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.15 }, 3.7);
+    tl.fromTo("#kp-r3 .kp-b", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.4, ease: "expo.out", stagger: 0.04 }, 4.0);
+    // the whole layer in one line: each part named as it is spoken
+    tl.to("#kp-sum", { opacity: 0, filter: "blur(8px)", duration: 0.25, ease: "power3.in" }, 6.1);
+    tl.fromTo("#kp-eq span", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out", stagger: 0.07 }, 6.3);
+    tl.set([".kp-w", ".kp-u"], { opacity: 0 }, 0);
+    tl.fromTo("#kp-e2-u", { scaleX: 0 }, { scaleX: 1, opacity: 1, duration: 0.25, ease: "power3.out" }, 6.75);
+    tl.to("#kp-e2-w", { opacity: 1, duration: 0.15 }, 6.75);
+    tl.fromTo("#kp-e1-u", { scaleX: 0 }, { scaleX: 1, opacity: 1, duration: 0.25, ease: "power3.out" }, 7.35);
+    tl.to("#kp-e1-w", { opacity: 1, duration: 0.15 }, 7.35);
+    tl.fromTo("#kp-e3-u", { scaleX: 0 }, { scaleX: 1, opacity: 1, duration: 0.25, ease: "power3.out" }, 7.95);
+    tl.to("#kp-e3-w", { opacity: 1, duration: 0.15 }, 7.95);
+    tl.fromTo("#kp-out", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.6);
+    window.__timelines["keep"] = tl;
+  </script>
+</template>
