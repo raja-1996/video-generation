@@ -1,0 +1,67 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #th-bars { position: absolute; left: 110px; top: 210px; width: 720px; height: 460px; border-bottom: 5px solid var(--ink); }
+    .th-bar { position: absolute; bottom: 0; width: 34px; border-radius: 4px 4px 0 0; transform-origin: 50% 100%; }
+    #th-bl { position: absolute; left: 110px; top: 690px; font-weight: 800; font-size: 36px; width: 720px; }
+    #th-big { position: absolute; left: 110px; top: 110px; font-size: 64px; }
+    #th-big em { font-style: normal; color: var(--red); }
+    #th-hg { position: absolute; left: 930px; top: 150px; width: 900px; height: 620px; }
+    .th-cap { position: absolute; font-weight: 900; font-size: 36px; text-align: center; width: 240px; }
+    #th-quarter { position: absolute; left: 110px; top: 830px; display: flex; align-items: center; gap: 40px; }
+    #th-quarter .stamp { position: relative; font-size: 110px; padding: 0 30px; }
+    #th-quarter .disp { font-size: 64px; }
+    #th-quarter .lbl { font-size: 34px; color: #3d3024; margin-top: 6px; }
+  </style>
+  <div id="root" data-composition-id="themes" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="th-big" class="disp">A <em>few</em> themes carry it</div>
+    <div id="th-bars"></div>
+    <div id="th-bl">How much of the table each theme explains</div>
+    <svg id="th-hg" viewBox="0 0 900 620"></svg>
+    <div class="th-cap" id="th-c1" style="left:930px;top:770px">traits</div>
+    <div class="th-cap" id="th-c2" style="left:1260px;top:770px">themes</div>
+    <div class="th-cap" id="th-c3" style="left:1590px;top:770px">traits</div>
+    <div id="th-quarter" data-hold>
+      <div class="stamp" id="th-stamp">¼</div>
+      <div><div class="disp">the size, same accuracy</div><div class="lbl">Google's lesson: rank = a quarter of the input size</div></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const bars = document.getElementById("th-bars");
+      for (let i = 0; i < 16; i++) {
+        const v = 0.04 + 0.96 * Math.exp(-i * 0.55);
+        const b = document.createElement("div"); b.className = "th-bar"; b.id = `th-b${i}`;
+        b.style.left = 16 + i * 44 + "px"; b.style.height = Math.round(v * 440) + "px";
+        b.style.background = i < 4 ? "#221c16" : "#a8916d";
+        bars.appendChild(b);
+      }
+      // hourglass: 10 traits -> 3 themes -> 10 traits
+      const L = [], M = [], R = [];
+      for (let i = 0; i < 10; i++) { L.push([120, 30 + i * 62]); R.push([780, 30 + i * 62]); }
+      for (let i = 0; i < 3; i++) M.push([450, 190 + i * 120]);
+      let s = '<g id="th-lines">';
+      for (const a of L) for (const m of M) s += `<line x1="${a[0]}" y1="${a[1]}" x2="${m[0]}" y2="${m[1]}" stroke="#221c16" stroke-width="2" opacity="0.5"/>`;
+      for (const m of M) for (const b of R) s += `<line x1="${m[0]}" y1="${m[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#221c16" stroke-width="2" opacity="0.5"/>`;
+      s += "</g>";
+      L.forEach((p, i) => (s += `<circle class="th-l" cx="${p[0]}" cy="${p[1]}" r="20" fill="#f6e9cc" stroke="#221c16" stroke-width="5"/>`));
+      M.forEach((p, i) => (s += `<circle class="th-m" cx="${p[0]}" cy="${p[1]}" r="38" fill="#b52a1f" stroke="#221c16" stroke-width="5"/>`));
+      R.forEach((p, i) => (s += `<circle class="th-r" cx="${p[0]}" cy="${p[1]}" r="20" fill="#f6e9cc" stroke="#221c16" stroke-width="5"/>`));
+      document.getElementById("th-hg").innerHTML = s;
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(".th-bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out", stagger: 0.07 }, 0.5);
+    tl.fromTo("#th-bl", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.0);
+    tl.fromTo("#th-big", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.7);
+    // squeeze into themes, then back out
+    tl.fromTo(["#th-hg .th-l", "#th-c1"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.03 }, 4.2);
+    tl.fromTo(["#th-hg .th-m", "#th-c2"], { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)", stagger: 0.1 }, 5.6);
+    tl.fromTo(["#th-hg .th-r", "#th-c3"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.03 }, 7.2);
+    tl.fromTo("#th-lines", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 5.0);
+    tl.fromTo("#th-stamp", { opacity: 0, scale: 1.6, rotation: -6 }, { opacity: 1, duration: 0.01 }, 9.4);
+    tl.to("#th-stamp", { scale: 1, duration: 0.14, ease: "power4.out" }, 9.41);
+    tl.fromTo("#th-quarter > div:last-child", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 9.7);
+    window.__timelines["themes"] = tl;
+  </script>
+</template>

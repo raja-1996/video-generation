@@ -1,0 +1,50 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    .st-layer { position: absolute; left: 110px; width: 640px; height: 170px; border: 5px solid var(--ink); border-radius: 18px;
+      background: #c39c69; display: flex; align-items: center; padding-left: 40px; font-family: var(--font-display); font-size: 58px; }
+    .st-layer small { font-family: var(--font-body); font-weight: 800; font-size: 34px; margin-left: 24px; color: #3d3024; }
+    .st-tag { width: 250px; height: 110px; font-size: 40px; }
+    .st-x { position: absolute; font-family: var(--font-display); font-size: 80px; color: var(--ink); }
+    .st-stamp { font-size: 44px; padding: 6px 20px; border-width: 6px; white-space: nowrap; }
+    #st-arrow { position: absolute; left: 1290px; top: 640px; }
+    #st-rule { position: absolute; left: 110px; top: 70px; font-size: 80px; }
+    #st-rule em { font-style: normal; color: var(--red); }
+    #st-count { position: absolute; left: 110px; top: 190px; font-weight: 800; font-size: 40px; color: #3d3024; }
+  </style>
+  <div id="root" data-composition-id="stack" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div class="st-layer" id="st-l2" style="top:430px">Layer 2 <small>adds another “and”</small></div>
+    <div class="st-layer" id="st-l1" style="top:730px">Layer 1 <small>makes pairs</small></div>
+    <!-- layer 1's pair -->
+    <div class="tag st-tag" id="st-mad" style="left:840px;top:760px">Madrid</div>
+    <div class="st-x" id="st-x1" style="left:1105px;top:765px">×</div>
+    <div class="tag st-tag" id="st-eng" style="left:1180px;top:760px">English</div>
+    <div class="stamp st-stamp" id="st-trav" style="left:1490px;top:780px">TRAVELLER</div>
+    <!-- layer 2's trio -->
+    <div class="stamp st-stamp" id="st-trav2" style="left:840px;top:480px">TRAVELLER</div>
+    <div class="st-x" id="st-x2" style="left:1190px;top:465px">×</div>
+    <div class="tag st-tag" id="st-11" style="left:1280px;top:460px">11 pm</div>
+    <div class="stamp st-stamp" id="st-late" style="left:1180px;top:300px">LATE-NIGHT TRAVELLER</div>
+    <div id="st-rule" class="disp">Each layer = one more <em>×</em></div>
+    <div id="st-count">1 layer: pairs &nbsp;·&nbsp; 2: trios &nbsp;·&nbsp; 3: fours</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#st-l1", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 0.2);
+    tl.fromTo(["#st-mad", "#st-x1", "#st-eng"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 0.5);
+    tl.fromTo("#st-trav", { opacity: 0, scale: 1.5, rotation: -6 }, { opacity: 1, duration: 0.01 }, 1.1);
+    tl.to("#st-trav", { scale: 1, duration: 0.14, ease: "power4.out" }, 1.11);
+    // a second layer drops on top
+    tl.fromTo("#st-l2", { opacity: 0, y: -260 }, { opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.2)" }, 1.9);
+    // the pair rises to layer 2 and meets 11 pm
+    tl.fromTo("#st-trav2", { opacity: 0, y: 300, rotation: -6 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.inOut" }, 4.3);
+    tl.fromTo("#st-x2", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 5.3);
+    tl.fromTo("#st-11", { opacity: 0, y: -120 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.4)" }, 6.2);
+    tl.fromTo("#st-late", { opacity: 0, scale: 1.5, rotation: -5 }, { opacity: 1, duration: 0.01 }, 7.5);
+    tl.to("#st-late", { scale: 1, duration: 0.14, ease: "power4.out" }, 7.51);
+    tl.fromTo("#st-rule", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 8.9);
+    tl.fromTo("#st-count", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 9.15);
+    window.__timelines["stack"] = tl;
+  </script>
+</template>

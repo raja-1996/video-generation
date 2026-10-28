@@ -1,0 +1,48 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #rs-scale { position: absolute; left: 110px; top: 110px; }
+    #rs-scale .disp { font-size: 110px; }
+    #rs-scale .lbl { font-size: 40px; color: #3d3024; margin-top: 10px; }
+    #rs-ruler { position: absolute; left: 160px; top: 560px; width: 1600px; height: 140px; background: var(--tag); border: 5px solid var(--ink); border-radius: 10px; }
+    .rs-tick { position: absolute; top: 0; width: 5px; background: var(--ink); }
+    .rs-num { position: absolute; top: 150px; width: 160px; margin-left: -80px; text-align: center; font-weight: 900; font-size: 34px; }
+    #rs-bar { position: absolute; left: 0; top: 40px; height: 60px; width: 1371px; background: var(--red); transform-origin: 0 50%; }
+    #rs-barl { position: absolute; left: 990px; top: 440px; font-size: 72px; color: var(--red); }
+    #rs-sig { position: absolute; left: 160px; top: 760px; }
+    #rs-sigbox { position: absolute; left: 0; top: 0; width: 232px; height: 0; }
+    #rs-signote { position: absolute; left: 160px; top: 800px; width: 900px; font-weight: 900; font-size: 44px; }
+    #rs-signote span { color: #5c4a35; font-weight: 800; font-size: 34px; display: block; }
+    #rs-ring { position: absolute; left: 318px; top: 520px; width: 140px; height: 220px; border: 7px solid var(--ink); border-radius: 70px; }
+    #rs-foot { position: absolute; left: 110px; top: 990px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="result" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="rs-scale"><div class="disp">Hundreds of billions</div><div class="lbl">of real examples from a Google ranking system</div></div>
+    <div id="rs-ruler"><div id="rs-bar"></div></div>
+    <div id="rs-barl" class="disp">0.6% better</div>
+    <div id="rs-ring"></div>
+    <div id="rs-signote" data-hold>0.1% already counts as a real win<span>for this production model</span></div>
+    <div id="rs-foot">Ranking error (1 − AUC), DCN-V2 vs. the production model it replaced. Source: DCN-V2 paper, section 8.</div>
+  </div>
+  <script>
+    (function () {
+      const r = document.getElementById("rs-ruler");
+      // 0.0% .. 0.7% across 1600 px
+      for (let i = 0; i <= 70; i++) {
+        const x = (i / 70) * 1600, major = i % 10 === 0;
+        r.insertAdjacentHTML("beforeend", `<div class="rs-tick" style="left:${x - 2.5}px;height:${major ? 56 : 24}px"></div>`);
+        if (major) r.insertAdjacentHTML("beforeend", `<div class="rs-num" style="left:${x}px">${(i / 100).toFixed(1)}%</div>`);
+      }
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rs-scale", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 0.5);
+    tl.fromTo("#rs-ruler", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 3.6);
+    tl.fromTo("#rs-bar", { scaleX: 0 }, { scaleX: 1, duration: 1.3, ease: "power3.out" }, 5.4);
+    tl.fromTo("#rs-barl", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 6.5);
+    tl.fromTo("#rs-ring", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 8.7);
+    tl.fromTo("#rs-signote", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 9.0);
+    tl.fromTo("#rs-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.8);
+    window.__timelines["result"] = tl;
+  </script>
+</template>

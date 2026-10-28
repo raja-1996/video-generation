@@ -1,0 +1,64 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #tb-title { position: absolute; left: 110px; top: 70px; font-size: 76px; }
+    #tb-grid { position: absolute; left: 110px; top: 200px; display: grid; grid-template-columns: 150px repeat(6, 110px); gap: 8px; }
+    #tb-grid > div { height: 100px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; border-radius: 8px; }
+    #tb-grid .h { justify-content: flex-end; padding-right: 14px; }
+    #tb-grid .ch { align-items: flex-end; padding-bottom: 6px; height: 60px; }
+    #tb-grid .c { border: 3px solid var(--ink); background: var(--tag); }
+    .tb-box { position: absolute; border: 8px solid var(--red); border-radius: 12px; }
+    .tb-call { position: absolute; left: 1080px; width: 760px; }
+    .tb-call .disp { font-size: 58px; color: var(--red); }
+    .tb-call .lbl { font-size: 38px; margin-top: 8px; color: #3d3024; }
+    #tb-data { position: absolute; left: 1080px; top: 220px; font-weight: 800; font-size: 40px; width: 760px; }
+    #tb-foot { position: absolute; left: 110px; top: 990px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="table" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="tb-title" class="disp">The table it learned</div>
+    <div id="tb-grid"></div>
+    <div class="tb-box" id="tb-b1"></div>
+    <div class="tb-box" id="tb-b2"></div>
+    <div id="tb-data">MovieLens: a million real movie ratings</div>
+    <div class="tb-call" id="tb-c1" style="top:430px"><div class="disp">User × Movie</div><div class="lbl">this person, this film</div></div>
+    <div class="tb-call" id="tb-c2" style="top:640px"><div class="disp">User × Gender</div><div class="lbl">this person, and who they are</div></div>
+    <div id="tb-foot">Strong pairs as reported in the DCN-V2 paper (Fig. 6); other shading illustrative.</div>
+  </div>
+  <script>
+    (function () {
+      const n = ["User", "Movie", "Gender", "Age", "Job", "Zip"];
+      // illustrative strengths; the User×Movie and User×Gender blocks are the ones the paper highlights
+      const W = [[0.3, 1, 0.9, 0.35, 0.4, 0.3], [1, 0.25, 0.3, 0.35, 0.2, 0.15], [0.9, 0.3, 0.1, 0.2, 0.25, 0.1],
+                 [0.35, 0.35, 0.2, 0.1, 0.3, 0.15], [0.4, 0.2, 0.25, 0.3, 0.1, 0.2], [0.3, 0.15, 0.1, 0.15, 0.2, 0.05]];
+      let g = '<div class="ch"></div>' + n.map((x) => `<div class="ch">${x}</div>`).join("");
+      for (let i = 0; i < 6; i++) {
+        g += `<div class="h">${n[i]}</div>`;
+        for (let j = 0; j < 6; j++) g += `<div class="c" id="tb-${i}-${j}" data-w="${W[i][j]}"></div>`;
+      }
+      document.getElementById("tb-grid").innerHTML = g;
+      // red boxes over row User, columns Movie and Gender
+      const cell = (i, j) => ({ x: 110 + 150 + 8 + j * 118, y: 200 + 60 + 8 + i * 108 });
+      [["tb-b1", 0, 1], ["tb-b2", 0, 2]].forEach(([id, i, j]) => {
+        const c = cell(i, j), el = document.getElementById(id);
+        el.style.left = c.x - 10 + "px"; el.style.top = c.y - 10 + "px"; el.style.width = "130px"; el.style.height = "120px";
+      });
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#tb-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+    tl.fromTo("#tb-grid", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 1.0);
+    tl.fromTo("#tb-data", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.5);
+    // the cells darken to their learned strength
+    document.querySelectorAll("#tb-grid .c").forEach((el, k) => {
+      const w = +el.dataset.w, v = Math.round(233 - w * 200);
+      tl.to(el, { backgroundColor: `rgb(${v + 13},${v},${Math.max(0, v - 29)})`, duration: 0.3, ease: "power2.out" }, 5.4 + (k % 6) * 0.05 + Math.floor(k / 6) * 0.08);
+    });
+    tl.set(["#tb-b1", "#tb-b2"], { opacity: 0 }, 0);
+    tl.fromTo("#tb-b1", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, 8.4);
+    tl.fromTo("#tb-c1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 8.5);
+    tl.fromTo("#tb-b2", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, 10.4);
+    tl.fromTo("#tb-c2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 10.5);
+    tl.fromTo("#tb-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.6);
+    window.__timelines["table"] = tl;
+  </script>
+</template>

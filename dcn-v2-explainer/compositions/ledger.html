@@ -1,0 +1,70 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #lg-page { position: absolute; left: 160px; top: 110px; width: 760px; height: 860px; background: var(--tag);
+      border: 4px solid var(--ink); border-radius: 8px; overflow: hidden;
+      background-image: repeating-linear-gradient(to bottom, transparent 0 86px, #c9b48e 86px 89px); background-position: 0 40px; }
+    #lg-page::before { content: ""; position: absolute; left: 96px; top: 0; bottom: 0; width: 4px; background: #d98b80; }
+    #lg-head { position: absolute; left: 130px; top: 40px; font-size: 50px; }
+    .lg-row { position: absolute; left: 130px; font-weight: 800; font-size: 50px; white-space: nowrap; }
+    .lg-row b { color: var(--red); font-weight: 900; }
+    #lg-wall { position: absolute; left: 70px; top: 80px; width: 1000px; height: 920px; }
+    .lg-mini { position: absolute; width: 110px; height: 140px; background: var(--tag); border: 3px solid var(--ink); border-radius: 4px;
+      background-image: repeating-linear-gradient(to bottom, transparent 0 14px, #8f7d60 14px 17px); background-position: 0 10px; }
+    #lg-right { position: absolute; left: 1180px; top: 170px; width: 680px; }
+    .lg-num { font-family: var(--font-display); font-size: 104px; line-height: 1; }
+    .lg-cap { font-weight: 800; font-size: 40px; color: #5c4a35; margin: 8px 0 44px; }
+    #lg-trios .lg-num { color: var(--red); }
+    #lg-foot { position: absolute; left: 1180px; top: 960px; font-weight: 700; font-size: 28px; color: #5c4a35; }
+  </style>
+  <div id="root" data-composition-id="ledger" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="lg-wall"></div>
+    <div id="lg-page">
+      <div id="lg-head" class="disp">Rules, by hand</div>
+      <div class="lg-row" style="top:150px">Madrid <b>×</b> English</div>
+      <div class="lg-row" style="top:236px">Madrid <b>×</b> 11 pm</div>
+      <div class="lg-row" style="top:322px">English <b>×</b> Phone</div>
+      <div class="lg-row" style="top:408px">11 pm <b>×</b> Phone</div>
+      <div class="lg-row" style="top:494px">Madrid <b>×</b> Phone</div>
+      <div class="lg-row" style="top:580px">English <b>×</b> 11 pm</div>
+      <div class="lg-row" style="top:666px">Rain <b>×</b> Sunday</div>
+      <div class="lg-row" style="top:752px">Age 30 <b>×</b> Laptop</div>
+    </div>
+    <div id="lg-right">
+      <div id="lg-traits"><div class="lg-num">1,000</div><div class="lg-cap">traits</div></div>
+      <div id="lg-pairs"><div class="lg-num" id="lg-pairs-n">0</div><div class="lg-cap">possible pairs</div></div>
+      <div id="lg-trios"><div class="lg-num" id="lg-trios-n">0</div><div class="lg-cap">possible trios</div></div>
+    </div>
+    <div id="lg-foot">Counting every combination of 1,000 traits</div>
+  </div>
+  <script>
+    (function () {
+      const wall = document.getElementById("lg-wall");
+      for (let r = 0; r < 6; r++) for (let c = 0; c < 8; c++) {
+        const m = document.createElement("div"); m.className = "lg-mini"; m.id = `lg-m${r * 8 + c}`;
+        m.style.left = c * 124 + "px"; m.style.top = r * 152 + "px"; wall.appendChild(m);
+      }
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#lg-page", { y: 80, rotation: 0, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.7, ease: "expo.out" }, 0.0);
+    tl.fromTo(".lg-row", { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+      { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power2.out", stagger: 0.45 }, 0.8);
+    // too many to write: the page shrinks into a wall of pages
+    tl.to("#lg-page", { scale: 0.145, x: -415, y: -390, rotation: 0, duration: 0.8, ease: "power3.inOut" }, 4.7);
+    tl.to("#lg-page", { opacity: 0, duration: 0.1 }, 5.5);
+    tl.fromTo(".lg-mini", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(1.6)",
+      stagger: { each: 0.06, from: "start" } }, 5.2);
+    tl.fromTo("#lg-traits", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 5.0);
+    tl.fromTo("#lg-pairs", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 5.8);
+    const p = { v: 0 }, q = { v: 0 };
+    tl.fromTo(p, { v: 0 }, { v: 499500, duration: 1.5, ease: "power2.out",
+      onUpdate: () => { document.getElementById("lg-pairs-n").textContent = Math.round(p.v).toLocaleString("en-US"); } }, 5.8);
+    tl.fromTo("#lg-trios", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 8.9);
+    tl.fromTo(q, { v: 0 }, { v: 166167000, duration: 1.6, ease: "power2.out",
+      onUpdate: () => { document.getElementById("lg-trios-n").textContent = Math.round(q.v).toLocaleString("en-US"); } }, 8.9);
+    tl.to("#lg-wall", { scale: 0.5, transformOrigin: "50% 50%", duration: 1.1, ease: "power3.inOut" }, 9.0);
+    tl.fromTo("#lg-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 6.2);
+    window.__timelines["ledger"] = tl;
+  </script>
+</template>

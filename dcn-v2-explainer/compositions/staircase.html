@@ -1,0 +1,85 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #sc-card { position: absolute; left: 90px; top: 170px; width: 1000px; height: 760px; background: var(--tag);
+      border: 4px solid var(--ink); border-radius: 18px; }
+    #sc-graph { position: absolute; left: 40px; top: 40px; width: 920px; height: 640px; }
+    #sc-lred { position: absolute; left: 0; right: 0; text-align: center; top: 150px; font-weight: 800; font-size: 36px; color: var(--red); }
+    #sc-link { position: absolute; left: 330px; top: 640px; font-weight: 800; font-size: 36px; color: var(--ink); }
+    #sc-pieces { position: absolute; left: 0; right: 0; text-align: center; top: 210px; font-family: var(--font-display); font-size: 40px; }
+    #sc-net { position: absolute; left: 1180px; top: 160px; width: 660px; height: 560px; }
+    #sc-nettl { position: absolute; left: 1180px; top: 90px; font-weight: 800; font-size: 36px; }
+    #sc-watch { position: absolute; left: 1180px; top: 790px; width: 660px; }
+    #sc-watch .lbl { font-size: 36px; margin-bottom: 14px; }
+    #sc-track { position: relative; height: 54px; border: 4px solid var(--ink); border-radius: 27px; background: var(--tag); overflow: hidden; }
+    #sc-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--ink); transform-origin: 0 50%; }
+  </style>
+  <div id="root" data-composition-id="staircase" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="sc-card">
+      <svg id="sc-graph" viewBox="0 0 920 640">
+        <line x1="60" y1="580" x2="880" y2="580" stroke="#221c16" stroke-width="4"/>
+        <line x1="460" y1="40" x2="460" y2="580" stroke="#221c16" stroke-width="3" stroke-dasharray="8 10" opacity="0.4"/>
+        <path id="sc-true" fill="none" stroke="#b52a1f" stroke-width="10" stroke-linecap="round"/>
+        <polyline id="sc-p1" fill="none" stroke="#221c16" stroke-width="7" stroke-linejoin="round"/>
+        <polyline id="sc-p2" fill="none" stroke="#221c16" stroke-width="7" stroke-linejoin="round"/>
+        <polyline id="sc-p3" fill="none" stroke="#221c16" stroke-width="7" stroke-linejoin="round"/>
+        <g id="sc-k1"></g><g id="sc-k2"></g><g id="sc-k3"></g>
+      </svg>
+      <div id="sc-lred">what's really there</div>
+      <div id="sc-link">the network's straight pieces</div>
+      <div id="sc-pieces"><span id="sc-pn">2</span> pieces</div>
+    </div>
+    <div id="sc-nettl">A neural network</div>
+    <svg id="sc-net" viewBox="0 0 660 560"><g id="sc-small"></g><g id="sc-big"></g></svg>
+    <div id="sc-watch"><div class="lbl">Time to answer Maya</div><div id="sc-track"><div id="sc-fill"></div></div></div>
+  </div>
+  <script>
+    (function () {
+      const X = (x) => 460 + x * 400, Y = (y) => 580 - y * 500;
+      let d = "";
+      for (let i = 0; i <= 80; i++) { const x = -1 + i / 40; d += (i ? "L" : "M") + X(x).toFixed(1) + " " + Y(x * x).toFixed(1); }
+      document.getElementById("sc-true").setAttribute("d", d);
+      [[2, "sc-p1", "sc-k1"], [4, "sc-p2", "sc-k2"], [10, "sc-p3", "sc-k3"]].forEach(([n, id, kid]) => {
+        const pts = []; let knots = "";
+        for (let i = 0; i <= n; i++) { const x = -1 + (2 * i) / n; pts.push(X(x).toFixed(1) + "," + Y(x * x).toFixed(1));
+          knots += `<circle cx="${X(x).toFixed(1)}" cy="${Y(x * x).toFixed(1)}" r="9" fill="#221c16"/>`; }
+        document.getElementById(id).setAttribute("points", pts.join(" "));
+        document.getElementById(kid).innerHTML = knots;
+      });
+      const net = (cols, rows, x0, w, h, y0) => {
+        let s = ""; const pos = [];
+        for (let c = 0; c < cols; c++) { pos.push([]); for (let r = 0; r < rows[c]; r++)
+          pos[c].push([x0 + (c * w) / (cols - 1), y0 + ((r + 0.5) * h) / rows[c]]); }
+        for (let c = 0; c < cols - 1; c++) for (const a of pos[c]) for (const b of pos[c + 1])
+          s += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#221c16" stroke-width="1.6" opacity="0.45"/>`;
+        for (const col of pos) for (const p of col) s += `<circle cx="${p[0]}" cy="${p[1]}" r="${rows.length > 4 ? 10 : 16}" fill="#f6e9cc" stroke="#221c16" stroke-width="4"/>`;
+        return s;
+      };
+      document.getElementById("sc-small").innerHTML = net(3, [4, 5, 1], 140, 380, 360, 100);
+      document.getElementById("sc-big").innerHTML = net(7, [4, 12, 14, 14, 12, 8, 1], 30, 600, 540, 10);
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo(["#sc-nettl", "#sc-small"], { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.1 }, 0.4);
+    tl.fromTo("#sc-card", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, 1.4);
+    tl.fromTo("#sc-true", { strokeDasharray: 2000, strokeDashoffset: 2000 }, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 2.0);
+    tl.fromTo("#sc-lred", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.8);
+    tl.set(["#sc-p2", "#sc-p3", "#sc-k2", "#sc-k3"], { opacity: 0 }, 0);
+    tl.fromTo(["#sc-p1", "#sc-k1"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 5.2);
+    tl.fromTo(["#sc-link", "#sc-pieces"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.15 }, 5.4);
+    tl.to(["#sc-p1", "#sc-k1"], { opacity: 0, duration: 0.15 }, 7.0);
+    tl.to(["#sc-p2", "#sc-k2"], { opacity: 1, duration: 0.2 }, 7.05);
+    tl.set("#sc-pn", { textContent: "4" }, 7.05);
+    tl.to(["#sc-p2", "#sc-k2"], { opacity: 0, duration: 0.15 }, 8.4);
+    tl.to(["#sc-p3", "#sc-k3"], { opacity: 1, duration: 0.2 }, 8.45);
+    tl.set("#sc-pn", { textContent: "10" }, 8.45);
+    // grow huge and slow
+    tl.set("#sc-big", { opacity: 0 }, 0);
+    tl.to("#sc-small", { opacity: 0, scale: 1.4, transformOrigin: "50% 50%", duration: 0.3, ease: "power3.in" }, 10.0);
+    tl.fromTo("#sc-big", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }, 10.2);
+    tl.fromTo("#sc-watch", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.6);
+    tl.fromTo("#sc-fill", { scaleX: 0.18 }, { scaleX: 0.18, duration: 0.1 }, 0.6);
+    tl.to("#sc-fill", { scaleX: 0.92, duration: 1.4, ease: "power2.inOut" }, 11.0);
+    window.__timelines["staircase"] = tl;
+  </script>
+</template>

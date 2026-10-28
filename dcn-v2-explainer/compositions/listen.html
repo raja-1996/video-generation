@@ -1,0 +1,65 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ls-chap { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font-size: 150px; }
+    #ls-arcs { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .ls-chip { position: absolute; top: 780px; width: 300px; height: 140px; font-size: 44px; }
+    #ls-who { position: absolute; left: 110px; top: 60px; width: 560px; }
+    #ls-who .lbl { font-size: 34px; margin-bottom: 12px; }
+    #ls-grid { display: grid; grid-template-columns: 110px repeat(4, 96px); gap: 6px; font-weight: 900; font-size: 30px; }
+    #ls-grid div { height: 64px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
+    #ls-grid .c { border: 3px solid var(--ink); }
+  </style>
+  <div id="root" data-composition-id="listen" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ls-chap" class="disp">The cross layer</div>
+    <svg id="ls-arcs" viewBox="0 0 1920 1080" data-hold></svg>
+    <div class="tag ls-chip" id="ls-c0" style="left:180px">Madrid</div>
+    <div class="tag ls-chip" id="ls-c1" style="left:600px">English</div>
+    <div class="tag ls-chip" id="ls-c2" style="left:1020px">11 pm</div>
+    <div class="tag ls-chip" id="ls-c3" style="left:1440px">Phone</div>
+    <div id="ls-who"><div class="lbl">Who matters to whom (learned)</div><div id="ls-grid"></div></div>
+  </div>
+  <script>
+    (function () {
+      const cx = [330, 750, 1170, 1590], y = 770;
+      // learned strength for each pair: Madrid-English strong, Madrid-11pm medium, the rest weak
+      const W = { "0-1": 1, "0-2": 0.55, "0-3": 0.15, "1-2": 0.3, "1-3": 0.12, "2-3": 0.4 };
+      let s = "";
+      Object.keys(W).forEach((k, n) => {
+        const [a, b] = k.split("-").map(Number);
+        const h = 120 + (b - a) * 110;
+        s += `<path id="ls-a${n}" data-w="${W[k]}" d="M${cx[a]} ${y} C${cx[a]} ${y - h} ${cx[b]} ${y - h} ${cx[b]} ${y}"
+          fill="none" stroke="#221c16" stroke-width="6" stroke-linecap="round"/>`;
+      });
+      document.getElementById("ls-arcs").innerHTML = s;
+      const names = ["Mad", "Eng", "11pm", "Ph"];
+      let g = "<div></div>" + names.map((n) => `<div>${n}</div>`).join("");
+      for (let i = 0; i < 4; i++) {
+        g += `<div>${names[i]}</div>`;
+        for (let j = 0; j < 4; j++) {
+          const w = i === j ? 0.2 : W[`${Math.min(i, j)}-${Math.max(i, j)}`];
+          const shade = Math.round(246 - w * 200);
+          g += `<div class="c" style="background:rgb(${shade + 8},${shade - 10},${shade - 40 < 0 ? 0 : shade - 40})"></div>`;
+        }
+      }
+      document.getElementById("ls-grid").innerHTML = g;
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ls-chap", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.45);
+    tl.to("#ls-chap", { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 2.55);
+    tl.fromTo(".ls-chip", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.08 }, 2.5);
+    // every trait listens to every other
+    for (let n = 0; n < 6; n++) {
+      tl.fromTo(`#ls-a${n}`, { strokeDasharray: 1600, strokeDashoffset: 1600 }, { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, 3.2 + n * 0.32);
+    }
+    // ...with a learned sense of who matters: strong ties thicken, weak ones fade
+    const weights = [1, 0.55, 0.15, 0.3, 0.12, 0.4];
+    weights.forEach((w, n) => {
+      tl.to(`#ls-a${n}`, { attr: { "stroke-width": 4 + w * 18 }, opacity: 0.25 + w * 0.75, stroke: w === 1 ? "#b52a1f" : "#221c16",
+        duration: 0.6, ease: "power2.inOut" }, 6.5);
+    });
+    tl.fromTo("#ls-who", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 7.0);
+    window.__timelines["listen"] = tl;
+  </script>
+</template>

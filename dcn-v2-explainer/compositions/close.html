@@ -1,0 +1,46 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #cl-phone { position: absolute; left: 1210px; top: 90px; width: 470px; height: 900px; background: #0b0f1a; border-radius: 64px; padding: 22px; }
+    #cl-screen { position: relative; width: 100%; height: 100%; border-radius: 46px; overflow: hidden; background: var(--screen); }
+    #cl-appbar { position: absolute; left: 0; right: 0; top: 0; height: 120px; border-bottom: 3px solid #e4d6b8; }
+    #cl-appbar span { position: absolute; left: 30px; bottom: 18px; font-family: var(--font-display); font-size: 40px; color: var(--ink); }
+    #cl-top { position: absolute; left: 22px; right: 22px; top: 150px; height: 330px; border-radius: 24px; background: #fff;
+      border: 6px solid var(--red); overflow: hidden; }
+    #cl-top i { position: absolute; left: 0; right: 0; top: 0; height: 190px; background: #c8553d; }
+    #cl-top i::after { content: ""; position: absolute; left: 40px; bottom: 0; width: 120px; height: 120px; border-radius: 60px 60px 0 0; background: #f2cc8f; }
+    #cl-top b { position: absolute; left: 22px; top: 208px; white-space: nowrap; font-family: var(--font-display); font-weight: 400; font-size: 31px; color: var(--ink); }
+    #cl-top u { position: absolute; left: 22px; top: 262px; text-decoration: none; font-weight: 800; font-size: 28px; color: #6b5a44; }
+    .cl-card { position: absolute; left: 22px; right: 22px; height: 150px; border-radius: 22px; background: #fff; border: 3px solid #e4d6b8; }
+    .cl-card i { position: absolute; left: 14px; top: 14px; width: 120px; height: 116px; border-radius: 14px; }
+    #cl-tags { position: absolute; left: 110px; top: 170px; display: flex; align-items: center; gap: 22px; }
+    #cl-tags .tag { position: relative; width: 250px; height: 110px; font-size: 38px; }
+    #cl-tags .x { font-family: var(--font-display); font-size: 64px; color: var(--lamp); }
+    #cl-line { position: absolute; left: 110px; top: 420px; width: 1040px; font-size: 104px; color: var(--screen); line-height: 1.08; }
+    #cl-line em { font-style: normal; color: var(--lamp); }
+    #cl-cite { position: absolute; left: 110px; top: 880px; font-weight: 800; font-size: 32px; color: #b9c2d6; }
+  </style>
+  <div id="root" data-composition-id="close" data-width="1920" data-height="1080">
+    <div class="nightbg"></div>
+    <div id="cl-phone"><div id="cl-screen">
+      <div id="cl-appbar"><span>For you</span></div>
+      <div id="cl-top"><i></i><b>Late-night tapas</b><u>Madrid · open now</u></div>
+      <div class="cl-card" style="top:500px"><i style="background:#81b29a"></i></div>
+      <div class="cl-card" style="top:670px"><i style="background:#3d5a80"></i></div>
+    </div></div>
+    <div id="cl-tags">
+      <div class="tag">Madrid</div><div class="x">×</div><div class="tag">English</div><div class="x">×</div><div class="tag">11 pm</div>
+    </div>
+    <div id="cl-line" class="disp">Learn the <em>“and”</em>,<br/>not just the facts.</div>
+    <div id="cl-cite">DCN-V2 · Wang et al., Google, 2020 · arXiv 2008.13535</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#cl-phone", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 0.0);
+    tl.fromTo("#cl-tags > *", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)", stagger: 0.12 }, 0.6);
+    tl.fromTo("#cl-top", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "expo.out" }, 2.6);
+    tl.fromTo("#cl-line", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }, 4.7);
+    tl.fromTo("#cl-cite", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 7.0);
+    window.__timelines["close"] = tl;
+  </script>
+</template>

@@ -1,0 +1,94 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; }
+    #ag-mult { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .ag-row { position: absolute; left: 380px; width: 1160px; height: 190px; }
+    .ag-row .lbl { position: absolute; left: 0; top: 0; font-size: 36px; }
+    .ag-strip { position: absolute; left: 0; right: 0; top: 52px; height: 130px; background: var(--tag); border: 4px solid var(--ink); border-radius: 14px; }
+    .ag-strip .mid { position: absolute; left: 0; right: 0; top: 50%; height: 3px; background: #6b5a44; }
+    .ag-b { position: absolute; width: 60px; border-radius: 4px; }
+    .ag-op { position: absolute; left: 250px; font-family: var(--font-display); font-size: 96px; }
+    #ag-circuit { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #ag-and { position: absolute; left: 0; right: 0; top: 70px; text-align: center; font-size: 140px; }
+    #ag-and em { font-style: normal; color: var(--red); }
+    .ag-sw { font-weight: 800; font-size: 38px; position: absolute; text-align: center; width: 420px; }
+    #ag-truth { position: absolute; left: 640px; top: 820px; font-weight: 900; font-size: 44px; line-height: 1.5; }
+    #ag-bulbl { position: absolute; left: 1050px; width: 310px; text-align: right; top: 525px; font-family: var(--font-display); font-size: 54px; color: var(--red); }
+  </style>
+  <div id="root" data-composition-id="andgate" data-width="1920" data-height="1080">
+    <div class="kraft"></div>
+    <div id="ag-mult">
+      <div class="ag-row" id="ag-r1" style="top:90px"><div class="lbl">English, as it was</div><div class="ag-strip"><div class="mid"></div></div></div>
+      <div class="ag-op" id="ag-x" style="top:268px;left:880px">×</div>
+      <div class="ag-row" id="ag-r2" style="top:380px"><div class="lbl">What the others said about it</div><div class="ag-strip"><div class="mid"></div></div></div>
+      <div class="ag-op" id="ag-eq" style="top:558px;left:880px">=</div>
+      <div class="ag-row" id="ag-r3" style="top:670px"><div class="lbl">Combined</div><div class="ag-strip"><div class="mid"></div></div></div>
+    </div>
+    <div id="ag-circuit">
+      <div id="ag-and" class="disp">× works like <em>and</em></div>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+        <!-- wire loop: battery left, two switches in series on top, bulb right -->
+        <path d="M300 760 L300 420 L560 420 M760 420 L960 420 M1160 420 L1470 420 L1470 470 M1470 640 L1470 760 L300 760"
+          fill="none" stroke="#221c16" stroke-width="10" stroke-linejoin="round"/>
+        <rect x="250" y="540" width="100" height="160" rx="12" fill="#f6e9cc" stroke="#221c16" stroke-width="8"/>
+        <rect x="280" y="522" width="40" height="20" fill="#221c16"/>
+        <text x="300" y="640" text-anchor="middle" font-family="Archivo Black" font-size="44" fill="#221c16">+</text>
+        <circle cx="560" cy="420" r="14" fill="#221c16"/><circle cx="760" cy="420" r="14" fill="#221c16"/>
+        <line id="ag-s1" x1="560" y1="420" x2="752" y2="420" stroke="#221c16" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="960" cy="420" r="14" fill="#221c16"/><circle cx="1160" cy="420" r="14" fill="#221c16"/>
+        <line id="ag-s2" x1="960" y1="420" x2="1152" y2="420" stroke="#221c16" stroke-width="12" stroke-linecap="round"/>
+        <g id="ag-rays" stroke="#f5b921" stroke-width="10" stroke-linecap="round">
+          <line x1="1470" y1="420" x2="1470" y2="360"/><line x1="1560" y1="470" x2="1610" y2="430"/>
+          <line x1="1380" y1="470" x2="1330" y2="430"/><line x1="1590" y1="560" x2="1650" y2="560"/>
+          <line x1="1350" y1="560" x2="1290" y2="560"/>
+        </g>
+        <circle id="ag-bulb" cx="1470" cy="550" r="85" fill="#f6e9cc" stroke="#221c16" stroke-width="8"/>
+        <rect x="1440" y="630" width="60" height="30" fill="#221c16"/>
+      </svg>
+      <div class="ag-sw" id="ag-l1" style="left:450px;top:470px">English is there</div>
+      <div class="ag-sw" id="ag-l2" style="left:850px;top:470px">Madrid is there</div>
+      <div id="ag-bulbl">traveller</div>
+      <div id="ag-truth"><div id="ag-t1">on × off = off</div><div id="ag-t2">on × on = <span style="color:var(--red)">on</span></div></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const a = [0.9, -0.3, 0.7, 0.1, -0.8, 0.6, 0.2, 0.9, -0.5, 0.4, 0.8, -0.2];
+      const b = [0.8, 0.6, -0.2, 0.9, 0.7, 0.1, -0.9, 0.9, 0.3, -0.6, 0.85, 0.5];
+      const c = a.map((v, i) => v * b[i]);
+      [[a, "#ag-r1"], [b, "#ag-r2"], [c, "#ag-r3"]].forEach(([vals, id], r) => {
+        const strip = document.querySelector(id + " .ag-strip");
+        vals.forEach((v, i) => {
+          const el = document.createElement("div"); el.className = "ag-b"; el.id = `ag-b${r}-${i}`;
+          const h = Math.abs(v) * 56;
+          el.style.left = 30 + i * 92 + "px"; el.style.height = h + "px";
+          el.style.top = v >= 0 ? `calc(50% - ${h}px)` : "calc(50% + 3px)";
+          el.style.background = r === 2 ? (v >= 0 ? "#b52a1f" : "#7a4e25") : (v >= 0 ? "#221c16" : "#7a4e25");
+          strip.appendChild(el);
+        });
+      });
+    })();
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ag-r1", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 0.3);
+    tl.fromTo("#ag-r2", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 1.0);
+    tl.fromTo("#ag-x", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 2.0);
+    tl.fromTo(["#ag-eq", "#ag-r3"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.15 }, 2.9);
+    tl.fromTo("#ag-r3 .ag-b", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.4, ease: "expo.out", stagger: 0.05 }, 3.2);
+    // the same idea as a circuit
+    tl.to("#ag-mult", { opacity: 0, filter: "blur(8px)", duration: 0.25, ease: "power3.in" }, 4.6);
+    tl.fromTo("#ag-circuit", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.85);
+    tl.fromTo("#ag-and", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 5.4);
+    tl.fromTo(["#ag-l1", "#ag-l2", "#ag-bulbl"], { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.25 }, 6.1);
+    tl.set("#ag-s1", { rotation: -32, svgOrigin: "560 420" }, 0);
+    tl.set("#ag-s2", { rotation: -32, svgOrigin: "960 420" }, 0);
+    tl.set("#ag-rays", { opacity: 0 }, 0);
+    tl.set(["#ag-t1", "#ag-t2"], { opacity: 0 }, 0);
+    tl.to("#ag-s1", { rotation: 0, duration: 0.25, ease: "power4.in" }, 8.55);
+    tl.to("#ag-t1", { opacity: 1, duration: 0.25 }, 8.9);
+    tl.to("#ag-s2", { rotation: 0, duration: 0.25, ease: "power4.in" }, 10.0);
+    tl.set("#ag-bulb", { attr: { fill: "#f5b921" } }, 10.25);
+    tl.set("#ag-rays", { opacity: 1 }, 10.25);
+    tl.to("#ag-t2", { opacity: 1, duration: 0.25 }, 10.4);
+    window.__timelines["andgate"] = tl;
+  </script>
+</template>
