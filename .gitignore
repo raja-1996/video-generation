@@ -1,0 +1,8 @@
+.venv/
+tts/
+hf-test/
+renders/
+node_modules/
+*.wav
+*.mp4
+.DS_Store
