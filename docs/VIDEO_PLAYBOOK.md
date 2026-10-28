@@ -43,7 +43,7 @@ from `template/tools/`; `dcn-v2-explainer/` is the reference film.
 | 7 | One HTML scene per narration scene, reveals cued to that scene's line times | `compositions/<id>.html` |
 | 8 | Mount every scene and the voice | `node tools/build-index.mjs` → `index.html` |
 | 9 | Check, then look | `npx hyperframes check --json`; `npx hyperframes snapshot --at <t,...>` |
-| 10 | Render | `npx hyperframes render -o renders/<name>.mp4 --quality high --workers 3` |
+| 10 | Render | `node tools/render.mjs` (GPU if present; workers from the cores) |
 | 11 | Make it loud enough for phones | `bash tools/finish.sh renders/<name>.mp4` (−14 LUFS, faststart) |
 
 ### Narration rules
@@ -72,7 +72,8 @@ from `template/tools/`; `dcn-v2-explainer/` is the reference film.
   mark the element `data-hold`.
 - **Red text on kraft** fails contrast at the bright red; the accent is `#b52a1f`.
 - **Render time** is about 0.7× the video length on this cloud container (4:25 film in 3 min 5 s) with a flat
-  ground, 24 fps and `--workers 3`. Auto workers picks 1 here, which is about 35% slower. Kokoro
+  ground, 24 fps and 3 workers. HyperFrames' own auto picks 1 worker here (about 35% slower), so `tools/render.mjs`
+  sets it: cores − 1 without a GPU, performance cores − 2 with one (Apple silicon: 10 → 8). Override with `WORKERS=n`. Kokoro
   slows down a lot while a render is running; generate the voice first.
 - **24 fps.** `build-index.mjs` sets `data-fps="24"` on the root. Only about a quarter of frames change (the rest
   are holds), and 24 fps renders about 15–20% faster than 30 with no visible loss on these slow moves.

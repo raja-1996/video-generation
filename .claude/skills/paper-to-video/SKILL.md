@@ -53,8 +53,8 @@ printf '.hyperframes/\nrenders/\n*.wav\nassets/*.mp3\n' > videos/$SLUG/.gitignor
 
 ## 5. Deliver
 
-- Render: `npx hyperframes render -o renders/$SLUG.mp4 --quality high --workers 3` in the background (about 0.7×
-  the video length). Generate all voice before rendering; Kokoro is slow while a render runs.
+- Render: `node tools/render.mjs` in the background (writes `renders/$SLUG.mp4`; uses the GPU if there is one and picks
+  the worker count from the cores; about 0.7× the video length on the 4-core cloud container). Generate all voice before rendering; Kokoro is slow while a render runs.
 - `bash tools/finish.sh renders/$SLUG.mp4` (−14 LUFS, faststart), verify with ffprobe that it has audio,
   then send `renders/$SLUG-final.mp4` with SendUserFile.
 - Write `REVIEW.md` (choices, what is illustrative, weakest shot). Commit the source only, never media,
