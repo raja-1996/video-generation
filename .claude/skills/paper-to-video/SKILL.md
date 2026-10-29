@@ -23,13 +23,15 @@ npx --yes hyperframes@latest doctor >/dev/null 2>&1 || bash hyperframes/setup_hy
 - Write down: the problem it solves, the core mechanism and its equations, every headline number with its
   table or section, and what is only illustrative.
 
-## 3. Stop once: three storylines (the owner picks)
+## 3. Three storylines, then go with the recommended one (no stop)
 
 Write three storylines that are different films (`hyperframes` skill, `references/story.md`): each with a
 person in a concrete situation, a device that makes the math physical, its first two seconds, its beats, its
-look. Put your recommendation first with a one-line reason, save them to `STORYLINES.md`, and ask the owner to
-pick (AskUserQuestion with the three as options). State the planned length (about 3 minutes for a first cut)
-and that narration is Kokoro voice-only. This is the only stop: after the pick, build through to the render.
+look. Put your recommendation first with a one-line reason and save them to `STORYLINES.md`, marking it picked
+(line 1: `# Storylines (picked: A) — ...`). Do not ask the owner to pick: build the recommended storyline
+straight through to the render. In one line, say which storyline you picked and why, the planned length (about
+3 minutes for a first cut), and that narration is Kokoro voice-only. The owner can still ask for B or C after
+seeing the film.
 
 ## 4. Build
 
