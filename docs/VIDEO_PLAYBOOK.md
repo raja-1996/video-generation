@@ -20,8 +20,8 @@ These come from the requests that shaped the DCN-V2 video. They take priority ov
 5. **Voice only.** Narration carries the film. No music, no sound effects (owner's preference).
 6. **Length follows the content.** A first cut of about 3 minutes; the owner then asked for 5 minutes, then for
    more math detail (8 minutes). Add scenes for missing ideas rather than stretching existing ones.
-7. **The owner picks the story.** Show three storylines with a recommendation first; after the pick, build
-   straight through to the finished video.
+7. **Claude picks the story.** Write three storylines with a recommendation first, and build the recommended
+   one straight through to the finished video without stopping to ask. The owner can ask for another after.
 8. **Stay true to the source.** Every claim and number traces to the paper. When the story would bend a fact,
    fix the story (two cross layers make *trios*, so the script says "Madrid, and English, and 11 pm").
    Illustrative values are marked on screen.
@@ -35,7 +35,7 @@ from `template/tools/`; `dcn-v2-explainer/` is the reference film.
 | --- | --- | --- |
 | 0 | Install tools once per machine/container | `bash kokoro/setup_kokoro.sh tts` and `bash hyperframes/setup_hyperframes.sh` |
 | 1 | Read the whole source; list its claims and numbers | `pdftotext paper.pdf` |
-| 2 | Propose three storylines (different worlds, devices, forms); the owner picks | `STORYLINES.md` |
+| 2 | Write three storylines (different worlds, devices, forms); go with the recommended one | `STORYLINES.md` |
 | 3 | Write the spec: look, motion, banned defaults | `SPEC.md` |
 | 4 | Write the narration as scenes of short lines (each line is a cue point) | `script.json` |
 | 5 | Generate the voice and the timing | `../tts/.venv/bin/python tools/tts.py .` → `assets/narration.wav`, `timing.json` |
