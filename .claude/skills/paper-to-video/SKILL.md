@@ -60,3 +60,8 @@ printf '.hyperframes/\nrenders/\n*.wav\nassets/*.mp3\n' > videos/$SLUG/.gitignor
 - Write `REVIEW.md` (choices, what is illustrative, weakest shot). Commit the source only, never media,
   and push to the working branch.
 - Offer the next steps the owner has asked for before: a longer cut, more worked math.
+
+## 6. The "why" film (second film per paper)
+
+When the owner asks for the deep dive, meaning why the method works, 5 whys, the math, or interview questions,
+follow `WHY.md` in this folder. It builds `videos/<slug>-why/` plus `INTERVIEW.md` from the paper's explainer.
