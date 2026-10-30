@@ -18,8 +18,10 @@ These come from the requests that shaped the DCN-V2 video. They take priority ov
 4. **Intuition plus the real problem it solves.** Say why the idea exists (hand-written rules explode;
    big networks are slow and bad at multiplying) before showing how it works.
 5. **Voice only.** Narration carries the film. No music, no sound effects (owner's preference).
-6. **Length follows the content.** A first cut of about 3 minutes; the owner then asked for 5 minutes, then for
-   more math detail (8 minutes). Add scenes for missing ideas rather than stretching existing ones.
+6. **One film per paper, about 10 minutes.** How and why in one story (since 2026-10-30; it replaced a ~5 min
+   how film plus a ~8.5 min why film). It runs symptom rows → a ladder of earlier approaches, simple to
+   advanced, each failing on the same rows → the paper's key idea → mechanism → math → replay → proof → cost →
+   what came next → interview drill. Scene order: `.claude/skills/paper-to-video/FILM.md`.
 7. **Claude picks the story.** Write three storylines with a recommendation first, and build the recommended
    one straight through to the finished video without stopping to ask. The owner can ask for another after.
 8. **Stay true to the source.** Every claim and number traces to the paper. When the story would bend a fact,
@@ -28,7 +30,7 @@ These come from the requests that shaped the DCN-V2 video. They take priority ov
 
 ## Workflow
 
-For a new paper, the `paper-to-video` skill runs these steps. New films live in `videos/<slug>/` and start
+For a new paper, the `paper-to-video` skill runs these steps. New films live in `videos/<slug>-film/` and start
 from `template/tools/`; `dcn-v2-explainer/` is the reference film.
 
 | Step | What | Command / file |
