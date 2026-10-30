@@ -1,5 +1,8 @@
 # The "why" film: a deep dive on one paper
 
+> **Deprecated on 2026-10-30.** New papers get one film built from `FILM.md`. This spec is kept only to
+> explain the existing `videos/<slug>-why/` films. Do not build new why films from it.
+
 The second film for a paper, made after its explainer (`videos/<slug>-explainer/`). The explainer shows *how* the
 method works. The why film goes down to the root cause, the way an RCA's 5 whys does:
 - why the old approach fails;

@@ -9,6 +9,11 @@ The owner's principles and the full workflow are in `docs/VIDEO_PLAYBOOK.md`; th
 `docs/DESIGN.md`. Read both first, and load the `hyperframes` skill before writing scenes.
 `dcn-v2-explainer/` is the reference film: copy its patterns (scene files, cue timing, equation labels).
 
+**One film per paper.** Since 2026-10-30 each paper gets a single film covering how and why, built in
+`videos/<slug>-film/` by the scene order in `FILM.md` (this folder). `FILM.md` sets the scenes, length and
+commands; the steps below set up, read the paper, pick the story and deliver. The old pair (a how film in
+`<slug>-explainer` and a why film in `<slug>-why`, from `WHY.md`) is deprecated: don't build new ones.
+
 ## 1. Setup (only if missing)
 
 ```bash
@@ -27,23 +32,24 @@ npx --yes hyperframes@latest doctor >/dev/null 2>&1 || bash hyperframes/setup_hy
 
 Write three storylines that are different films (`hyperframes` skill, `references/story.md`): each with a
 person in a concrete situation, a device that makes the math physical, its first two seconds, its beats, its
-look. Put your recommendation first with a one-line reason and save them to `STORYLINES.md`, marking it picked
-(line 1: `# Storylines (picked: A) — ...`). Do not ask the owner to pick: build the recommended storyline
-straight through to the render. In one line, say which storyline you picked and why, the planned length (about
-3 minutes for a first cut), and that narration is Kokoro voice-only. The owner can still ask for B or C after
-seeing the film.
+look. Each storyline must also carry the 3 symptom rows and a ladder of earlier approaches (`FILM.md`
+scenes 2–3). Put your recommendation first with a one-line reason and save them to `STORYLINES.md`, marking it
+picked (line 1 format in `FILM.md`). Do not ask the owner to pick: build the recommended storyline straight
+through to the render. In one line, say which storyline you picked and why, the planned length (about 10
+minutes), and that narration is Kokoro voice-only. The owner can still ask for B or C after seeing the film.
 
 ## 4. Build
 
 ```bash
-SLUG=<short-name>                      # e.g. attention-explainer
+SLUG=<short-name>-film                 # e.g. autoint-film
 npx hyperframes init videos/$SLUG --non-interactive
 cp -r template/tools videos/$SLUG/ && mkdir -p videos/$SLUG/{assets,compositions}
 printf '.hyperframes/\nrenders/\n*.wav\nassets/*.mp3\n' > videos/$SLUG/.gitignore
 ```
 
 1. `SPEC.md` (look, motion, banned list; reuse DESIGN.md unless the storyline calls for another world).
-2. `script.json`: scenes of short lines, each line a cue. Math scenes follow the pattern: real-world process
+2. `script.json`: one scene per `FILM.md` scene (split a long one if needed), short lines, each line a cue.
+   Math scenes follow the pattern: real-world process
    first → symbols with every term named in plain words → worked with real numbers (exact arithmetic,
    example weights labelled). Check every sentence against the paper.
 3. Voice: `../../tts/.venv/bin/python tools/tts.py .` then
@@ -55,15 +61,16 @@ printf '.hyperframes/\nrenders/\n*.wav\nassets/*.mp3\n' > videos/$SLUG/.gitignor
 
 ## 5. Deliver
 
-- Render: `npx hyperframes render -o renders/$SLUG.mp4 --quality high` in the background (about 2.5× the
-  video length). Generate all voice before rendering; Kokoro is slow while a render runs.
-- `bash tools/finish.sh renders/$SLUG.mp4` (−14 LUFS, faststart), verify with ffprobe that it has audio,
-  then send `renders/$SLUG-final.mp4` with SendUserFile.
-- Write `REVIEW.md` (choices, what is illustrative, weakest shot). Commit the source only, never media,
-  and push to the working branch.
-- Offer the next steps the owner has asked for before: a longer cut, more worked math.
+- Render, finish and share copy exactly as in `FILM.md` → Commands, all in the foreground. Generate all voice
+  before rendering; Kokoro is slow while a render runs.
+- Verify with ffprobe that `renders/$SLUG-final.mp4` has audio, then send it with SendUserFile.
+- Write `REVIEW.md` (choices, what is illustrative, weakest shot) and `INTERVIEW.md`.
+- Put it in the library: create `../library/<topic>/<slug>/` with the PDF if missing, then run
+  `node library/build-gallery.mjs` from `paper/`.
+- Never commit or push the films or the `videos/` folders; they stay local.
 
-## 6. The "why" film (second film per paper)
+## 6. Deprecated: the two-film pair
 
-When the owner asks for the deep dive, meaning why the method works, 5 whys, the math, or interview questions,
-follow `WHY.md` in this folder. It builds `videos/<slug>-why/` plus `INTERVIEW.md` from the paper's explainer.
+Until 2026-10-30 each paper got a how film (`videos/<slug>-explainer/`) and a why film (`videos/<slug>-why/`,
+spec in `WHY.md`). Both are replaced by the one film in `FILM.md`. Keep the existing pairs as they are; don't
+build new ones or rebuild old ones unless the owner asks.
